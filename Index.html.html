@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinancIA</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#07080f;--surface:#0f1018;--surface2:#161720;--border:#22233a;--accent:#7fff6e;--accent2:#3de8ff;--text:#e8e8f2;--muted:#5a5a7a;--danger:#ff4d6d}
+body{font-family:'DM Mono',monospace;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+.screen{display:none;position:relative;z-index:1}
+.screen.active{display:block}
+#authScreen{min-height:100vh;display:none;align-items:center;justify-content:center;padding:24px}
+#authScreen.active{display:flex}
+.auth-card{width:100%;max-width:400px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:40px 36px;animation:slideUp .4s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.auth-logo{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;text-align:center;margin-bottom:6px}
+.auth-logo span{color:var(--accent)}
+.auth-tagline{text-align:center;font-size:12px;color:var(--muted);margin-bottom:32px;letter-spacing:.5px}
+.auth-tabs{display:flex;margin-bottom:28px;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.auth-tab{flex:1;padding:10px;text-align:center;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:.5px;cursor:pointer;background:transparent;border:none;color:var(--muted);transition:all .2s}
+.auth-tab.active{background:var(--surface2);color:var(--text)}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.field input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;color:var(--text);font-family:'DM Mono',monospace;font-size:14px;outline:none;transition:border-color .2s}
+.field input:focus{border-color:var(--accent)}
+.field input::placeholder{color:var(--muted)}
+.btn-primary{width:100%;background:var(--accent);color:#07080f;border:none;border-radius:10px;padding:14px;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;cursor:pointer;letter-spacing:.5px;transition:opacity .15s,transform .1s;margin-top:4px}
+.btn-primary:hover{opacity:.88}.btn-primary:active{transform:scale(.98)}.btn-primary:disabled{opacity:.4;cursor:default}
+.auth-error{background:#1f0a10;border:1px solid var(--danger);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--danger);margin-bottom:16px;display:none}
+.auth-error.show{display:block}
+.container{max-width:900px;margin:0 auto;padding:24px 16px;position:relative;z-index:1}
+header{display:flex;align-items:center;justify-content:space-between;padding:20px 0 28px;border-bottom:1px solid var(--border);margin-bottom:24px}
+.logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;letter-spacing:-.5px}
+.logo span{color:var(--accent)}
+.header-right{display:flex;align-items:center;gap:12px}
+.user-pill{font-size:11px;color:var(--muted);border:1px solid var(--border);padding:5px 12px;border-radius:20px;letter-spacing:.5px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btn-logout{background:none;border:1px solid var(--border);color:var(--muted);border-radius:8px;padding:5px 12px;font-size:11px;font-family:'DM Mono',monospace;cursor:pointer;transition:all .15s}
+.btn-logout:hover{border-color:var(--danger);color:var(--danger)}
+.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;transition:border-color .2s}
+.card:hover{border-color:#2e2e48}
+.card-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.card-value{font-family:'Syne',sans-serif;font-size:22px;font-weight:700}
+.card-value.green{color:var(--accent)}.card-value.red{color:var(--danger)}.card-value.blue{color:var(--accent2)}
+.card-sub{font-size:11px;color:var(--muted);margin-top:3px}
+.input-section{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:22px}
+.input-header{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.5px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block}
+.input-row{display:flex;gap:10px;align-items:flex-end}
+.input-natural{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;color:var(--text);font-family:'DM Mono',monospace;font-size:13px;outline:none;transition:border-color .2s;resize:none;height:46px;line-height:1.4}
+.input-natural:focus{border-color:var(--accent)}
+.input-natural::placeholder{color:var(--muted)}
+.btn-add{background:var(--accent);color:#07080f;border:none;border-radius:10px;padding:0 20px;height:46px;font-family:'Syne',sans-serif;font-size:12px;font-weight:800;cursor:pointer;letter-spacing:.5px;white-space:nowrap;transition:opacity .15s,transform .1s}
+.btn-add:hover{opacity:.88}.btn-add:active{transform:scale(.97)}.btn-add:disabled{opacity:.4;cursor:default}
+.hint{font-size:11px;color:var(--muted);margin-top:9px}
+.hint span{color:var(--accent)}
+.categories-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}
+.cat-chip{font-size:11px;padding:5px 11px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);cursor:pointer;letter-spacing:.5px;transition:all .15s}
+.cat-chip:hover{border-color:var(--accent);color:var(--accent)}
+.section-title{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.tx-list{display:flex;flex-direction:column;gap:5px;margin-bottom:24px}
+.tx-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 14px;display:flex;align-items:center;gap:11px;animation:fadeIn .3s ease;transition:border-color .2s}
+.tx-item:hover{border-color:#2e2e48}
+.tx-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.tx-info{flex:1;min-width:0}
+.tx-desc{font-size:13px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tx-meta{font-size:10px;color:var(--muted);margin-top:2px}
+.tx-amount{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;flex-shrink:0}
+.tx-amount.neg{color:var(--danger)}.tx-amount.pos{color:var(--accent)}
+.tx-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:4px;border-radius:6px;transition:color .15s;flex-shrink:0}
+.tx-del:hover{color:var(--danger)}
+.cat-badge{font-size:9px;padding:2px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:.8px;font-weight:500;display:inline-block;margin-top:2px}
+.chart-section{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:24px}
+.bars{display:flex;gap:7px;align-items:flex-end;height:72px;margin-top:14px}
+.bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px}
+.bar-fill{width:100%;border-radius:4px 4px 0 0;transition:height .5s cubic-bezier(.34,1.56,.64,1);min-height:3px}
+.bar-label{font-size:10px;color:var(--muted)}
+.ai-section{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:24px}
+.ai-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700}
+.ai-badge{background:linear-gradient(135deg,var(--accent2),var(--accent));color:#07080f;font-size:9px;padding:2px 8px;border-radius:10px;letter-spacing:1px;font-weight:700}
+.ai-messages{padding:14px 18px;min-height:70px;max-height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:9px}
+.ai-bubble{padding:9px 13px;border-radius:10px;font-size:12px;line-height:1.6;max-width:90%;animation:fadeIn .25s ease}
+.ai-bubble.ai{background:var(--surface2);color:var(--text);align-self:flex-start;border:1px solid var(--border)}
+.ai-bubble.ai .ai-label{font-size:9px;color:var(--accent2);letter-spacing:1px;margin-bottom:3px}
+.ai-ask-row{padding:11px 14px;border-top:1px solid var(--border);display:flex;gap:7px}
+.ai-input{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:9px 13px;color:var(--text);font-family:'DM Mono',monospace;font-size:12px;outline:none;transition:border-color .2s}
+.ai-input:focus{border-color:var(--accent2)}
+.ai-input::placeholder{color:var(--muted)}
+.btn-ai{background:var(--surface2);border:1px solid var(--border);color:var(--accent2);border-radius:8px;padding:0 14px;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:.5px;transition:all .15s}
+.btn-ai:hover{border-color:var(--accent2)}.btn-ai:disabled{opacity:.4;cursor:default}
+.filter-tabs{display:flex;gap:5px}
+.tab{font-size:11px;padding:4px 11px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Mono',monospace;transition:all .15s}
+.tab.active{border-color:var(--accent);color:var(--accent)}
+.empty{text-align:center;padding:28px;color:var(--muted);font-size:12px}
+.loading{display:inline-block;width:12px;height:12px;border:2px solid var(--border);border-top-color:var(--accent2);border-radius:50%;animation:spin .7s linear infinite}
+@media(max-width:600px){.summary-grid{grid-template-columns:1fr 1fr}.summary-grid .card:last-child{grid-column:span 2}.card-value{font-size:18px}.auth-card{padding:28px 20px}}
+</style>
+</head>
+<body>
+
+<div id="authScreen" class="screen active">
+  <div class="auth-card">
+    <div class="auth-logo">Financ<span>IA</span></div>
+    <div class="auth-tagline">Sua vida financeira com inteligência artificial</div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchTab('login')">Entrar</button>
+      <button class="auth-tab" onclick="switchTab('register')">Criar conta</button>
+    </div>
+    <div class="auth-error" id="authError"></div>
+    <div id="loginForm">
+      <div class="field"><label>E-mail</label><input type="email" id="loginEmail" placeholder="seu@email.com" autocomplete="email"></div>
+      <div class="field"><label>Senha</label><input type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <button class="btn-primary" onclick="doLogin()">Entrar</button>
+    </div>
+    <div id="registerForm" style="display:none">
+      <div class="field"><label>Nome</label><input type="text" id="regName" placeholder="Como quer ser chamado?"></div>
+      <div class="field"><label>E-mail</label><input type="email" id="regEmail" placeholder="seu@email.com"></div>
+      <div class="field"><label>Senha</label><input type="password" id="regPass" placeholder="Mín. 6 caracteres"></div>
+      <div class="field"><label>Confirmar senha</label><input type="password" id="regPass2" placeholder="Repita a senha" onkeydown="if(event.key==='Enter')doRegister()"></div>
+      <button class="btn-primary" onclick="doRegister()">Criar conta</button>
+    </div>
+  </div>
+</div>
+
+<div id="appScreen" class="screen">
+<div class="container">
+  <header>
+    <div class="logo">Financ<span>IA</span></div>
+    <div class="header-right">
+      <div class="user-pill" id="userPill"></div>
+      <button class="btn-logout" onclick="doLogout()">Sair</button>
+    </div>
+  </header>
+
+  <div class="summary-grid">
+    <div class="card"><div class="card-label">Receitas</div><div class="card-value green" id="totalIn">R$ 0</div><div class="card-sub" id="countIn">0 lançamentos</div></div>
+    <div class="card"><div class="card-label">Gastos</div><div class="card-value red" id="totalOut">R$ 0</div><div class="card-sub" id="countOut">0 lançamentos</div></div>
+    <div class="card"><div class="card-label">Saldo</div><div class="card-value blue" id="balance">R$ 0</div><div class="card-sub" id="balanceSub">—</div></div>
+  </div>
+
+  <div class="input-section">
+    <div class="input-header"><span class="dot"></span> Novo lançamento</div>
+    <div class="input-row">
+      <textarea class="input-natural" id="txInput" placeholder="Ex: gastei 150 no mercado  |  200 cartão gasolina  |  recebi 3000 salário..." rows="1"></textarea>
+      <button class="btn-add" id="btnAdd" onclick="addTransaction()">+ Lançar</button>
+    </div>
+    <div class="categories-row">
+      <span class="cat-chip" onclick="quickInput('Alimentação')">🍔 Alimentação</span>
+      <span class="cat-chip" onclick="quickInput('Cartão')">💳 Cartão</span>
+      <span class="cat-chip" onclick="quickInput('Casa')">🏠 Casa</span>
+      <span class="cat-chip" onclick="quickInput('Saúde')">💊 Saúde</span>
+      <span class="cat-chip" onclick="quickInput('Transporte')">🚗 Transporte</span>
+      <span class="cat-chip" onclick="quickInput('Lazer')">🎮 Lazer</span>
+      <span class="cat-chip" onclick="quickInput('Receita')">💰 Receita</span>
+    </div>
+    <div class="hint">Digite em linguagem natural — a IA categoriza automaticamente. <span>Enter</span> para lançar.</div>
+  </div>
+
+  <div class="section-title">
+    <span>Lançamentos</span>
+    <div class="filter-tabs">
+      <button class="tab active" onclick="setFilter('todos',this)">Todos</button>
+      <button class="tab" onclick="setFilter('gastos',this)">Gastos</button>
+      <button class="tab" onclick="setFilter('receitas',this)">Receitas</button>
+    </div>
+  </div>
+  <div class="tx-list" id="txList"><div class="empty">Nenhum lançamento ainda.</div></div>
+
+  <div class="chart-section">
+    <div class="section-title" style="margin-bottom:0"><span>Por Categoria</span></div>
+    <div class="bars" id="barsChart"><div style="color:var(--muted);font-size:12px;align-self:center;width:100%;text-align:center;">Adicione lançamentos para ver o gráfico</div></div>
+  </div>
+
+  <div class="ai-section">
+    <div class="ai-header"><span>Assistente Financeiro</span><span class="ai-badge">IA</span></div>
+    <div class="ai-messages" id="aiMessages">
+      <div class="ai-bubble ai"><div class="ai-label">ASSISTENTE</div>Olá! Lance seus gastos acima e me pergunte o que quiser sobre suas finanças.</div>
+    </div>
+    <div class="ai-ask-row">
+      <input class="ai-input" id="aiInput" placeholder="Onde estou gastando mais? Como está meu saldo?..." onkeydown="if(event.key==='Enter')askAI()">
+      <button class="btn-ai" id="btnAsk" onclick="askAI()">Perguntar</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+const GEMINI_KEY = 'AIzaSyC2D1PaW4xzHbPxW3_atYmNkpnnvBciyxU';
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
+
+const CAT_COLORS = {
+  'Alimentação':['#ff6e9c','#2a1520'],'Cartão':['#7fff6e','#152a15'],
+  'Casa':['#3de8ff','#0f2028'],'Saúde':['#ffb347','#281f0f'],
+  'Transporte':['#a78bfa','#1a1528'],'Lazer':['#fb923c','#281610'],
+  'Receita':['#7fff6e','#152a15'],'Outros':['#6b6b80','#1a1a22']
+};
+const CAT_ICONS = {'Alimentação':'🍔','Cartão':'💳','Casa':'🏠','Saúde':'💊','Transporte':'🚗','Lazer':'🎮','Receita':'💰','Outros':'📌'};
+
+let currentUser = null;
+let transactions = [];
+let activeFilter = 'todos';
+
+function hashStr(str){let h=0;for(let i=0;i<str.length;i++)h=(Math.imul(31,h)+str.charCodeAt(i))|0;return Math.abs(h).toString(36)}
+function getUsers(){return JSON.parse(localStorage.getItem('financia_users')||'{}')}
+function saveUsers(u){localStorage.setItem('financia_users',JSON.stringify(u))}
+function txKey(email){return 'financia_tx_'+hashStr(email)}
+function loadTx(email){return JSON.parse(localStorage.getItem(txKey(email))||'[]')}
+function saveTx(email,data){localStorage.setItem(txKey(email),JSON.stringify(data))}
+function saveSession(u){localStorage.setItem('financia_session',JSON.stringify(u))}
+function clearSession(){localStorage.removeItem('financia_session')}
+function getSession(){return JSON.parse(localStorage.getItem('financia_session')||'null')}
+
+function switchTab(tab){
+  document.getElementById('loginForm').style.display=tab==='login'?'block':'none';
+  document.getElementById('registerForm').style.display=tab==='register'?'block':'none';
+  document.querySelectorAll('.auth-tab').forEach((el,i)=>el.classList.toggle('active',(tab==='login')===(i===0)));
+  showError('');
+}
+function showError(msg){const el=document.getElementById('authError');el.textContent=msg;el.classList.toggle('show',!!msg)}
+
+function doRegister(){
+  const name=document.getElementById('regName').value.trim();
+  const email=document.getElementById('regEmail').value.trim().toLowerCase();
+  const pass=document.getElementById('regPass').value;
+  const pass2=document.getElementById('regPass2').value;
+  if(!name)return showError('Digite seu nome.');
+  if(!email||!email.includes('@'))return showError('E-mail inválido.');
+  if(pass.length<6)return showError('Senha deve ter no mínimo 6 caracteres.');
+  if(pass!==pass2)return showError('As senhas não coincidem.');
+  const users=getUsers();
+  if(users[email])return showError('E-mail já cadastrado. Faça login.');
+  users[email]={name,passHash:hashStr(pass+email)};
+  saveUsers(users);
+  const user={email,name};
+  saveSession(user);
+  startApp(user);
+}
+
+function doLogin(){
+  const email=document.getElementById('loginEmail').value.trim().toLowerCase();
+  const pass=document.getElementById('loginPass').value;
+  if(!email||!pass)return showError('Preencha todos os campos.');
+  const users=getUsers();
+  const u=users[email];
+  if(!u)return showError('E-mail não encontrado.');
+  if(u.passHash!==hashStr(pass+email))return showError('Senha incorreta.');
+  const user={email,name:u.name};
+  saveSession(user);
+  startApp(user);
+}
+
+function doLogout(){
+  clearSession();currentUser=null;transactions=[];
+  document.getElementById('authScreen').classList.add('active');
+  document.getElementById('appScreen').classList.remove('active');
+  document.getElementById('loginEmail').value='';
+  document.getElementById('loginPass').value='';
+  showError('');
+}
+
+function startApp(user){
+  currentUser=user;
+  transactions=loadTx(user.email);
+  document.getElementById('userPill').textContent=user.name||user.email;
+  document.getElementById('authScreen').classList.remove('active');
+  document.getElementById('appScreen').classList.add('active');
+  document.getElementById('aiMessages').innerHTML=`<div class="ai-bubble ai"><div class="ai-label">ASSISTENTE</div>Olá, ${user.name}! Lance seus gastos acima e me pergunte o que quiser sobre suas finanças.</div>`;
+  renderAll();
+}
+
+function quickInput(cat){const el=document.getElementById('txInput');el.value=cat+' ';el.focus()}
+
+async function gemini(prompt, systemPrompt=''){
+  const contents = systemPrompt
+    ? [{role:'user',parts:[{text: systemPrompt + '\n\n' + prompt}]}]
+    : [{role:'user',parts:[{text:prompt}]}];
+  const res = await fetch(GEMINI_URL,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({contents, generationConfig:{temperature:0.1,maxOutputTokens:800}})
+  });
+  const data = await res.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+}
+
+async function addTransaction(){
+  const input=document.getElementById('txInput');
+  const btn=document.getElementById('btnAdd');
+  const text=input.value.trim();
+  if(!text||!currentUser)return;
+  btn.disabled=true;
+  btn.innerHTML='<span class="loading"></span>';
+  try{
+    const system=`Você é um parser financeiro. Dado um texto em linguagem natural, extraia as informações e responda SOMENTE com JSON válido, sem markdown, sem explicações. Formato: {"desc":"descrição curta","amount":000.00,"type":"gasto ou receita","category":"uma de: Alimentação, Cartão, Casa, Saúde, Transporte, Lazer, Receita, Outros"} — amount sempre positivo. type="receita" para salário/recebimento/entrada; "gasto" para tudo mais.`;
+    const raw = await gemini(text, system);
+    const parsed = JSON.parse(raw.replace(/```json|```/g,'').trim());
+    if(parsed && parsed.amount > 0){
+      const tx={id:Date.now(),desc:parsed.desc,amount:parsed.amount,type:parsed.type,category:parsed.category,date:new Date().toLocaleDateString('pt-BR'),original:text};
+      transactions.unshift(tx);
+      saveTx(currentUser.email,transactions);
+      input.value='';
+      renderAll();
+    }
+  }catch(e){alert('Não consegui interpretar. Tente: "gastei 150 no mercado" ou "recebi 3000 de salário"');}
+  btn.disabled=false;btn.textContent='+ Lançar';
+}
+
+async function askAI(){
+  const input=document.getElementById('aiInput');
+  const btn=document.getElementById('btnAsk');
+  const q=input.value.trim();
+  if(!q)return;
+  const msgs=document.getElementById('aiMessages');
+  input.value='';btn.disabled=true;
+  msgs.innerHTML+=`<div class="ai-bubble" style="align-self:flex-end;background:var(--surface2);border:1px solid var(--border);font-size:12px;padding:9px 13px;">${q}</div>`;
+  const loadId='load_'+Date.now();
+  msgs.innerHTML+=`<div class="ai-bubble ai" id="${loadId}"><div class="ai-label">ASSISTENTE</div><span class="loading"></span></div>`;
+  msgs.scrollTop=msgs.scrollHeight;
+  const summary=buildSummary();
+  const system=`Você é um assistente financeiro pessoal brasileiro, direto e útil. Responda em português de forma concisa. Lançamentos do usuário ${currentUser.name}:\n\n${summary}`;
+  const answer = await gemini(q, system);
+  document.getElementById(loadId).innerHTML=`<div class="ai-label">ASSISTENTE</div>${answer||'Não consegui processar.'}`;
+  msgs.scrollTop=msgs.scrollHeight;
+  btn.disabled=false;
+}
+
+function buildSummary(){
+  if(!transactions.length)return 'Nenhum lançamento ainda.';
+  const totalIn=transactions.filter(t=>t.type==='receita').reduce((s,t)=>s+t.amount,0);
+  const totalOut=transactions.filter(t=>t.type==='gasto').reduce((s,t)=>s+t.amount,0);
+  const lines=transactions.map(t=>`[${t.date}] ${t.type==='receita'?'+':'-'}R$${t.amount.toFixed(2)} | ${t.desc} | ${t.category}`);
+  return `Receitas: R$${totalIn.toFixed(2)} | Gastos: R$${totalOut.toFixed(2)} | Saldo: R$${(totalIn-totalOut).toFixed(2)}\n\n${lines.join('\n')}`;
+}
+
+function renderAll(){renderSummary();renderList();renderChart()}
+
+function renderSummary(){
+  const totalIn=transactions.filter(t=>t.type==='receita').reduce((s,t)=>s+t.amount,0);
+  const totalOut=transactions.filter(t=>t.type==='gasto').reduce((s,t)=>s+t.amount,0);
+  const bal=totalIn-totalOut;
+  const fmt=v=>`R$ ${v.toLocaleString('pt-BR',{minimumFractionDigits:2})}`;
+  document.getElementById('totalIn').textContent=fmt(totalIn);
+  document.getElementById('totalOut').textContent=fmt(totalOut);
+  document.getElementById('balance').textContent=fmt(Math.abs(bal));
+  document.getElementById('balance').className='card-value '+(bal>=0?'green':'red');
+  document.getElementById('countIn').textContent=`${transactions.filter(t=>t.type==='receita').length} lançamentos`;
+  document.getElementById('countOut').textContent=`${transactions.filter(t=>t.type==='gasto').length} lançamentos`;
+  document.getElementById('balanceSub').textContent=bal>=0?'Positivo 🟢':'Negativo 🔴';
+}
+
+function renderList(){
+  const list=document.getElementById('txList');
+  let filtered=transactions;
+  if(activeFilter==='gastos')filtered=transactions.filter(t=>t.type==='gasto');
+  if(activeFilter==='receitas')filtered=transactions.filter(t=>t.type==='receita');
+  if(!filtered.length){list.innerHTML='<div class="empty">Nenhum lançamento encontrado.</div>';return}
+  list.innerHTML=filtered.map(t=>{
+    const[color,bg]=CAT_COLORS[t.category]||CAT_COLORS['Outros'];
+    const icon=CAT_ICONS[t.category]||'📌';
+    return `<div class="tx-item">
+      <div class="tx-icon" style="background:${bg}">${icon}</div>
+      <div class="tx-info"><div class="tx-desc">${t.desc}</div><div class="tx-meta">${t.date} · <span class="cat-badge" style="background:${bg};color:${color}">${t.category}</span></div></div>
+      <div class="tx-amount ${t.type==='receita'?'pos':'neg'}">${t.type==='receita'?'+':'-'} R$ ${t.amount.toLocaleString('pt-BR',{minimumFractionDigits:2})}</div>
+      <button class="tx-del" onclick="delTx(${t.id})">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function renderChart(){
+  const chart=document.getElementById('barsChart');
+  const gastos=transactions.filter(t=>t.type==='gasto');
+  if(!gastos.length){chart.innerHTML='<div style="color:var(--muted);font-size:12px;align-self:center;width:100%;text-align:center;">Adicione gastos para ver o gráfico</div>';return}
+  const bycat={};
+  gastos.forEach(t=>{bycat[t.category]=(bycat[t.category]||0)+t.amount});
+  const entries=Object.entries(bycat).sort((a,b)=>b[1]-a[1]).slice(0,7);
+  const max=Math.max(...entries.map(e=>e[1]));
+  chart.innerHTML=entries.map(([cat,val])=>{
+    const[color]=CAT_COLORS[cat]||CAT_COLORS['Outros'];
+    const pct=Math.round((val/max)*100);
+    return `<div class="bar-wrap"><div style="font-size:9px;color:var(--muted)">${val>=1000?(val/1000).toFixed(1)+'k':Math.round(val)}</div><div class="bar-fill" style="height:${pct}%;background:${color};opacity:.8"></div><div class="bar-label">${CAT_ICONS[cat]||'📌'}</div></div>`;
+  }).join('');
+}
+
+function delTx(id){transactions=transactions.filter(t=>t.id!==id);saveTx(currentUser.email,transactions);renderAll()}
+function setFilter(f,el){activeFilter=f;document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');renderList()}
+document.getElementById('txInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();addTransaction()}});
+
+const session=getSession();
+if(session)startApp(session);
+</script>
+</body>
+</html>
