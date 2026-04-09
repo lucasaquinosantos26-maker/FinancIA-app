@@ -339,13 +339,12 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
     <div class="budget-form-item">
       <label>Categoria</label>
       <select id="budgetCategory">
-        <option value="Alimentacao">Alimentacao</option>
-        <option value="Cartao">Cartao</option>
+        <option value="Alimentação">Alimentação</option>
+        <option value="Cartão">Cartão</option>
         <option value="Casa">Casa</option>
-        <option value="Saude">Saude</option>
+        <option value="Saúde">Saúde</option>
         <option value="Transporte">Transporte</option>
         <option value="Lazer">Lazer</option>
-        <option value="Receita">Receita</option>
         <option value="Outros">Outros</option>
       </select>
     </div>
@@ -555,7 +554,8 @@ function addManualTransaction(){
   document.getElementById('manualDesc').value = '';
   document.getElementById('manualAmount').value = '';
   document.getElementById('manualType').value = 'gasto';
-  document.getElementById('manualCategory').value = 'Alimentacao';
+  updateManualCategories();
+  document.getElementById('manualCategory').value = 'Alimentação';
 
   renderAll();
   showToast('Lancamento adicionado!', 'success');
@@ -782,7 +782,11 @@ function renderRuleChart(){
   }
 
   // Health score (100 = perfect adherence)
-  const diff = Math.abs(pctNec-50)+Math.abs(pctDes-30)+Math.abs(pctInv-20);
+  // Investimentos acima de 20% é positivo, só penaliza se abaixo
+  const diffNec = Math.abs(pctNec-50);
+  const diffDes = Math.abs(pctDes-30);
+  const diffInv = pctInv < 20 ? (20 - pctInv) : 0;
+  const diff = diffNec + diffDes + diffInv;
   const score = Math.max(0, Math.round(100 - diff));
   scoreEl.textContent = score;
 
@@ -800,7 +804,7 @@ function renderRuleChart(){
     barsHTML += `<div class="rule-bar-item">
       <div class="rule-bar-label">
         <span class="rule-cat-name">${RULE_LABELS[seg]}</span>
-        <span class="rule-cat-pct">${pct.toFixed(1)}% (ideal: ${ideal}%) · ${fmt(val)}</span>
+        <span class="rule-cat-pct">${pct.toFixed(1)}% (${seg==='investimentos'?'mín':'ideal'}: ${ideal}%) · ${fmt(val)}</span>
       </div>
       <div class="rule-bar-track">
         <div class="rule-bar-actual" style="width:${barW}%;background:${barColor}"></div>
@@ -818,12 +822,24 @@ function renderRuleChart(){
     const ideal = RULE_IDEAL[seg];
     const diff = pct - ideal;
     const name = RULE_LABELS[seg];
-    if(Math.abs(diff) < 3){
-      feedbackHTML += `<div class="rule-feedback-item"><span class="emoji">✅</span><b>${name}</b>: ${pct.toFixed(1)}% — Dentro do ideal! Continue assim.</div>`;
-    } else if(diff > 0){
-      feedbackHTML += `<div class="rule-feedback-item"><span class="emoji">⚠️</span><b>${name}</b>: ${pct.toFixed(1)}% — ${diff.toFixed(1)}pp acima do ideal (${ideal}%). Tente reduzir esses gastos.</div>`;
+    if(seg==='investimentos'){
+      // Para investimentos: acima é BOM, abaixo é ruim
+      if(Math.abs(diff) < 3){
+        feedbackHTML += `<div class="rule-feedback-item"><span class="emoji">✅</span><b>${name}</b>: ${pct.toFixed(1)}% — Dentro do ideal! Continue assim.</div>`;
+      } else if(diff > 0){
+        feedbackHTML += `<div class="rule-feedback-item"><span class="emoji">🚀</span><b>${name}</b>: ${pct.toFixed(1)}% — ${diff.toFixed(1)}pp acima do ideal (${ideal}%). Excelente! Você está investindo bem.</div>`;
+      } else {
+        feedbackHTML += `<div class="rule-feedback-item"><span class="emoji">⚠️</span><b>${name}</b>: ${pct.toFixed(1)}% — ${Math.abs(diff).toFixed(1)}pp abaixo do ideal (${ideal}%). Tente direcionar mais para investimentos.</div>`;
+      }
     } else {
-      feedbackHTML += `<div class="rule-feedback-item"><span class="emoji">💡</span><b>${name}</b>: ${pct.toFixed(1)}% — ${Math.abs(diff).toFixed(1)}pp abaixo do ideal (${ideal}%). ${seg==='investimentos'?'Tente direcionar mais para investimentos.':'Você tem margem aqui, bom sinal!'}</div>`;
+      // Para necessidades e desejos: abaixo é bom, acima é ruim
+      if(Math.abs(diff) < 3){
+        feedbackHTML += `<div class="rule-feedback-item"><span class="emoji">✅</span><b>${name}</b>: ${pct.toFixed(1)}% — Dentro do ideal! Continue assim.</div>`;
+      } else if(diff > 0){
+        feedbackHTML += `<div class="rule-feedback-item"><span class="emoji">⚠️</span><b>${name}</b>: ${pct.toFixed(1)}% — ${diff.toFixed(1)}pp acima do ideal (${ideal}%). Tente reduzir esses gastos.</div>`;
+      } else {
+        feedbackHTML += `<div class="rule-feedback-item"><span class="emoji">💡</span><b>${name}</b>: ${pct.toFixed(1)}% — ${Math.abs(diff).toFixed(1)}pp abaixo do ideal (${ideal}%). Você tem margem aqui, bom sinal!</div>`;
+      }
     }
   });
 
@@ -880,20 +896,18 @@ function editTx(id){
 
   const editForm = document.createElement('div');
   editForm.className = 'tx-edit-form active';
+  const gastoCatsEdit = ['Alimentação','Cartão','Casa','Saúde','Transporte','Lazer','Outros'];
+  const receitaCatsEdit = ['Salário','Freelance','Adiantamento','Investimento','Presente','Outros'];
+  const editCats = tx.type==='receita' ? receitaCatsEdit : gastoCatsEdit;
+  const catOptions = editCats.map(c=>`<option value="${c}" ${tx.category===c?'selected':''}>${c}</option>`).join('');
+  // Se a categoria atual não está na lista, adiciona
+  const extraOpt = !editCats.includes(tx.category) ? `<option value="${tx.category}" selected>${tx.category}</option>` : '';
+
   editForm.innerHTML = `
     <div class="tx-edit-field"><input type="text" id="edit-desc-${id}" value="${tx.desc}"></div>
     <div class="tx-edit-field"><input type="number" id="edit-amount-${id}" value="${tx.amount}" step="0.01" min="0"></div>
-    <div class="tx-edit-field"><select id="edit-type-${id}"><option value="gasto" ${tx.type==='gasto'?'selected':''}>Gasto</option><option value="receita" ${tx.type==='receita'?'selected':''}>Receita</option></select></div>
-    <div class="tx-edit-field"><select id="edit-cat-${id}">
-      <option value="Alimentacao" ${tx.category==='Alimentacao'?'selected':''}>Alimentacao</option>
-      <option value="Cartao" ${tx.category==='Cartao'?'selected':''}>Cartao</option>
-      <option value="Casa" ${tx.category==='Casa'?'selected':''}>Casa</option>
-      <option value="Saude" ${tx.category==='Saude'?'selected':''}>Saude</option>
-      <option value="Transporte" ${tx.category==='Transporte'?'selected':''}>Transporte</option>
-      <option value="Lazer" ${tx.category==='Lazer'?'selected':''}>Lazer</option>
-      <option value="Receita" ${tx.category==='Receita'?'selected':''}>Receita</option>
-      <option value="Outros" ${tx.category==='Outros'?'selected':''}>Outros</option>
-    </select></div>
+    <div class="tx-edit-field"><select id="edit-type-${id}" onchange="updateEditCategories(${id})"><option value="gasto" ${tx.type==='gasto'?'selected':''}>Gasto</option><option value="receita" ${tx.type==='receita'?'selected':''}>Receita</option></select></div>
+    <div class="tx-edit-field"><select id="edit-cat-${id}">${extraOpt}${catOptions}</select></div>
     <div class="tx-edit-actions">
       <button class="tx-save" onclick="saveTxEdit(${id})">Salvar</button>
       <button class="tx-cancel" onclick="cancelEdit(${id})">Cancelar</button>
@@ -926,6 +940,15 @@ function saveTxEdit(id){
 function cancelEdit(id){
   const form = document.querySelector(`#tx-${id} .tx-edit-form`);
   if(form) form.remove();
+}
+
+function updateEditCategories(id){
+  const type = document.getElementById(`edit-type-${id}`).value;
+  const sel = document.getElementById(`edit-cat-${id}`);
+  const gastoCats = ['Alimentação','Cartão','Casa','Saúde','Transporte','Lazer','Outros'];
+  const receitaCats = ['Salário','Freelance','Adiantamento','Investimento','Presente','Outros'];
+  const cats = type==='receita' ? receitaCats : gastoCats;
+  sel.innerHTML = cats.map(c=>`<option value="${c}">${c}</option>`).join('');
 }
 
 function renderChart(){
@@ -1033,8 +1056,7 @@ function setFilter(f,el){
     if(t === el) t.classList.add('active');
     else t.classList.remove('active');
   });
-  renderList();
-  renderSummary();
+  renderAll();
 }
 
 function setDateFilter(f,el){
@@ -1044,10 +1066,7 @@ function setDateFilter(f,el){
     if(t === el) t.classList.add('active');
     else t.classList.remove('active');
   });
-  renderList();
-  renderSummary();
-  renderChart();
-  renderBalanceChart();
+  renderAll();
 }
 document.getElementById('txInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();addTransaction()}});
 
