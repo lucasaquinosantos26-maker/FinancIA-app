@@ -131,6 +131,28 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
 .budget-cancel{background:var(--surface2);border:1px solid var(--border);color:var(--muted)}
 .chart-balance-section{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:24px}
 .chart-canvas{width:100%;height:120px;margin-top:14px}
+.rule-section{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:24px}
+.rule-content{display:flex;gap:18px;margin-top:14px;align-items:flex-start;flex-wrap:wrap}
+.rule-chart-wrap{position:relative;width:160px;height:160px;flex-shrink:0;margin:0 auto}
+.rule-chart-wrap canvas{width:160px;height:160px}
+.rule-chart-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.rule-chart-center .rule-score{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:var(--text)}
+.rule-chart-center .rule-score-label{font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.rule-details{flex:1;min-width:180px}
+.rule-bar-item{margin-bottom:12px}
+.rule-bar-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.rule-bar-label .rule-cat-name{font-size:11px;font-weight:600;color:var(--text)}
+.rule-bar-label .rule-cat-pct{font-size:10px;color:var(--muted)}
+.rule-bar-track{height:10px;background:var(--border);border-radius:5px;overflow:hidden;position:relative}
+.rule-bar-actual{height:100%;border-radius:5px;transition:width .5s cubic-bezier(.34,1.56,.64,1)}
+.rule-bar-ideal{position:absolute;top:0;height:100%;width:2px;background:var(--text);opacity:.5}
+.rule-feedback{margin-top:14px;padding:12px;background:var(--surface2);border:1px solid var(--border);border-radius:10px}
+.rule-feedback-title{font-size:10px;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.rule-feedback-item{font-size:11px;color:var(--text);line-height:1.6;margin-bottom:4px}
+.rule-feedback-item .emoji{margin-right:4px}
+.rule-legend{display:flex;gap:12px;margin-top:10px;flex-wrap:wrap;justify-content:center}
+.rule-legend-item{display:flex;align-items:center;gap:4px;font-size:9px;color:var(--muted)}
+.rule-legend-dot{width:8px;height:8px;border-radius:50%}
 .ai-section{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:24px}
 .ai-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700}
 .ai-badge{background:linear-gradient(135deg,var(--accent2),var(--accent));color:#07080f;font-size:9px;padding:2px 8px;border-radius:10px;letter-spacing:1px;font-weight:700}
@@ -270,6 +292,31 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
       <button onclick="openBudgetModal()">+ Adicionar</button>
     </div>
     <div id="budgetList"></div>
+  </div>
+
+  <div class="rule-section" id="ruleSection">
+    <div class="section-title" style="margin-bottom:0"><span>Regra 50/30/20</span></div>
+    <div class="rule-content">
+      <div class="rule-chart-wrap">
+        <canvas id="ruleChart" width="160" height="160"></canvas>
+        <div class="rule-chart-center">
+          <div class="rule-score" id="ruleScore">--</div>
+          <div class="rule-score-label">Saúde</div>
+        </div>
+      </div>
+      <div class="rule-details" id="ruleDetails">
+        <div style="color:var(--muted);font-size:12px;text-align:center;padding:20px 0">Adicione lançamentos para ver a análise</div>
+      </div>
+    </div>
+    <div class="rule-legend">
+      <div class="rule-legend-item"><div class="rule-legend-dot" style="background:#3de8ff"></div>Necessidades (50%)</div>
+      <div class="rule-legend-item"><div class="rule-legend-dot" style="background:#a78bfa"></div>Desejos (30%)</div>
+      <div class="rule-legend-item"><div class="rule-legend-dot" style="background:#7fff6e"></div>Investimentos (20%)</div>
+    </div>
+    <div class="rule-feedback" id="ruleFeedback" style="display:none">
+      <div class="rule-feedback-title">Diagnóstico Financeiro</div>
+      <div id="ruleFeedbackContent"></div>
+    </div>
   </div>
 
   <div class="ai-section">
@@ -644,7 +691,139 @@ function exportCSV(){
   showToast('CSV exportado!', 'success');
 }
 
-function renderAll(){renderSummary();renderList();renderChart();renderBudgets();renderBalanceChart()}
+const RULE_MAP = {
+  necessidades: ['Casa','Alimentação','Saúde','Transporte'],
+  desejos: ['Lazer','Cartão']
+};
+const RULE_COLORS = {necessidades:'#3de8ff',desejos:'#a78bfa',investimentos:'#7fff6e'};
+const RULE_IDEAL = {necessidades:50,desejos:30,investimentos:20};
+const RULE_LABELS = {necessidades:'Necessidades',desejos:'Desejos',investimentos:'Investimentos'};
+
+function renderRuleChart(){
+  const canvas = document.getElementById('ruleChart');
+  const detailsEl = document.getElementById('ruleDetails');
+  const feedbackEl = document.getElementById('ruleFeedback');
+  const feedbackContent = document.getElementById('ruleFeedbackContent');
+  const scoreEl = document.getElementById('ruleScore');
+  if(!canvas||!detailsEl) return;
+
+  const ctx = canvas.getContext('2d');
+  canvas.width = 160; canvas.height = 160;
+
+  const filtered = getFilteredTransactions();
+  const totalIn = filtered.filter(t=>t.type==='receita').reduce((s,t)=>s+t.amount,0);
+  const totalOut = filtered.filter(t=>t.type==='gasto').reduce((s,t)=>s+t.amount,0);
+
+  if(!totalOut || !totalIn){
+    ctx.clearRect(0,0,160,160);
+    const cx=80,cy=80,r=60;
+    ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.strokeStyle='rgba(255,255,255,.08)';ctx.lineWidth=16;ctx.stroke();
+    scoreEl.textContent='--';
+    detailsEl.innerHTML='<div style="color:var(--muted);font-size:12px;text-align:center;padding:20px 0">Adicione receitas e gastos para ver a análise</div>';
+    feedbackEl.style.display='none';
+    return;
+  }
+
+  const catTotals = {};
+  filtered.filter(t=>t.type==='gasto').forEach(t=>{
+    catTotals[t.category] = (catTotals[t.category]||0) + t.amount;
+  });
+
+  let necessidades=0, desejos=0;
+  RULE_MAP.necessidades.forEach(c=>{ necessidades += (catTotals[c]||0); });
+  RULE_MAP.desejos.forEach(c=>{ desejos += (catTotals[c]||0); });
+
+  // "Outros" gastos go to necessidades
+  const mappedCats = [...RULE_MAP.necessidades,...RULE_MAP.desejos];
+  Object.keys(catTotals).forEach(c=>{ if(!mappedCats.includes(c)) necessidades += catTotals[c]; });
+
+  const investimentos = Math.max(0, totalIn - totalOut);
+
+  const total = necessidades + desejos + investimentos;
+  const pctNec = total ? (necessidades/total*100) : 0;
+  const pctDes = total ? (desejos/total*100) : 0;
+  const pctInv = total ? (investimentos/total*100) : 0;
+
+  const actual = {necessidades:pctNec, desejos:pctDes, investimentos:pctInv};
+
+  // Draw donut
+  ctx.clearRect(0,0,160,160);
+  const cx=80,cy=80,r=60,lw=16;
+  let startAngle = -Math.PI/2;
+  const segments = ['necessidades','desejos','investimentos'];
+  const values = [pctNec,pctDes,pctInv];
+
+  if(total === 0){
+    ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.strokeStyle='rgba(255,255,255,.08)';ctx.lineWidth=lw;ctx.stroke();
+  } else {
+    segments.forEach((seg,i)=>{
+      const sweep = (values[i]/100)*Math.PI*2;
+      if(sweep > 0.001){
+        ctx.beginPath();
+        ctx.arc(cx,cy,r,startAngle,startAngle+sweep);
+        ctx.strokeStyle=RULE_COLORS[seg];
+        ctx.lineWidth=lw;
+        ctx.lineCap='butt';
+        ctx.stroke();
+        startAngle += sweep;
+      }
+    });
+  }
+
+  // Health score (100 = perfect adherence)
+  const diff = Math.abs(pctNec-50)+Math.abs(pctDes-30)+Math.abs(pctInv-20);
+  const score = Math.max(0, Math.round(100 - diff));
+  scoreEl.textContent = score;
+
+  // Bars
+  const fmt = v => `R$ ${v.toLocaleString('pt-BR',{minimumFractionDigits:2})}`;
+  let barsHTML = '';
+  segments.forEach(seg=>{
+    const pct = actual[seg];
+    const ideal = RULE_IDEAL[seg];
+    const val = seg==='necessidades'?necessidades:seg==='desejos'?desejos:investimentos;
+    const overUnder = pct > ideal ? 'acima' : pct < ideal ? 'abaixo' : 'no ideal';
+    const barColor = RULE_COLORS[seg];
+    const barW = Math.min(pct, 100);
+    const idealPos = ideal;
+    barsHTML += `<div class="rule-bar-item">
+      <div class="rule-bar-label">
+        <span class="rule-cat-name">${RULE_LABELS[seg]}</span>
+        <span class="rule-cat-pct">${pct.toFixed(1)}% (ideal: ${ideal}%) · ${fmt(val)}</span>
+      </div>
+      <div class="rule-bar-track">
+        <div class="rule-bar-actual" style="width:${barW}%;background:${barColor}"></div>
+        <div class="rule-bar-ideal" style="left:${idealPos}%"></div>
+      </div>
+    </div>`;
+  });
+  detailsEl.innerHTML = barsHTML;
+
+  // Feedback
+  feedbackEl.style.display = 'block';
+  let feedbackHTML = '';
+  segments.forEach(seg=>{
+    const pct = actual[seg];
+    const ideal = RULE_IDEAL[seg];
+    const diff = pct - ideal;
+    const name = RULE_LABELS[seg];
+    if(Math.abs(diff) < 3){
+      feedbackHTML += `<div class="rule-feedback-item"><span class="emoji">✅</span><b>${name}</b>: ${pct.toFixed(1)}% — Dentro do ideal! Continue assim.</div>`;
+    } else if(diff > 0){
+      feedbackHTML += `<div class="rule-feedback-item"><span class="emoji">⚠️</span><b>${name}</b>: ${pct.toFixed(1)}% — ${diff.toFixed(1)}pp acima do ideal (${ideal}%). Tente reduzir esses gastos.</div>`;
+    } else {
+      feedbackHTML += `<div class="rule-feedback-item"><span class="emoji">💡</span><b>${name}</b>: ${pct.toFixed(1)}% — ${Math.abs(diff).toFixed(1)}pp abaixo do ideal (${ideal}%). ${seg==='investimentos'?'Tente direcionar mais para investimentos.':'Você tem margem aqui, bom sinal!'}</div>`;
+    }
+  });
+
+  if(score >= 80) feedbackHTML += `<div class="rule-feedback-item" style="margin-top:8px"><span class="emoji">🏆</span><b>Parabéns!</b> Sua distribuição está muito próxima do ideal 50/30/20.</div>`;
+  else if(score >= 50) feedbackHTML += `<div class="rule-feedback-item" style="margin-top:8px"><span class="emoji">📊</span><b>Atenção:</b> Sua distribuição precisa de alguns ajustes. Revise os pontos acima.</div>`;
+  else feedbackHTML += `<div class="rule-feedback-item" style="margin-top:8px"><span class="emoji">🚨</span><b>Alerta:</b> Sua distribuição está bem distante do ideal. Considere reorganizar seu orçamento.</div>`;
+
+  feedbackContent.innerHTML = feedbackHTML;
+}
+
+function renderAll(){renderSummary();renderList();renderChart();renderBudgets();renderBalanceChart();renderRuleChart()}
 
 function renderSummary(){
   const filtered = getFilteredTransactions();
