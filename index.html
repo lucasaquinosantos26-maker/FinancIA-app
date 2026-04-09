@@ -250,8 +250,8 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
       <div class="manual-row">
         <div class="manual-field"><label>Descrição</label><input type="text" id="manualDesc" placeholder="Gasto/Receita"></div>
         <div class="manual-field"><label>Valor (R$)</label><input type="number" id="manualAmount" placeholder="0.00" min="0" step="0.01"></div>
-        <div class="manual-field"><label>Tipo</label><select id="manualType"><option value="gasto">Gasto</option><option value="receita">Receita</option></select></div>
-        <div class="manual-field"><label>Categoria</label><select id="manualCategory"><option value="Alimentação">Alimentação</option><option value="Cartão">Cartão</option><option value="Casa">Casa</option><option value="Saúde">Saúde</option><option value="Transporte">Transporte</option><option value="Lazer">Lazer</option><option value="Receita">Receita</option><option value="Outros">Outros</option></select></div>
+        <div class="manual-field"><label>Tipo</label><select id="manualType" onchange="updateManualCategories()"><option value="gasto">Gasto</option><option value="receita">Receita</option></select></div>
+        <div class="manual-field"><label>Categoria</label><select id="manualCategory"><option value="Alimentação">Alimentação</option><option value="Cartão">Cartão</option><option value="Casa">Casa</option><option value="Saúde">Saúde</option><option value="Transporte">Transporte</option><option value="Lazer">Lazer</option><option value="Outros">Outros</option></select></div>
         <button class="btn-add" onclick="addManualTransaction()">+ Lançar</button>
       </div>
     </div>
@@ -470,6 +470,15 @@ function switchInputMode(mode){
   document.getElementById('manualFormSection').classList.toggle('active', mode === 'manual');
 }
 
+function updateManualCategories(){
+  const type=document.getElementById('manualType').value;
+  const sel=document.getElementById('manualCategory');
+  const gastoCats=[{v:'Alimentação',t:'Alimentação'},{v:'Cartão',t:'Cartão'},{v:'Casa',t:'Casa'},{v:'Saúde',t:'Saúde'},{v:'Transporte',t:'Transporte'},{v:'Lazer',t:'Lazer'},{v:'Outros',t:'Outros'}];
+  const receitaCats=[{v:'Salário',t:'Salário'},{v:'Freelance',t:'Freelance'},{v:'Adiantamento',t:'Adiantamento'},{v:'Investimento',t:'Investimento'},{v:'Presente',t:'Presente'},{v:'Outros',t:'Outros'}];
+  const cats=type==='receita'?receitaCats:gastoCats;
+  sel.innerHTML=cats.map(c=>`<option value="${c.v}">${c.t}</option>`).join('');
+}
+
 function quickInput(cat){const el=document.getElementById('txInput');el.value=cat+' ';el.focus()}
 
 async function gemini(prompt, systemPrompt=''){
@@ -484,10 +493,11 @@ async function gemini(prompt, systemPrompt=''){
   if(!res.ok){
     const error = await res.json();
     if(res.status === 429){
-      showToast('Limite da IA atingido. Use o modo manual.', 'error', 4000);
+      showToast('Limite da IA atingido. Alternando para manual.', 'error', 4000);
     }else{
-      showToast('Erro ao conectar com IA. Tente novamente.', 'error', 4000);
+      showToast('Erro ao conectar com IA. Alternando para manual.', 'error', 4000);
     }
+    switchInputMode('manual');
     throw new Error(`API Error: ${res.status}`);
   }
   const data = await res.json();
@@ -515,8 +525,9 @@ async function addTransaction(){
     }
   }catch(e){
     if(!e.message.includes('API Error')){
-      showToast('Nao consegui interpretar. Tente: "gastei 150 no mercado"', 'error');
+      showToast('Nao consegui interpretar. Alternando para modo manual.', 'error', 3000);
     }
+    switchInputMode('manual');
   }
   btn.disabled=false;btn.textContent='+ Lancar';
 }
