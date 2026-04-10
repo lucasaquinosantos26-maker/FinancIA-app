@@ -24,9 +24,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Inject API Key
-        run: sed -i 's/%%GEMINI_API_KEY%%/${{ secrets.GEMINI_API_KEY }}/' index.html
-
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
@@ -37,4 +34,4 @@ jobs:
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages
