@@ -197,9 +197,152 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
 /* ── END TOOLTIP ── */
 
 @media(max-width:600px){.summary-grid{grid-template-columns:1fr 1fr}.summary-grid .card:last-child{grid-column:span 2}.card-value{font-size:18px}.auth-card{padding:28px 20px}.manual-row{grid-template-columns:1fr}.budget-modal-content{width:95%}.filter-tabs{width:100%}}
+
+/* ═══════════════════════════════════════
+   SPLASH SCREEN — FinancIA Intro
+═══════════════════════════════════════ */
+#splashScreen {
+  position: fixed;
+  inset: 0;
+  background: #07080f;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+#splashScreen.fade-out {
+  animation: splashFadeOut 0.8s ease forwards;
+}
+@keyframes splashFadeOut {
+  0%   { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.04); pointer-events: none; }
+}
+
+/* Canvas de partículas */
+#splashCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Conteúdo central */
+.splash-center {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Título digitado */
+.splash-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(42px, 10vw, 72px);
+  font-weight: 800;
+  letter-spacing: -2px;
+  color: #e8e8f2;
+  line-height: 1;
+  min-height: 1.2em;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.splash-title .part-financ { color: #e8e8f2; }
+.splash-title .part-ia {
+  color: #7fff6e;
+  text-shadow: 0 0 20px rgba(127,255,110,.6), 0 0 40px rgba(127,255,110,.3);
+}
+.splash-title .part-rs {
+  color: #3de8ff;
+  text-shadow: 0 0 20px rgba(61,232,255,.8), 0 0 50px rgba(61,232,255,.4);
+  opacity: 0;
+  transform: scale(0.5);
+  display: inline-block;
+  transition: all 0.4s cubic-bezier(.34,1.56,.64,1);
+  margin-left: 4px;
+  font-size: 0.55em;
+  vertical-align: super;
+}
+.splash-title .part-rs.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Cursor piscante */
+.splash-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 0.85em;
+  background: #7fff6e;
+  margin-left: 2px;
+  vertical-align: middle;
+  animation: cursorBlink 0.7s step-end infinite;
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(127,255,110,.8);
+}
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+.splash-cursor.hidden { display: none; }
+
+/* Tagline */
+.splash-tagline {
+  font-family: 'DM Mono', monospace;
+  font-size: clamp(11px, 2.5vw, 14px);
+  color: #5a5a7a;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.6s ease;
+}
+.splash-tagline.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Barra de progresso */
+.splash-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(90deg, #3de8ff, #7fff6e);
+  box-shadow: 0 0 10px rgba(127,255,110,.5);
+  transition: width linear;
+}
+
+/* Skip */
+.splash-skip {
+  position: absolute;
+  bottom: 28px;
+  right: 28px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: #2a2a3a;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: color 0.2s;
+  border: none;
+  background: none;
+  padding: 4px 8px;
+}
+.splash-skip:hover { color: #5a5a7a; }
+/* ═══════════════════════════════════════ */
+
 </style>
 </head>
 <body>
+
+
+
 
 <div id="authScreen" class="screen active">
   <div class="auth-card">
@@ -464,6 +607,10 @@ function setDateFilter(f,el){activeDateFilter=f;Array.from(document.querySelecto
 document.getElementById('txInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();addTransaction()}});
 const session=getSession();
 if(session)startApp(session);
+
+
+
+
 </script>
 </body>
 </html>
