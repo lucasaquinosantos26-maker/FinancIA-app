@@ -188,6 +188,45 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
 .tooltip-item b{color:var(--text);font-weight:600}
 .tooltip-item span.dim{color:var(--muted);font-size:10px}
 @media(max-width:480px){.tooltip-box{left:auto;right:-8px;transform:translateY(-4px)}.tooltip-box.visible{transform:translateY(0)}.tooltip-box::before{left:auto;right:14px;transform:none}.tooltip-box::after{left:auto;right:15px;transform:none}}
+
+/* ── META DE ECONOMIA ── */
+.meta-section{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:24px}
+.meta-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.meta-header button{background:var(--accent);color:#07080f;border:none;border-radius:8px;padding:6px 12px;font-size:10px;font-weight:700;cursor:pointer}
+.meta-progress-wrap{height:14px;background:var(--border);border-radius:7px;overflow:hidden;margin-bottom:6px}
+.meta-progress-fill{height:100%;border-radius:7px;transition:width .5s cubic-bezier(.34,1.56,.64,1);background:linear-gradient(90deg,#3de8ff,#7fff6e)}
+.meta-info{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}
+.meta-info .meta-val{color:var(--text);font-family:'Syne',sans-serif;font-weight:700}
+.meta-empty{font-size:12px;color:var(--muted);text-align:center;padding:12px 0}
+.meta-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;align-items:center;justify-content:center}
+.meta-modal.active{display:flex}
+.meta-modal-content{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;width:90%;max-width:360px}
+.meta-modal-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:16px;color:var(--text)}
+.meta-modal-btns{display:flex;gap:8px;margin-top:16px}
+.meta-modal-btns button{flex:1;padding:10px;border-radius:8px;border:none;font-weight:600;cursor:pointer;font-size:11px}
+.meta-save{background:var(--accent);color:#07080f}
+.meta-cancel{background:var(--surface2);border:1px solid var(--border);color:var(--muted)}
+
+/* ── LANÇAMENTO RECORRENTE ── */
+.recurrent-toggle{display:flex;align-items:center;gap:7px;margin-top:10px;cursor:pointer;user-select:none;width:fit-content}
+.recurrent-toggle input{accent-color:var(--accent);width:14px;height:14px;cursor:pointer}
+.recurrent-toggle span{font-size:11px;color:var(--muted);transition:color .2s}
+.recurrent-toggle:hover span{color:var(--accent)}
+.recurring-badge{font-size:9px;padding:1px 6px;border-radius:8px;background:rgba(61,232,255,.1);color:var(--accent2);border:1px solid rgba(61,232,255,.2);margin-left:5px;letter-spacing:.5px}
+
+/* ── EDITAR PERFIL ── */
+.user-pill{cursor:pointer;transition:all .2s}
+.user-pill:hover{border-color:var(--accent);color:var(--accent)}
+.profile-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;align-items:center;justify-content:center}
+.profile-modal.active{display:flex}
+.profile-modal-content{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;width:90%;max-width:360px}
+.profile-modal-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:16px;color:var(--text)}
+.profile-modal-btns{display:flex;gap:8px;margin-top:16px}
+.profile-modal-btns button{flex:1;padding:10px;border-radius:8px;border:none;font-weight:600;cursor:pointer;font-size:11px}
+.profile-save{background:var(--accent);color:#07080f}
+.profile-cancel{background:var(--surface2);border:1px solid var(--border);color:var(--muted)}
+/* ── END NEW FEATURES ── */
+
 /* ── SPLASH — DIGITAÇÃO ── */
 #splashScreen{position:fixed;inset:0;background:#07080f;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
 #splashScreen.out{animation:splashOut .8s ease forwards;pointer-events:none}
@@ -256,7 +295,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
   <header>
     <div class="logo">Financ<span>IA</span></div>
     <div class="header-right">
-      <div class="user-pill" id="userPill"></div>
+      <div class="user-pill" id="userPill" onclick="openProfileModal()" title="Editar perfil"></div>
       <button class="btn-logout" onclick="doLogout()">Sair</button>
     </div>
   </header>
@@ -288,6 +327,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
         <span class="cat-chip" onclick="quickInput('Receita')">💰 Receita</span>
       </div>
       <div class="hint">Digite em linguagem natural — a IA categoriza automaticamente. <span>Enter</span> para lançar.</div>
+      <label class="recurrent-toggle"><input type="checkbox" id="isRecurringIA"> <span>🔄 Lançamento fixo (repete todo mês)</span></label>
     </div>
     <div class="manual-form" id="manualFormSection">
       <div class="manual-row">
@@ -297,6 +337,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
         <div class="manual-field"><label>Categoria</label><select id="manualCategory"><option value="Alimentação">Alimentação</option><option value="Cartão">Cartão</option><option value="Casa">Casa</option><option value="Saúde">Saúde</option><option value="Transporte">Transporte</option><option value="Lazer">Lazer</option><option value="Outros">Outros</option></select></div>
         <button class="btn-add" onclick="addManualTransaction()">+ Lançar</button>
       </div>
+      <label class="recurrent-toggle"><input type="checkbox" id="isRecurringManual"> <span>🔄 Lançamento fixo (repete todo mês)</span></label>
     </div>
   </div>
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:10px">
@@ -328,6 +369,17 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
     </div>
     <div id="budgetList"></div>
   </div>
+
+  <!-- META DE ECONOMIA -->
+  <div class="meta-section">
+    <div class="meta-header">
+      <div class="section-title" style="margin-bottom:0;flex:0"><span>Meta de Economia</span></div>
+      <button onclick="openMetaModal()">+ Definir</button>
+    </div>
+    <div id="metaContent"><div class="meta-empty">Nenhuma meta definida. Defina quanto quer guardar este mês.</div></div>
+  </div>
+  <!-- END META -->
+
   <div class="rule-section" id="ruleSection">
     <div class="section-title" style="margin-bottom:0">
       <span style="display:inline-flex;align-items:center">
@@ -373,6 +425,27 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
 </div>
 </div>
 
+
+<!-- MODAL META -->
+<div class="meta-modal" id="metaModal">
+  <div class="meta-modal-content">
+    <div class="meta-modal-title">🎯 Meta de Economia do Mês</div>
+    <div class="field"><label>Valor que deseja guardar (R$)</label><input type="number" id="metaValue" placeholder="ex: 500.00" min="0" step="0.01" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;color:var(--text);font-family:'DM Mono',monospace;font-size:14px;outline:none"></div>
+    <div class="meta-modal-btns"><button class="meta-save" onclick="saveMeta()">Salvar</button><button class="meta-cancel" onclick="closeMetaModal()">Cancelar</button></div>
+  </div>
+</div>
+<!-- END MODAL META -->
+
+<!-- MODAL PERFIL -->
+<div class="profile-modal" id="profileModal">
+  <div class="profile-modal-content">
+    <div class="profile-modal-title">✏️ Editar Perfil</div>
+    <div class="field"><label>Seu nome</label><input type="text" id="profileName" placeholder="Como quer ser chamado?" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;color:var(--text);font-family:'DM Mono',monospace;font-size:14px;outline:none"></div>
+    <div class="profile-modal-btns"><button class="profile-save" onclick="saveProfile()">Salvar</button><button class="profile-cancel" onclick="closeProfileModal()">Cancelar</button></div>
+  </div>
+</div>
+<!-- END MODAL PERFIL -->
+
 <div class="budget-modal" id="budgetModal">
   <div class="budget-modal-content">
     <button class="budget-modal-close" onclick="closeBudgetModal()">X</button>
@@ -407,7 +480,7 @@ function showError(msg){const el=document.getElementById('authError');el.textCon
 function doRegister(){const name=document.getElementById('regName').value.trim();const email=document.getElementById('regEmail').value.trim().toLowerCase();const pass=document.getElementById('regPass').value;const pass2=document.getElementById('regPass2').value;if(!name)return showError('Digite seu nome.');if(!email||!email.includes('@'))return showError('E-mail inválido.');if(pass.length<6)return showError('Senha deve ter no mínimo 6 caracteres.');if(pass!==pass2)return showError('As senhas não coincidem.');const users=getUsers();if(users[email])return showError('E-mail já cadastrado. Faça login.');users[email]={name,passHash:hashStr(pass+email)};saveUsers(users);const user={email,name};saveSession(user);startApp(user)}
 function doLogin(){const email=document.getElementById('loginEmail').value.trim().toLowerCase();const pass=document.getElementById('loginPass').value;if(!email||!pass)return showError('Preencha todos os campos.');const users=getUsers();const u=users[email];if(!u)return showError('E-mail não encontrado.');if(u.passHash!==hashStr(pass+email))return showError('Senha incorreta.');const user={email,name:u.name};saveSession(user);startApp(user)}
 function doLogout(){clearSession();currentUser=null;transactions=[];budgets={};document.getElementById('authScreen').classList.add('active');document.getElementById('appScreen').classList.remove('active');document.getElementById('loginEmail').value='';document.getElementById('loginPass').value='';showError('')}
-function startApp(user){currentUser=user;transactions=loadTx(user.email);budgets=loadBudgets(user.email);document.getElementById('userPill').textContent=user.name||user.email;document.getElementById('authScreen').classList.remove('active');document.getElementById('appScreen').classList.add('active');document.getElementById('aiMessages').innerHTML=`<div class="ai-bubble ai"><div class="ai-label">ASSISTENTE</div>Olá, ${user.name}! Lance seus gastos acima e me pergunte o que quiser sobre suas finanças.</div>`;renderAll()}
+function startApp(user){currentUser=user;transactions=loadTx(user.email);budgets=loadBudgets(user.email);currentMeta=loadMeta(user.email);checkAndApplyRecurring();document.getElementById('userPill').textContent=user.name||user.email;document.getElementById('authScreen').classList.remove('active');document.getElementById('appScreen').classList.add('active');document.getElementById('aiMessages').innerHTML=`<div class="ai-bubble ai"><div class="ai-label">ASSISTENTE</div>Olá, ${user.name}! Lance seus gastos acima e me pergunte o que quiser sobre suas finanças.</div>`;renderAll()}
 function switchInputMode(mode){inputMode=mode;document.getElementById('modeIA').classList.toggle('active',mode==='ia');document.getElementById('modeManual').classList.toggle('active',mode==='manual');document.getElementById('aiInputSection').style.display=mode==='ia'?'block':'none';document.getElementById('manualFormSection').classList.toggle('active',mode==='manual')}
 function updateManualCategories(){const type=document.getElementById('manualType').value;const sel=document.getElementById('manualCategory');const g=['Alimentação','Cartão','Casa','Saúde','Transporte','Lazer','Outros'];const r=['Salário','Freelance','Adiantamento','Investimento','Presente','Outros'];sel.innerHTML=(type==='receita'?r:g).map(c=>`<option value="${c}">${c}</option>`).join('')}
 function quickInput(cat){const el=document.getElementById('txInput');el.value=cat+' ';el.focus()}
@@ -415,8 +488,12 @@ function toggleTooltip(e){e.stopPropagation();const tt=document.getElementById('
 document.addEventListener('click',function(e){const tt=document.getElementById('ruleTooltip');const btn=document.getElementById('tooltipBtn');if(tt&&!tt.contains(e.target)&&e.target!==btn){tt.classList.remove('visible');tt.setAttribute('aria-hidden','true')}});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){const tt=document.getElementById('ruleTooltip');if(tt){tt.classList.remove('visible');tt.setAttribute('aria-hidden','true')}}});
 async function gemini(prompt,systemPrompt=''){const contents=systemPrompt?[{role:'user',parts:[{text:systemPrompt+'\n\n'+prompt}]}]:[{role:'user',parts:[{text:prompt}]}];const res=await fetch(GEMINI_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents,generationConfig:{temperature:0.1,maxOutputTokens:800}})});if(!res.ok){if(res.status===429)showToast('Limite da IA atingido. Alternando para manual.','error',4000);else showToast('Erro ao conectar com IA.','error',4000);switchInputMode('manual');throw new Error(`API Error: ${res.status}`)}const data=await res.json();return data.candidates?.[0]?.content?.parts?.[0]?.text||''}
-async function addTransaction(){const input=document.getElementById('txInput');const btn=document.getElementById('btnAdd');const text=input.value.trim();if(!text||!currentUser)return;btn.disabled=true;btn.innerHTML='<span class="loading"></span>';try{const system=`Voce e um parser financeiro. Responda SOMENTE com JSON valido sem markdown. Formato: {"desc":"descricao curta","amount":000.00,"type":"gasto ou receita","category":"uma de: Alimentacao, Cartao, Casa, Saude, Transporte, Lazer, Receita, Outros"} — amount sempre positivo. type="receita" para salario/entrada; "gasto" para tudo mais.`;const raw=await gemini(text,system);const parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());if(parsed&&parsed.amount>0){const tx={id:Date.now(),desc:parsed.desc,amount:parsed.amount,type:parsed.type,category:parsed.category,date:new Date().toLocaleDateString('pt-BR'),original:text};transactions.unshift(tx);saveTx(currentUser.email,transactions);input.value='';renderAll();showToast('Lançamento adicionado!','success')}}catch(e){if(!e.message.includes('API Error')){showToast('Não consegui interpretar. Alternando para modo manual.','error',3000);switchInputMode('manual')}}btn.disabled=false;btn.textContent='+ Lançar'}
-function addManualTransaction(){const desc=document.getElementById('manualDesc').value.trim();const amount=parseFloat(document.getElementById('manualAmount').value);const type=document.getElementById('manualType').value;const category=document.getElementById('manualCategory').value;if(!desc||!amount||amount<=0||!currentUser)return showToast('Preencha todos os campos corretamente.','error');const tx={id:Date.now(),desc,amount,type,category,date:new Date().toLocaleDateString('pt-BR'),original:desc};transactions.unshift(tx);saveTx(currentUser.email,transactions);document.getElementById('manualDesc').value='';document.getElementById('manualAmount').value='';document.getElementById('manualType').value='gasto';updateManualCategories();renderAll();showToast('Lançamento adicionado!','success')}
+async function addTransaction(){const input=document.getElementById('txInput');const btn=document.getElementById('btnAdd');const text=input.value.trim();if(!text||!currentUser)return;btn.disabled=true;btn.innerHTML='<span class="loading"></span>';try{const system=`Voce e um parser financeiro. Responda SOMENTE com JSON valido sem markdown. Formato: {"desc":"descricao curta","amount":000.00,"type":"gasto ou receita","category":"uma de: Alimentacao, Cartao, Casa, Saude, Transporte, Lazer, Receita, Outros"} — amount sempre positivo. type="receita" para salario/entrada; "gasto" para tudo mais.`;const raw=await gemini(text,system);const parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());if(parsed&&parsed.amount>0){
+      const isRec=document.getElementById('isRecurringIA').checked;
+      const tx={id:Date.now(),desc:parsed.desc,amount:parsed.amount,type:parsed.type,category:parsed.category,date:new Date().toLocaleDateString('pt-BR'),original:text,isRecurring:isRec};
+      if(isRec){const rec=loadRecurring(currentUser.email);rec.push({id:tx.id,desc:tx.desc,amount:tx.amount,type:tx.type,category:tx.category});saveRecurring(currentUser.email,rec);}
+      transactions.unshift(tx);saveTx(currentUser.email,transactions);input.value='';document.getElementById('isRecurringIA').checked=false;renderAll();showToast(isRec?'Lançamento fixo adicionado! 🔄':'Lançamento adicionado!','success')}}catch(e){if(!e.message.includes('API Error')){showToast('Não consegui interpretar. Alternando para modo manual.','error',3000);switchInputMode('manual')}}btn.disabled=false;btn.textContent='+ Lançar'}
+function addManualTransaction(){const desc=document.getElementById('manualDesc').value.trim();const amount=parseFloat(document.getElementById('manualAmount').value);const type=document.getElementById('manualType').value;const category=document.getElementById('manualCategory').value;if(!desc||!amount||amount<=0||!currentUser)return showToast('Preencha todos os campos corretamente.','error');const isRec=document.getElementById('isRecurringManual').checked;const tx={id:Date.now(),desc,amount,type,category,date:new Date().toLocaleDateString('pt-BR'),original:desc,isRecurring:isRec};if(isRec){const rec=loadRecurring(currentUser.email);rec.push({id:tx.id,desc,amount,type,category});saveRecurring(currentUser.email,rec);}transactions.unshift(tx);saveTx(currentUser.email,transactions);document.getElementById('manualDesc').value='';document.getElementById('manualAmount').value='';document.getElementById('manualType').value='gasto';document.getElementById('isRecurringManual').checked=false;updateManualCategories();renderAll();showToast(isRec?'Lançamento fixo adicionado! 🔄':'Lançamento adicionado!','success')}
 function getFilteredTransactions(){let f=transactions;if(activeFilter==='gastos')f=f.filter(t=>t.type==='gasto');if(activeFilter==='receitas')f=f.filter(t=>t.type==='receita');if(activeDateFilter!=='todos-datas'){const now=new Date();const cm=now.getMonth(),cy=now.getFullYear();f=f.filter(t=>{const p=t.date.split('/');const d=new Date(p[2],p[1]-1,p[0]);if(activeDateFilter==='este-mes')return d.getMonth()===cm&&d.getFullYear()===cy;if(activeDateFilter==='mes-anterior'){const pm=cm===0?11:cm-1,py=cm===0?cy-1:cy;return d.getMonth()===pm&&d.getFullYear()===py}return true})}return f}
 async function askAI(){const input=document.getElementById('aiInput');const btn=document.getElementById('btnAsk');const q=input.value.trim();if(!q)return;const msgs=document.getElementById('aiMessages');input.value='';btn.disabled=true;msgs.innerHTML+=`<div class="ai-bubble" style="align-self:flex-end;background:var(--surface2);border:1px solid var(--border);font-size:12px;padding:9px 13px;">${q}</div>`;const loadId='load_'+Date.now();msgs.innerHTML+=`<div class="ai-bubble ai" id="${loadId}"><div class="ai-label">ASSISTENTE</div><span class="loading"></span></div>`;msgs.scrollTop=msgs.scrollHeight;const summary=buildSummary();const system=`Voce e um assistente financeiro pessoal brasileiro, direto e util. Responda em portugues de forma concisa. Lancamentos do usuario ${currentUser.name}:\n\n${summary}`;try{const answer=await gemini(q,system);document.getElementById(loadId).innerHTML=`<div class="ai-label">ASSISTENTE</div>${answer||'Não consegui processar.'}`}catch(e){document.getElementById(loadId).innerHTML=`<div class="ai-label">ASSISTENTE</div>Desculpe, não consegui processar no momento.`}msgs.scrollTop=msgs.scrollHeight;btn.disabled=false}
 function buildSummary(){if(!transactions.length)return 'Nenhum lançamento ainda.';const tI=transactions.filter(t=>t.type==='receita').reduce((s,t)=>s+t.amount,0);const tO=transactions.filter(t=>t.type==='gasto').reduce((s,t)=>s+t.amount,0);const lines=transactions.map(t=>`[${t.date}] ${t.type==='receita'?'+':'-'}R$${t.amount.toFixed(2)} | ${t.desc} | ${t.category}`);return `Receitas: R$${tI.toFixed(2)} | Gastos: R$${tO.toFixed(2)} | Saldo: R$${(tI-tO).toFixed(2)}\n\n${lines.join('\n')}`}
@@ -431,9 +508,14 @@ const RULE_COLORS={necessidades:'#3de8ff',desejos:'#a78bfa',investimentos:'#7fff
 const RULE_IDEAL={necessidades:50,desejos:30,investimentos:20};
 const RULE_LABELS={necessidades:'Necessidades',desejos:'Desejos',investimentos:'Investimentos'};
 function renderRuleChart(){const canvas=document.getElementById('ruleChart');const detailsEl=document.getElementById('ruleDetails');const feedbackEl=document.getElementById('ruleFeedback');const feedbackContent=document.getElementById('ruleFeedbackContent');const scoreEl=document.getElementById('ruleScore');if(!canvas||!detailsEl)return;const ctx=canvas.getContext('2d');canvas.width=160;canvas.height=160;const filtered=getFilteredTransactions();const totalIn=filtered.filter(t=>t.type==='receita').reduce((s,t)=>s+t.amount,0);const totalOut=filtered.filter(t=>t.type==='gasto').reduce((s,t)=>s+t.amount,0);if(!totalOut||!totalIn){ctx.clearRect(0,0,160,160);ctx.beginPath();ctx.arc(80,80,60,0,Math.PI*2);ctx.strokeStyle='rgba(255,255,255,.08)';ctx.lineWidth=16;ctx.stroke();scoreEl.textContent='--';detailsEl.innerHTML='<div style="color:var(--muted);font-size:12px;text-align:center;padding:20px 0">Adicione receitas e gastos para ver a análise</div>';feedbackEl.style.display='none';return}const catTotals={};filtered.filter(t=>t.type==='gasto').forEach(t=>{catTotals[t.category]=(catTotals[t.category]||0)+t.amount});let necessidades=0,desejos=0;RULE_MAP.necessidades.forEach(c=>{necessidades+=(catTotals[c]||0)});RULE_MAP.desejos.forEach(c=>{desejos+=(catTotals[c]||0)});const mappedCats=[...RULE_MAP.necessidades,...RULE_MAP.desejos];Object.keys(catTotals).forEach(c=>{if(!mappedCats.includes(c))necessidades+=catTotals[c]});const investimentos=Math.max(0,totalIn-totalOut);const total=necessidades+desejos+investimentos;const pctNec=total?(necessidades/total*100):0;const pctDes=total?(desejos/total*100):0;const pctInv=total?(investimentos/total*100):0;ctx.clearRect(0,0,160,160);let startAngle=-Math.PI/2;const segments=['necessidades','desejos','investimentos'];const values=[pctNec,pctDes,pctInv];if(total===0){ctx.beginPath();ctx.arc(80,80,60,0,Math.PI*2);ctx.strokeStyle='rgba(255,255,255,.08)';ctx.lineWidth=16;ctx.stroke()}else{segments.forEach((seg,i)=>{const sweep=(values[i]/100)*Math.PI*2;if(sweep>0.001){ctx.beginPath();ctx.arc(80,80,60,startAngle,startAngle+sweep);ctx.strokeStyle=RULE_COLORS[seg];ctx.lineWidth=16;ctx.lineCap='butt';ctx.stroke();startAngle+=sweep}})}const diffNec=Math.abs(pctNec-50);const diffDes=Math.abs(pctDes-30);const diffInv=pctInv<20?(20-pctInv):0;const score=Math.max(0,Math.round(100-diffNec-diffDes-diffInv));scoreEl.textContent=score;const actual={necessidades:pctNec,desejos:pctDes,investimentos:pctInv};const fmt=v=>`R$ ${v.toLocaleString('pt-BR',{minimumFractionDigits:2})}`;let barsHTML='';segments.forEach(seg=>{const pct=actual[seg];const ideal=RULE_IDEAL[seg];const val=seg==='necessidades'?necessidades:seg==='desejos'?desejos:investimentos;barsHTML+=`<div class="rule-bar-item"><div class="rule-bar-label"><span class="rule-cat-name">${RULE_LABELS[seg]}</span><span class="rule-cat-pct">${pct.toFixed(1)}% (ideal: ${ideal}%) · ${fmt(val)}</span></div><div class="rule-bar-track"><div class="rule-bar-actual" style="width:${Math.min(pct,100)}%;background:${RULE_COLORS[seg]}"></div><div class="rule-bar-ideal" style="left:${ideal}%"></div></div></div>`});detailsEl.innerHTML=barsHTML;feedbackEl.style.display='block';let feedbackHTML='';segments.forEach(seg=>{const pct=actual[seg];const ideal=RULE_IDEAL[seg];const diff=pct-ideal;const name=RULE_LABELS[seg];if(seg==='investimentos'){if(Math.abs(diff)<3)feedbackHTML+=`<div class="rule-feedback-item"><span class="emoji">✅</span><b>${name}</b>: ${pct.toFixed(1)}% — Dentro do ideal! Continue assim.</div>`;else if(diff>0)feedbackHTML+=`<div class="rule-feedback-item"><span class="emoji">🚀</span><b>${name}</b>: ${pct.toFixed(1)}% — ${diff.toFixed(1)}pp acima. Excelente!</div>`;else feedbackHTML+=`<div class="rule-feedback-item"><span class="emoji">⚠️</span><b>${name}</b>: ${pct.toFixed(1)}% — ${Math.abs(diff).toFixed(1)}pp abaixo do ideal. Tente investir mais.</div>`}else{if(Math.abs(diff)<3)feedbackHTML+=`<div class="rule-feedback-item"><span class="emoji">✅</span><b>${name}</b>: ${pct.toFixed(1)}% — Dentro do ideal!</div>`;else if(diff>0)feedbackHTML+=`<div class="rule-feedback-item"><span class="emoji">⚠️</span><b>${name}</b>: ${pct.toFixed(1)}% — ${diff.toFixed(1)}pp acima do ideal. Tente reduzir.</div>`;else feedbackHTML+=`<div class="rule-feedback-item"><span class="emoji">💡</span><b>${name}</b>: ${pct.toFixed(1)}% — ${Math.abs(diff).toFixed(1)}pp abaixo. Boa margem!</div>`}});if(score>=80)feedbackHTML+=`<div class="rule-feedback-item" style="margin-top:8px"><span class="emoji">🏆</span><b>Parabéns!</b> Distribuição muito próxima do ideal.</div>`;else if(score>=50)feedbackHTML+=`<div class="rule-feedback-item" style="margin-top:8px"><span class="emoji">📊</span><b>Atenção:</b> Alguns ajustes necessários.</div>`;else feedbackHTML+=`<div class="rule-feedback-item" style="margin-top:8px"><span class="emoji">🚨</span><b>Alerta:</b> Distribuição distante do ideal. Reorganize seu orçamento.</div>`;feedbackContent.innerHTML=feedbackHTML}
-function renderAll(){renderSummary();renderList();renderChart();renderBudgets();renderBalanceChart();renderRuleChart()}
+function renderAll(){renderSummary();renderList();renderChart();renderBudgets();renderBalanceChart();renderRuleChart();renderMeta()}
 function renderSummary(){const filtered=getFilteredTransactions();const tI=filtered.filter(t=>t.type==='receita').reduce((s,t)=>s+t.amount,0);const tO=filtered.filter(t=>t.type==='gasto').reduce((s,t)=>s+t.amount,0);const bal=tI-tO;const fmt=v=>`R$ ${v.toLocaleString('pt-BR',{minimumFractionDigits:2})}`;document.getElementById('totalIn').textContent=fmt(tI);document.getElementById('totalOut').textContent=fmt(tO);document.getElementById('balance').textContent=fmt(Math.abs(bal));document.getElementById('balance').className='card-value '+(bal>=0?'green':'red');document.getElementById('countIn').textContent=`${filtered.filter(t=>t.type==='receita').length} lançamentos`;document.getElementById('countOut').textContent=`${filtered.filter(t=>t.type==='gasto').length} lançamentos`;document.getElementById('balanceSub').textContent=bal>=0?'Positivo 🟢':'Negativo 🔴'}
-function renderList(){const list=document.getElementById('txList');let filtered=getFilteredTransactions();if(!filtered.length){list.innerHTML='<div class="empty">Nenhum lançamento encontrado.</div>';return}list.innerHTML=filtered.map(t=>{const[color,bg]=CAT_COLORS[t.category]||CAT_COLORS['Outros'];const icon=CAT_ICONS[t.category]||'📌';return `<div class="tx-item" id="tx-${t.id}"><div class="tx-icon" style="background:${bg}">${icon}</div><div class="tx-info"><div class="tx-desc">${t.desc}</div><div class="tx-meta">${t.date} · <span class="cat-badge" style="background:${bg};color:${color}">${t.category}</span></div></div><div class="tx-amount ${t.type==='receita'?'pos':'neg'}">${t.type==='receita'?'+':'-'} R$ ${t.amount.toLocaleString('pt-BR',{minimumFractionDigits:2})}</div><div class="tx-actions"><button class="tx-btn" onclick="editTx(${t.id})">✏️</button><button class="tx-btn danger" onclick="delTx(${t.id})">✕</button></div></div>`}).join('')}
+function renderList(){const list=document.getElementById('txList');let filtered=getFilteredTransactions();if(!filtered.length){list.innerHTML='<div class="empty">Nenhum lançamento encontrado.</div>';return}list.innerHTML=filtered.map(t=>{
+    const[color,bg]=CAT_COLORS[t.category]||CAT_COLORS['Outros'];
+    const icon=CAT_ICONS[t.category]||'📌';
+    const recBadge=t.isRecurring?'<span class="recurring-badge">🔄 fixo</span>':'';
+    return '<div class="tx-item" id="tx-'+t.id+'"><div class="tx-icon" style="background:'+bg+'">'+icon+'</div><div class="tx-info"><div class="tx-desc">'+t.desc+recBadge+'</div><div class="tx-meta">'+t.date+' · <span class="cat-badge" style="background:'+bg+';color:'+color+'">'+t.category+'</span></div></div><div class="tx-amount '+(t.type==='receita'?'pos':'neg')+'">'+(t.type==='receita'?'+':'-')+' R$ '+t.amount.toLocaleString('pt-BR',{minimumFractionDigits:2})+'</div><div class="tx-actions"><button class="tx-btn" onclick="editTx('+t.id+')">✏️</button><button class="tx-btn danger" onclick="delTx('+t.id+')">✕</button></div></div>';
+  }).join('')}
 function editTx(id){const tx=transactions.find(t=>t.id===id);if(!tx)return;const item=document.getElementById(`tx-${id}`);const existing=item.querySelector('.tx-edit-form');if(existing)existing.remove();const editForm=document.createElement('div');editForm.className='tx-edit-form active';const g=['Alimentação','Cartão','Casa','Saúde','Transporte','Lazer','Outros'];const r=['Salário','Freelance','Adiantamento','Investimento','Presente','Outros'];const cats=tx.type==='receita'?r:g;const catOptions=cats.map(c=>`<option value="${c}" ${tx.category===c?'selected':''}>${c}</option>`).join('');editForm.innerHTML=`<div class="tx-edit-field"><input type="text" id="edit-desc-${id}" value="${tx.desc}"></div><div class="tx-edit-field"><input type="number" id="edit-amount-${id}" value="${tx.amount}" step="0.01" min="0"></div><div class="tx-edit-field"><select id="edit-type-${id}"><option value="gasto" ${tx.type==='gasto'?'selected':''}>Gasto</option><option value="receita" ${tx.type==='receita'?'selected':''}>Receita</option></select></div><div class="tx-edit-field"><select id="edit-cat-${id}">${catOptions}</select></div><div class="tx-edit-actions"><button class="tx-save" onclick="saveTxEdit(${id})">Salvar</button><button class="tx-cancel" onclick="cancelEdit(${id})">Cancelar</button></div>`;item.appendChild(editForm)}
 function saveTxEdit(id){const tx=transactions.find(t=>t.id===id);if(!tx)return;const desc=document.getElementById(`edit-desc-${id}`).value.trim();const amount=parseFloat(document.getElementById(`edit-amount-${id}`).value);const type=document.getElementById(`edit-type-${id}`).value;const category=document.getElementById(`edit-cat-${id}`).value;if(!desc||!amount||amount<=0)return showToast('Dados inválidos.','error');tx.desc=desc;tx.amount=amount;tx.type=type;tx.category=category;saveTx(currentUser.email,transactions);renderAll();showToast('Lançamento atualizado!','success')}
 function cancelEdit(id){const form=document.querySelector(`#tx-${id} .tx-edit-form`);if(form)form.remove()}
@@ -445,6 +527,107 @@ function setDateFilter(f,el){activeDateFilter=f;Array.from(document.querySelecto
 document.getElementById('txInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();addTransaction()}});
 const session=getSession();
 if(session)startApp(session);
+
+
+// ── META DE ECONOMIA ──────────────────────────
+function metaKey(e){return 'financia_meta_'+hashStr(e)}
+function loadMeta(e){return JSON.parse(localStorage.getItem(metaKey(e))||'null')}
+function saveMeta_(){localStorage.setItem(metaKey(currentUser.email),JSON.stringify(currentMeta))}
+
+let currentMeta = null;
+
+function openMetaModal(){
+  document.getElementById('metaModal').classList.add('active');
+  document.getElementById('metaValue').value = currentMeta || '';
+  setTimeout(()=>document.getElementById('metaValue').focus(),100);
+}
+function closeMetaModal(){document.getElementById('metaModal').classList.remove('active')}
+function saveMeta(){
+  const val = parseFloat(document.getElementById('metaValue').value);
+  if(!val||val<=0) return showToast('Digite um valor válido.','error');
+  currentMeta = val;
+  saveMeta_();
+  closeMetaModal();
+  renderMeta();
+  showToast('Meta definida!','success');
+}
+
+function renderMeta(){
+  const el = document.getElementById('metaContent');
+  if(!currentMeta){el.innerHTML='<div class="meta-empty">Nenhuma meta definida. Defina quanto quer guardar este mês.</div>';return}
+  const now = new Date();
+  const cm = now.getMonth(), cy = now.getFullYear();
+  const monthTx = transactions.filter(t=>{
+    const p=t.date.split('/');const d=new Date(p[2],p[1]-1,p[0]);
+    return d.getMonth()===cm&&d.getFullYear()===cy;
+  });
+  const receitas = monthTx.filter(t=>t.type==='receita').reduce((s,t)=>s+t.amount,0);
+  const gastos = monthTx.filter(t=>t.type==='gasto').reduce((s,t)=>s+t.amount,0);
+  const guardado = Math.max(0, receitas - gastos);
+  const pct = Math.min(100, Math.round((guardado/currentMeta)*100));
+  const fmt = v => `R$ ${v.toLocaleString('pt-BR',{minimumFractionDigits:2})}`;
+  const cor = pct>=100?'#7fff6e':pct>=60?'#ffb347':'#3de8ff';
+  const emoji = pct>=100?'🏆':pct>=60?'📈':'💪';
+  el.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <span style="font-size:12px;color:var(--text)">${emoji} Meta: <b style="color:${cor}">${fmt(currentMeta)}</b></span>
+      <button onclick="openMetaModal()" style="background:none;border:none;color:var(--muted);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace">editar</button>
+    </div>
+    <div class="meta-progress-wrap"><div class="meta-progress-fill" style="width:${pct}%;background:linear-gradient(90deg,#3de8ff,${cor})"></div></div>
+    <div class="meta-info">
+      <span>Guardado: <span class="meta-val" style="color:${cor}">${fmt(guardado)}</span></span>
+      <span><span class="meta-val">${pct}%</span> da meta</span>
+    </div>
+    ${pct>=100?`<div style="margin-top:8px;font-size:11px;color:#7fff6e;text-align:center">🏆 Meta atingida! Parabéns!</div>`:''}
+  `;
+}
+
+// ── EDITAR PERFIL ──────────────────────────────
+function openProfileModal(){
+  document.getElementById('profileName').value = currentUser.name || '';
+  document.getElementById('profileModal').classList.add('active');
+  setTimeout(()=>document.getElementById('profileName').focus(),100);
+}
+function closeProfileModal(){document.getElementById('profileModal').classList.remove('active')}
+function saveProfile(){
+  const name = document.getElementById('profileName').value.trim();
+  if(!name) return showToast('Digite seu nome.','error');
+  currentUser.name = name;
+  saveSession(currentUser);
+  // Update in users db
+  const users = getUsers();
+  if(users[currentUser.email]) users[currentUser.email].name = name;
+  saveUsers(users);
+  document.getElementById('userPill').textContent = name;
+  closeProfileModal();
+  showToast('Perfil atualizado!','success');
+}
+
+// ── RECORRENTES ───────────────────────────────
+function recurringKey(e){return 'financia_recurring_'+hashStr(e)}
+function loadRecurring(e){return JSON.parse(localStorage.getItem(recurringKey(e))||'[]')}
+function saveRecurring(e,d){localStorage.setItem(recurringKey(e),JSON.stringify(d))}
+
+function checkAndApplyRecurring(){
+  if(!currentUser) return;
+  const recurring = loadRecurring(currentUser.email);
+  if(!recurring.length) return;
+  const now = new Date();
+  const monthKey = `${now.getFullYear()}-${now.getMonth()}`;
+  const appliedKey = `financia_recurring_applied_${hashStr(currentUser.email)}_${monthKey}`;
+  if(localStorage.getItem(appliedKey)) return; // já aplicou este mês
+
+  recurring.forEach(r=>{
+    const exists = transactions.some(t=>t.recurringId===r.id && t.date.endsWith(`/${String(now.getMonth()+1).padStart(2,'0')}/${now.getFullYear()}`));
+    if(!exists){
+      const tx={id:Date.now()+Math.random(),desc:r.desc,amount:r.amount,type:r.type,category:r.category,date:new Date().toLocaleDateString('pt-BR'),recurringId:r.id,isRecurring:true};
+      transactions.unshift(tx);
+    }
+  });
+  saveTx(currentUser.email,transactions);
+  localStorage.setItem(appliedKey,'1');
+}
+// ── END NEW FEATURES ──────────────────────────
 
 // ── SPLASH DIGITAÇÃO ──────────────────────────────────────
 (function(){
