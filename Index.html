@@ -514,6 +514,8 @@ if(session)startApp(session);
   }
 
   window.skipSplash=function(){endSplash(true);};
+
+  window.addEventListener('pageshow',function(e){if(e.persisted){done=false;elF.textContent='';elIA.textContent='';elRS.classList.remove('show');elCur.classList.remove('hide');elTag.classList.remove('show');elProg.style.transition='none';elProg.style.width='0%';const s=document.getElementById('splashScreen');s.classList.remove('out');s.style.display='flex';ci=0;phase='financ';cancelAnimationFrame(raf);drawParticles();setTimeout(type,500);}});
   setTimeout(type,500);
 })();
 // ── END SPLASH ────────────────────────────────────────────
