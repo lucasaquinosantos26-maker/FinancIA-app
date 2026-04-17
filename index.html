@@ -533,7 +533,7 @@ function metaKey(e){return 'financia_meta_'+hashStr(e)}
 function loadMeta(e){return JSON.parse(localStorage.getItem(metaKey(e))||'null')}
 function saveMeta_(){localStorage.setItem(metaKey(currentUser.email),JSON.stringify(currentMeta))}
 
-let currentMeta = null;
+// currentMeta declared globally above
 
 function openMetaModal(){
   document.getElementById('metaModal').classList.add('active');
