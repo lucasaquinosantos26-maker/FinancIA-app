@@ -7,7 +7,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#07080f;--surface:#0f1018;--surface2:#161720;--border:#22233a;--accent:#7fff6e;--accent2:#3de8ff;--text:#e8e8f2;--muted:#5a5a7a;--danger:#ff4d6d}
+:root{--bg:#07080f;--surface:#0f1018;--surface2:#hh161720;--border:#22233a;--accent:#7fff6e;--accent2:#3de8ff;--text:#e8e8f2;--muted:#5a5a7a;--danger:#ff4d6d}
 body{font-family:'DM Mono',monospace;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
 .screen{display:none;position:relative;z-index:1}
@@ -457,7 +457,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
 </div>
 
 <script>
-const GEMINI_KEY='AIzaSyD5jCKQnNOMaLTtK1F7grw9HA47wB2IO-g';
+const GEMINI_KEY='AQ.Ab8RN6IZggy1asu5It8rnzdIYTIH7XPR8gSi2oMyD9AAAiuJRg';
 const GEMINI_URL=`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
 const CAT_COLORS={'Alimentação':['#ff6e9c','#2a1520'],'Cartão':['#7fff6e','#152a15'],'Casa':['#3de8ff','#0f2028'],'Saúde':['#ffb347','#281f0f'],'Transporte':['#a78bfa','#1a1528'],'Lazer':['#fb923c','#281610'],'Receita':['#7fff6e','#152a15'],'Outros':['#6b6b80','#1a1a22']};
 const CAT_ICONS={'Alimentação':'🍔','Cartão':'💳','Casa':'🏠','Saúde':'💊','Transporte':'🚗','Lazer':'🎮','Receita':'💰','Outros':'📌'};
