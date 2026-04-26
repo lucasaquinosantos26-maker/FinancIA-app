@@ -257,6 +257,20 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
 /* Hierarquia tipográfica clara */
 h1, h2, h3, h4, .section-title, .card-title { font-family: 'Syne', 'Inter', sans-serif; letter-spacing: -0.01em; }
 body, button, input, textarea, select, label, p, span, div { font-family: 'Inter','DM Mono',sans-serif; }
+
+/* === BLOCO B: Zona de lançamento simplificada === */
+/* Chips estáticos de categoria menos prominentes */
+.chips-row, .category-chips, [data-chips], .quick-cats { opacity: 0.55; transition: opacity 0.2s; font-size: 12px !important; }
+.chips-row:hover, .category-chips:hover, [data-chips]:hover, .quick-cats:hover { opacity: 1; }
+.chip, .chip-cat, .quick-cat { padding: 4px 10px !important; font-size: 12px !important; }
+/* Toggle IA/Manual mais discreto */
+#modeIA, #modeManual { font-size: 11px !important; padding: 4px 10px !important; opacity: 0.7; }
+#modeIA.active, #modeIA[class*="ative"], #modeManual.active, #modeManual[class*="ative"] { opacity: 1; }
+/* Botão +Lançar reforçado */
+#btnAdd { font-size: 16px !important; padding: 14px 28px !important; font-weight: 700 !important; box-shadow: 0 4px 16px rgba(125,255,110,0.25); transition: all 0.2s; }
+#btnAdd:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(125,255,110,0.4); }
+/* Esconder o checkbox "Lançamento fixo" antigo se duplicado */
+#manualFormSection { transition: opacity 0.3s; }
 </style>
 </head>
 <body>
@@ -366,7 +380,7 @@ body, button, input, textarea, select, label, p, span, div { font-family: 'Inter
       <div class="input-row">
         <textarea class="input-natural" id="txInput" placeholder="Ex: gastei 150 no mercado  |  200 cartão gasolina  |  recebi 3000 salário..." rows="1"></textarea>
         <button class="btn-add" id="btnAdd" onclick="addTransaction()">+ Lançar</button>
-<div id="categorySuggestion" style="display:none;margin-top:8px;padding:10px 14px;background:rgba(125,255,110,0.08);border:1px solid #7fff6e;border-radius:8px;color:#7fff6e;font-size:13px;font-family:Inter,sans-serif;"><span id="categorySuggestionText"></span></div>
+<div id="categorySuggestion" style="display:none;margin-top:8px;padding:10px 14px;background:rgba(125,255,110,0.08);border:1px solid #7fff6e;border-radius:8px;color:#7fff6e;font-size:13px;font-family:Inter,sans-serif;width:100%;flex-basis:100%;order:99;"><span id="categorySuggestionText"></span></div>
 
       </div>
       <div class="categories-row">
@@ -883,6 +897,149 @@ document.addEventListener('DOMContentLoaded', ()=>{
     });
   }
 });
+
+/* ===================================================================== */
+/* BLOCO C — Datas humanizadas */
+/* ===================================================================== */
+function humanizeDate(input) {
+  if (!input) return '';
+  let d;
+  if (input instanceof Date) d = input;
+  else if (typeof input === 'string') {
+    // formatos: DD/MM/YYYY ou ISO
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(input)) {
+      const [dd, mm, yy] = input.split('/');
+      d = new Date(Number(yy), Number(mm)-1, Number(dd));
+    } else { d = new Date(input); }
+  } else { return String(input); }
+  if (isNaN(d.getTime())) return String(input);
+  const today = new Date(); today.setHours(0,0,0,0);
+  const target = new Date(d); target.setHours(0,0,0,0);
+  const diffDays = Math.round((today - target) / 86400000);
+  const meses = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+  if (diffDays === 0) return 'hoje';
+  if (diffDays === 1) return 'ontem';
+  if (diffDays === -1) return 'amanhã';
+  if (diffDays > 1 && diffDays <= 6) return 'há ' + diffDays + ' dias';
+  if (diffDays < -1 && diffDays >= -6) return 'em ' + (-diffDays) + ' dias';
+  return d.getDate() + ' ' + meses[d.getMonth()] + (d.getFullYear() !== today.getFullYear() ? ' ' + d.getFullYear() : '');
+}
+window.humanizeDate = humanizeDate;
+
+/* Aplicar humanização aos elementos com data DD/MM/YYYY na lista de lançamentos */
+function applyDateHumanization() {
+  try {
+    const list = document.getElementById('txList');
+    if (!list) return;
+    // Encontrar nodes com texto que casa DD/MM/YYYY
+    const re = /(\b\d{2}\/\d{2}\/\d{4}\b)/;
+    const walker = document.createTreeWalker(list, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    let n; while ((n = walker.nextNode())) nodes.push(n);
+    nodes.forEach(node => {
+      const m = node.nodeValue.match(re);
+      if (m && !node.parentElement?.dataset?.humanized) {
+        const original = m[1];
+        const human = humanizeDate(original);
+        node.nodeValue = node.nodeValue.replace(original, human);
+        if (node.parentElement) {
+          node.parentElement.dataset.humanized = '1';
+          node.parentElement.title = original;
+        }
+      }
+    });
+  } catch(e){}
+}
+window.applyDateHumanization = applyDateHumanization;
+
+/* Observar mudanças na lista para re-humanizar quando novos lançamentos aparecerem */
+document.addEventListener('DOMContentLoaded', ()=>{
+  setTimeout(applyDateHumanization, 800);
+  const list = document.getElementById('txList');
+  if (list && window.MutationObserver) {
+    const obs = new MutationObserver(()=>{ setTimeout(applyDateHumanization, 50); });
+    obs.observe(list, {childList:true, subtree:true});
+  }
+});
+
+/* ===================================================================== */
+/* BLOCO D — Assistente IA flutuante (FAB) */
+/* ===================================================================== */
+function setupAssistantFAB() {
+  if (document.getElementById('assistantFAB')) return;
+  const fab = document.createElement('button');
+  fab.id = 'assistantFAB';
+  fab.title = 'Falar com o assistente';
+  fab.innerHTML = '<span style="font-size:24px">🤖</span><span id="fabBadge" style="display:none;position:absolute;top:-4px;right:-4px;background:#ff4d6d;color:#fff;font-size:10px;font-weight:700;border-radius:10px;padding:2px 6px;font-family:Inter,sans-serif;">0</span>';
+  fab.style.cssText = 'position:fixed;bottom:24px;right:24px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#7fff6e,#3de8ff);border:none;cursor:pointer;box-shadow:0 6px 20px rgba(125,255,110,0.4);display:flex;align-items:center;justify-content:center;z-index:9000;transition:transform 0.2s, box-shadow 0.2s;';
+  fab.onmouseenter = ()=>{ fab.style.transform='scale(1.08)'; fab.style.boxShadow='0 8px 28px rgba(125,255,110,0.55)'; };
+  fab.onmouseleave = ()=>{ fab.style.transform='scale(1)'; fab.style.boxShadow='0 6px 20px rgba(125,255,110,0.4)'; };
+  fab.onclick = ()=>{
+    const aiSection = document.getElementById('aiInput') || document.getElementById('aiMessages');
+    if (aiSection) {
+      aiSection.scrollIntoView({behavior:'smooth', block:'center'});
+      setTimeout(()=>{ const inp = document.getElementById('aiInput'); if (inp) inp.focus(); }, 600);
+      // limpar badge
+      const b = document.getElementById('fabBadge'); if (b) b.style.display='none';
+      sessionStorage.setItem('__fabSeen','1');
+    } else { showToast('Assistente indisponível no momento.','warning'); }
+  };
+  document.body.appendChild(fab);
+  // Mostrar badge se há insight pendente (showAutoInsight ainda não foi visto)
+  setTimeout(()=>{
+    if (!sessionStorage.getItem('__fabSeen')) {
+      const b = document.getElementById('fabBadge');
+      if (b) { b.style.display = 'block'; b.textContent = '!'; }
+    }
+  }, 3000);
+}
+window.setupAssistantFAB = setupAssistantFAB;
+document.addEventListener('DOMContentLoaded', ()=>{ setTimeout(setupAssistantFAB, 1500); });
+
+/* ===================================================================== */
+/* BLOCO E — Streak diário no header */
+/* ===================================================================== */
+function updateStreak() {
+  try {
+    const session = JSON.parse(localStorage.getItem('financia_session')||'{}');
+    if (!session || !session.id) return;
+    const key = 'financia_streak_'+session.id;
+    const today = new Date(); today.setHours(0,0,0,0);
+    const todayISO = today.toISOString().slice(0,10);
+    let data = {};
+    try { data = JSON.parse(localStorage.getItem(key)||'{}'); } catch(e){ data = {}; }
+    if (!data.last) { data = {count:1, last:todayISO}; }
+    else if (data.last !== todayISO) {
+      const lastD = new Date(data.last+'T00:00:00');
+      const diff = Math.round((today - lastD)/86400000);
+      if (diff === 1) data.count = (data.count||0) + 1;
+      else if (diff > 1) data.count = 1;
+      data.last = todayISO;
+    }
+    localStorage.setItem(key, JSON.stringify(data));
+    return data.count || 1;
+  } catch(e){ return 0; }
+}
+function renderStreak() {
+  try {
+    const count = updateStreak();
+    if (!count || count < 1) return;
+    let badge = document.getElementById('streakBadge');
+    if (!badge) {
+      badge = document.createElement('span');
+      badge.id = 'streakBadge';
+      badge.style.cssText = 'display:inline-flex;align-items:center;gap:4px;background:rgba(255,179,71,0.15);border:1px solid rgba(255,179,71,0.4);color:#ffb347;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;font-family:Inter,sans-serif;margin-left:8px;';
+      badge.title = 'Sequência de dias consecutivos usando o app';
+      // Inserir ao lado do gamification-bar ou userPill
+      const target = document.getElementById('gamification-bar') || document.getElementById('userPill');
+      if (target && target.parentElement) target.parentElement.insertBefore(badge, target);
+      else document.body.appendChild(badge);
+    }
+    badge.innerHTML = '🔥 ' + count + (count === 1 ? ' dia' : ' dias');
+  } catch(e){}
+}
+window.renderStreak = renderStreak;
+document.addEventListener('DOMContentLoaded', ()=>{ setTimeout(renderStreak, 1200); });
 </script>
 </body>
 </html>
