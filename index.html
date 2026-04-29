@@ -8,6 +8,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600;700&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#07080f;--surface:#0f1018;--surface2:#161720;--border:#22233a;--accent:#7fff6e;--accent2:#3de8ff;--text:#e8e8f2;--muted:#9a9ac0;--danger:#ff4d6d}
+body.light-mode{--bg:#f8fafc;--surface:#ffffff;--surface2:#f1f5f9;--border:#e2e8f0;--text:#0f172a;--muted:#64748b}
 body{font-family:'Inter','DM Mono',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
 .screen{display:none;position:relative;z-index:1}
@@ -236,6 +237,98 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
 h1, h2, h3, h4, .section-title, .card-title { font-family: 'Syne', 'Inter', sans-serif; letter-spacing: -0.01em; }
 body, button, input, textarea, select, label, p, span, div { font-family: 'Inter','DM Mono',sans-serif; }
 #categorySuggestion{transition:opacity 0.2s;font-size:12px;padding:8px 12px;}
+
+/* =========================================
+   TEMA ANTIGRAVITY (Premium Dark Mode)
+   ========================================= */
+body {
+  background-color: #030409 !important; 
+  overflow-x: hidden;
+  position: relative;
+  z-index: 0;
+}
+body::after {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: 
+    radial-gradient(circle at 40% 50%, rgba(61, 232, 255, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 70% 30%, rgba(127, 255, 110, 0.05) 0%, transparent 40%);
+  animation: rotateOrbs 40s linear infinite;
+  z-index: -1;
+  pointer-events: none;
+}
+@keyframes rotateOrbs {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.auth-card, .card, .input-section, .chart-section, .budget-section, .meta-section, .rule-section, .ai-section {
+  background: rgba(15, 16, 24, 0.4) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255,255,255,0.02);
+}
+.auth-card {
+  border-radius: 24px !important;
+}
+.field input, .field textarea, .ai-input, .input-natural {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease !important;
+}
+.field input:focus, .field textarea:focus, .ai-input:focus, .input-natural:focus {
+  border-color: rgba(127, 255, 110, 0.5) !important;
+  box-shadow: 0 0 16px rgba(127, 255, 110, 0.15) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+.btn-primary, .btn-add, .meta-save, .budget-save {
+  background: linear-gradient(135deg, var(--accent), #5be65b) !important;
+  color: #000 !important;
+  box-shadow: 0 4px 15px rgba(127, 255, 110, 0.25) !important;
+  border: none !important;
+  transition: all 0.3s ease !important;
+}
+.btn-primary:hover, .btn-add:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(127, 255, 110, 0.45) !important;
+}
+.splash-title {
+  position: relative;
+}
+.sp-financ {
+  color: #ffffff !important;
+}
+.sp-ia {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  text-shadow: none !important;
+}
+.sp-ia::after {
+  content: 'IA';
+  position: absolute;
+  left: 0;
+  top: 0;
+  filter: blur(14px);
+  opacity: 0.8;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  z-index: -1;
+}
+.screen {
+  animation: screenFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes screenFade {
+  from { opacity: 0; transform: translateY(15px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
 </style>
 </head>
 <body>
@@ -293,10 +386,11 @@ body, button, input, textarea, select, label, p, span, div { font-family: 'Inter
   <button class="splash-skip" onclick="skipSplash()">pular →</button>
 </div>
 
-<div id="authScreen" class="screen active">
-  <div class="auth-card">
+<div id="authScreen" class="screen active" style="position: relative; overflow: hidden; background: #030409;">
+  <div id="tsparticles" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;"></div>
+  <div class="auth-card" style="position: relative; z-index: 10;">
     <div class="auth-logo">Financ<span>IA</span></div>
-    <div class="auth-tagline">Sua vida financeira com inteligência artificial</div>
+    <div class="auth-tagline" style="min-height: 40px;"><span id="typed-tagline"></span></div>
     <div class="auth-tabs">
       <button class="auth-tab active" onclick="switchTab('login')">Entrar</button>
       <button class="auth-tab" onclick="switchTab('register')">Criar conta</button>
@@ -319,12 +413,12 @@ body, button, input, textarea, select, label, p, span, div { font-family: 'Inter
 
 <div id="appScreen" class="screen">
 <div class="container">
-  <header>
+  <header style="position: sticky; top: 0; z-index: 100; background: rgba(var(--bg-rgb), 0.8); backdrop-filter: blur(12px); padding: 16px 0; margin-bottom: 24px; border-bottom: 1px solid var(--border);">
     <div class="logo">Financ<span>IA</span></div>
     <div class="header-right">
+      <div id="gamification-bar" class="gam-bar"></div>
       <div class="user-pill" id="userPill" onclick="openProfileModal()" title="Editar perfil"></div>
       <button class="btn-logout" onclick="doLogout()">Sair</button>
-      <div id="gamification-bar" class="gam-bar"></div>
     </div>
   </header>
   <div class="summary-grid">
@@ -954,6 +1048,7 @@ async function addTransaction(){
         rec.push({id:tx.id,desc:tx.desc,amount:tx.amount,type:tx.type,category:tx.category});
         saveRecurring(currentUser.email,rec);
       }
+      if(navigator.vibrate) navigator.vibrate(50);
       transactions.unshift(tx);
       saveTx(currentUser.email,transactions);
       input.value='';
@@ -1234,8 +1329,8 @@ function switchTab(tab){document.getElementById('loginForm').style.display=tab==
 function showError(msg){const el=document.getElementById('authError');el.textContent=msg;el.classList.toggle('show',!!msg)}
 function doRegister(){const name=document.getElementById('regName').value.trim();const email=document.getElementById('regEmail').value.trim().toLowerCase();const pass=document.getElementById('regPass').value;const pass2=document.getElementById('regPass2').value;if(!name)return showError('Digite seu nome.');if(!email||!email.includes('@'))return showError('E-mail inválido.');if(pass.length<6)return showError('Senha deve ter no mínimo 6 caracteres.');if(pass!==pass2)return showError('As senhas não coincidem.');const users=getUsers();if(users[email])return showError('E-mail já cadastrado. Faça login.');users[email]={name,passHash:hashStr(pass+email)};saveUsers(users);const user={email,name};saveSession(user);startApp(user)}
 function doLogin(){const email=document.getElementById('loginEmail').value.trim().toLowerCase();const pass=document.getElementById('loginPass').value;if(!email||!pass)return showError('Preencha todos os campos.');const users=getUsers();const u=users[email];if(!u)return showError('E-mail não encontrado.');if(u.passHash!==hashStr(pass+email))return showError('Senha incorreta.');const user={email,name:u.name};saveSession(user);startApp(user)}
-function doLogout(){clearSession();currentUser=null;transactions=[];budgets={};document.getElementById('authScreen').classList.add('active');document.getElementById('appScreen').classList.remove('active');document.getElementById('loginEmail').value='';document.getElementById('loginPass').value='';showError('')}
-function startApp(user){currentUser=user;transactions=loadTx(user.email);budgets=loadBudgets(user.email);currentMeta=loadMeta(user.email);checkAndApplyRecurring();renderGamification();document.getElementById('userPill').textContent=user.name||user.email;document.getElementById('authScreen').classList.remove('active');document.getElementById('appScreen').classList.add('active');document.getElementById('aiMessages').innerHTML=`<div class="ai-bubble ai"><div class="ai-label">ASSISTENTE</div>Olá, ${user.name}! Lance seus gastos acima e me pergunte o que quiser sobre suas finanças.</div>`;renderAll()}
+function doLogout(){clearSession();currentUser=null;transactions=[];budgets={};document.getElementById('authScreen').classList.add('active');document.getElementById('appScreen').classList.remove('active');document.getElementById('loginEmail').value='';document.getElementById('loginPass').value='';showError('');document.body.classList.remove('light-mode');}
+function startApp(user){currentUser=user;transactions=loadTx(user.email);budgets=loadBudgets(user.email);currentMeta=loadMeta(user.email);checkAndApplyRecurring();renderGamification();document.getElementById('userPill').textContent=user.name||user.email;document.getElementById('authScreen').classList.remove('active');document.getElementById('appScreen').classList.add('active');document.body.classList.add('light-mode');document.getElementById('aiMessages').innerHTML=`<div class="ai-bubble ai"><div class="ai-label">ASSISTENTE</div>Olá, ${user.name}! Lance seus gastos acima e me pergunte o que quiser sobre suas finanças.</div>`;renderAll()}
 function switchInputMode(mode){inputMode=mode;document.getElementById('modeIA').classList.toggle('active',mode==='ia');document.getElementById('modeManual').classList.toggle('active',mode==='manual');document.getElementById('aiInputSection').style.display=mode==='ia'?'block':'none';document.getElementById('manualFormSection').classList.toggle('active',mode==='manual')}
 function addManualTransaction(){const desc=document.getElementById('manualDesc').value.trim();const amount=parseFloat(document.getElementById('manualAmount').value);const type=document.getElementById('manualType').value;const category=document.getElementById('manualCategory').value;if(!desc||!amount||amount<=0||!currentUser)return showToast('Preencha todos os campos corretamente.','error');const isRec=document.getElementById('isRecurringManual').checked;const tx={id:Date.now(),desc,amount,type,category,date:new Date().toLocaleDateString('pt-BR'),original:desc,isRecurring:isRec};if(isRec){const rec=loadRecurring(currentUser.email);rec.push({id:tx.id,desc,amount,type,category});saveRecurring(currentUser.email,rec);}transactions.unshift(tx);saveTx(currentUser.email,transactions);document.getElementById('manualDesc').value='';document.getElementById('manualAmount').value='';document.getElementById('manualType').value='gasto';document.getElementById('isRecurringManual').checked=false;updateManualCategories();addXP(10);checkTxAchievement(transactions.length);renderAll();showToast(isRec?'Lançamento fixo adicionado! 🔄':'Lançamento adicionado!','success')}
 function quickInput(cat){const el=document.getElementById('txInput');el.value=cat+' ';el.focus()}
@@ -1465,6 +1560,40 @@ function updateStreak(){
     return data.count || 1;
   } catch(e){ return 0; }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  if(document.getElementById('typed-tagline')){
+    new Typed('#typed-tagline', {
+      strings: [
+        'Sua vida financeira com inteligência artificial.',
+        'Fale com seu dinheiro. Literalmente.',
+        'Economize e atinja suas metas com facilidade.'
+      ],
+      typeSpeed: 45,
+      backSpeed: 25,
+      backDelay: 2000,
+      loop: true,
+      cursorChar: '█'
+    });
+  }
+  if(document.getElementById('tsparticles')){
+    tsParticles.load("tsparticles", {
+      background: { color: { value: "transparent" } },
+      fpsLimit: 60,
+      particles: {
+        color: { value: ["#7fff6e", "#3de8ff"] },
+        links: { enable: true, color: "#22233a", distance: 150, opacity: 0.4, width: 1 },
+        move: { enable: true, speed: 0.8, direction: "none", random: true, straight: false, outModes: "out" },
+        number: { density: { enable: true, area: 800 }, value: 40 },
+        opacity: { value: 0.5 },
+        shape: { type: "circle" },
+        size: { value: { min: 1, max: 3 } }
+      },
+      detectRetina: true
+    });
+  }
+});
 </script>
 </body>
 </html>
+
