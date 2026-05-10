@@ -174,7 +174,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
 .toast.error{border-color:var(--danger);background:rgba(255,77,109,.1)}
 .toast.success{border-color:var(--accent);background:rgba(127,255,110,.1)}
 .toast.removing{animation:slideOutToast .3s ease forwards}
-/* ââ TOOLTIP ââ */
+/* ── TOOLTIP ── */
 .info-wrap{position:relative;display:inline-flex;align-items:center;vertical-align:middle;margin-left:6px}
 .info-icon{width:17px;height:17px;border-radius:50%;border:1.5px solid var(--muted);background:transparent;color:var(--muted);font-size:10px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:all .2s;padding:0;line-height:1;font-family:'Syne',sans-serif;flex-shrink:0;user-select:none}
 .info-icon:hover{border-color:var(--accent2);color:var(--accent2);background:rgba(61,232,255,.1);box-shadow:0 0 8px rgba(61,232,255,.2)}
@@ -190,7 +190,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
 .tooltip-item span.dim{color:var(--muted);font-size:10px}
 @media(max-width:480px){.tooltip-box{left:auto;right:-8px;transform:translateY(-4px)}.tooltip-box.visible{transform:translateY(0)}.tooltip-box::before{left:auto;right:14px;transform:none}.tooltip-box::after{left:auto;right:15px;transform:none}}
 
-/* ââ META DE ECONOMIA ââ */
+/* ── META DE ECONOMIA ── */
 .meta-section{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:24px}
 .meta-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
 .meta-header button{background:var(--accent);color:#07080f;border:none;border-radius:8px;padding:6px 12px;font-size:10px;font-weight:700;cursor:pointer}
@@ -207,7 +207,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
 .meta-modal-btns button{flex:1;padding:10px;border-radius:8px;border:none;font-weight:600;cursor:pointer;font-size:11px}
 .meta-save{background:var(--accent);color:#07080f}
 .meta-cancel{background:var(--surface2);border:1px solid var(--border);color:var(--muted)}
-/* ââ SPLASH â DIGITAÃÃO ââ */
+/* ── SPLASH — DIGITAÇÃO ── */
 #splashScreen{position:fixed;inset:0;background:#07080f;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
 #splashScreen.out{animation:splashOut .8s ease forwards;pointer-events:none}
 @keyframes splashOut{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.04)}}
@@ -226,10 +226,10 @@ header{display:flex;align-items:center;justify-content:space-between;padding:20p
 .splash-progress{position:absolute;bottom:0;left:0;height:2px;width:0%;background:linear-gradient(90deg,#3de8ff,#7fff6e);box-shadow:0 0 10px rgba(127,255,110,.5);transition:width linear}
 .splash-skip{position:absolute;bottom:26px;right:26px;font-family:'Inter','DM Mono',sans-serif;font-size:11px;color:#222232;cursor:pointer;letter-spacing:1px;transition:color .2s;border:none;background:none;padding:4px 8px}
 .splash-skip:hover{color:#5a5a7a}
-/* ââ END SPLASH ââ */
+/* ── END SPLASH ── */
 @media(max-width:600px){.summary-grid{grid-template-columns:1fr 1fr}.summary-grid .card:last-child{grid-column:span 2}.card-value{font-size:18px}.auth-card{padding:28px 20px}.manual-row{grid-template-columns:1fr}.budget-modal-content{width:95%}.filter-tabs{width:100%}}
 .gam-bar{display:flex;align-items:center;gap:8px;margin-left:auto;padding:4px 12px;background:rgba(255,255,255,0.05);border-radius:20px;border:1px solid rgba(127,255,110,0.2)}.gam-level-badge{background:linear-gradient(135deg,#7fff6e,#3de8ff);color:#000;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;font-family:'Inter','DM Mono',sans-serif}.gam-xp-wrap{width:80px;height:6px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden}.gam-xp-bar{height:100%;background:linear-gradient(90deg,#7fff6e,#3de8ff);border-radius:3px;transition:width 0.5s ease}.gam-xp-label{font-size:10px;color:var(--muted);font-family:'Inter','DM Mono',sans-serif}.gam-streak{font-size:12px;font-weight:700;color:#ffb347}.xp-toast{position:fixed;top:80px;right:20px;background:linear-gradient(135deg,#7fff6e,#3de8ff);color:#000;font-size:14px;font-weight:700;padding:8px 18px;border-radius:20px;z-index:10000;opacity:0;transform:translateY(-20px) scale(0.8);transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);pointer-events:none;font-family:'Inter','DM Mono',sans-serif}.xp-toast.show{opacity:1;transform:translateY(0) scale(1)}.achievement-pop{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.5);background:linear-gradient(135deg,#1a1a2e,#16213e);border:2px solid #7fff6e;border-radius:24px;padding:32px 40px;text-align:center;z-index:10001;opacity:0;transition:all 0.5s cubic-bezier(0.34,1.56,0.64,1);box-shadow:0 0 60px rgba(127,255,110,0.3)}.achievement-pop.show{opacity:1;transform:translate(-50%,-50%) scale(1)}.achiev-icon{font-size:48px;margin-bottom:12px}.achiev-title{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}.achiev-desc{font-size:18px;font-weight:700;color:#7fff6e}.confetti-piece{position:fixed;top:-20px;border-radius:2px;animation:confettiFall linear forwards;z-index:9999;pointer-events:none}@keyframes confettiFall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}@keyframes btnPulse{0%,100%{box-shadow:0 0 0 0 rgba(127,255,110,0.4)}50%{box-shadow:0 0 0 12px rgba(127,255,110,0)}}#btnAdd{animation:btnPulse 2s ease-in-out infinite}#btnAdd:hover{animation:none}.tx-item{animation:slideInTx 0.3s ease}@keyframes slideInTx{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
-/* Tipografia monetÃ¡ria */
+/* Tipografia monetária */
 #balance, #totalIn, #totalOut, .money, .card-value, .tx-value, .balance-value, [data-money], .currency, .amount {
   font-family: 'DM Mono', monospace !important;
   font-feature-settings: 'tnum' 1;
@@ -329,6 +329,24 @@ body::after {
   from { opacity: 0; transform: translateY(15px) scale(0.98); }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
+
+/* ===== LANDING PAGE ===== */
+#landingScreen { display:none; position:fixed; inset:0; z-index:50; background:var(--bg); flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:2rem; }
+#landingScreen.active { display:flex; }
+.landing-logo { font-size:3rem; font-weight:900; color:var(--accent); margin-bottom:0.5rem; letter-spacing:-2px; }
+.landing-tagline { font-size:1.1rem; color:var(--text-secondary); margin-bottom:2.5rem; max-width:420px; }
+.landing-cta-group { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; }
+.btn-landing-primary { background:var(--accent); color:#fff; border:none; padding:0.85rem 2rem; border-radius:12px; font-size:1rem; font-weight:700; cursor:pointer; transition:transform 0.15s,box-shadow 0.15s; }
+.btn-landing-primary:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(99,102,241,0.4); }
+.btn-landing-secondary { background:transparent; color:var(--accent); border:2px solid var(--accent); padding:0.85rem 2rem; border-radius:12px; font-size:1rem; font-weight:700; cursor:pointer; transition:transform 0.15s; }
+.btn-landing-secondary:hover { transform:translateY(-2px); }
+.landing-features { display:flex; gap:1.5rem; margin-top:3rem; flex-wrap:wrap; justify-content:center; }
+.landing-feat { background:var(--card-bg); border:1px solid var(--border); border-radius:16px; padding:1.25rem 1.5rem; min-width:140px; max-width:180px; }
+.landing-feat-icon { font-size:2rem; margin-bottom:0.5rem; }
+.landing-feat-title { font-weight:700; font-size:0.9rem; color:var(--text); }
+.landing-feat-desc { font-size:0.78rem; color:var(--text-secondary); margin-top:0.25rem; }
+.btn-theme-toggle { background:transparent; border:1px solid var(--border); border-radius:8px; padding:0.4rem 0.75rem; cursor:pointer; font-size:1.1rem; color:var(--text); margin-right:0.5rem; transition:background 0.2s; }
+.btn-theme-toggle:hover { background:var(--hover); }
 </style>
 </head>
 <body>
@@ -342,171 +360,79 @@ body::after {
       <span class="onb-dot" style="width:24px;height:4px;border-radius:2px;background:#22233a;"></span>
     </div>
     <div id="onbStep1">
-      <h2 style="font-family:Syne,sans-serif;font-size:24px;margin:0 0 8px;">Bem-vindo ao FinancIA ð</h2>
-      <p style="color:#9a9ac0;margin:0 0 18px;">Seu assistente financeiro com IA. Veja o que vocÃª pode fazer:</p>
+      <h2 style="font-family:Syne,sans-serif;font-size:24px;margin:0 0 8px;">Bem-vindo ao FinancIA 👋</h2>
+      <p style="color:#9a9ac0;margin:0 0 18px;">Seu assistente financeiro com IA. Veja o que você pode fazer:</p>
       <ul style="list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:10px;">
-        <li>ð¤ <b>LanÃ§amento por IA</b> â escreva em linguagem natural</li>
-        <li>ð <b>Categorias automÃ¡ticas</b> â detectadas pelo texto</li>
-        <li>ð¡ <b>Insights inteligentes</b> â alertas e dicas em tempo real</li>
-        <li>ð¯ <b>OrÃ§amento e metas</b> â acompanhe seu progresso</li>
+        <li>🤖 <b>Lançamento por IA</b> — escreva em linguagem natural</li>
+        <li>📊 <b>Categorias automáticas</b> — detectadas pelo texto</li>
+        <li>💡 <b>Insights inteligentes</b> — alertas e dicas em tempo real</li>
+        <li>🎯 <b>Orçamento e metas</b> — acompanhe seu progresso</li>
       </ul>
       <button onclick="goToOnboardingStep(2)" style="background:#7fff6e;color:#07080f;border:none;padding:12px 24px;border-radius:8px;font-weight:700;cursor:pointer;width:100%;font-family:Inter,sans-serif;">Continuar</button>
     </div>
     <div id="onbStep2" style="display:none;">
       <h2 style="font-family:Syne,sans-serif;font-size:22px;margin:0 0 8px;">Como funciona?</h2>
       <p style="color:#9a9ac0;margin:0 0 16px;">Basta digitar algo como:</p>
-      <div style="background:#161720;border:1px solid #22233a;padding:12px;border-radius:8px;margin-bottom:8px;font-family:DM Mono,monospace;font-size:13px;">"AlmoÃ§o no restaurante 45 reais"</div>
-      <div style="background:#161720;border:1px solid #22233a;padding:12px;border-radius:8px;margin-bottom:18px;font-family:DM Mono,monospace;font-size:13px;">"SalÃ¡rio 5000"</div>
+      <div style="background:#161720;border:1px solid #22233a;padding:12px;border-radius:8px;margin-bottom:8px;font-family:DM Mono,monospace;font-size:13px;">"Almoço no restaurante 45 reais"</div>
+      <div style="background:#161720;border:1px solid #22233a;padding:12px;border-radius:8px;margin-bottom:18px;font-family:DM Mono,monospace;font-size:13px;">"Salário 5000"</div>
       <p style="color:#9a9ac0;margin:0 0 20px;font-size:13px;">A IA reconhece valor, tipo (gasto/receita) e categoria automaticamente.</p>
       <div style="display:flex;gap:8px;">
         <button onclick="goToOnboardingStep(1)" style="background:transparent;color:#9a9ac0;border:1px solid #22233a;padding:12px;border-radius:8px;cursor:pointer;flex:0 0 auto;font-family:Inter,sans-serif;">Voltar</button>
-        <button onclick="goToOnboardingStep(3)" style="background:#7fff6e;color:#07080f;border:none;padding:12px;border-radius:8px;font-weight:700;cursor:pointer;flex:1;font-family:Inter,sans-serif;">PrÃ³ximo</button>
+        <button onclick="goToOnboardingStep(3)" style="background:#7fff6e;color:#07080f;border:none;padding:12px;border-radius:8px;font-weight:700;cursor:pointer;flex:1;font-family:Inter,sans-serif;">Próximo</button>
       </div>
     </div>
     <div id="onbStep3" style="display:none;text-align:center;">
-      <div style="font-size:48px;margin-bottom:12px;">ð</div>
+      <div style="font-size:48px;margin-bottom:12px;">🎉</div>
       <h2 style="font-family:Syne,sans-serif;font-size:22px;margin:0 0 8px;">Tudo pronto!</h2>
-      <p style="color:#9a9ac0;margin:0 0 24px;">Comece registrando seu primeiro lanÃ§amento. VocÃª pode ver dicas e insights conforme usa o app.</p>
-      <button onclick="finishOnboarding()" style="background:#7fff6e;color:#07080f;border:none;padding:12px 24px;border-radius:8px;font-weight:700;cursor:pointer;width:100%;font-family:Inter,sans-serif;">ComeÃ§ar a usar</button>
+      <p style="color:#9a9ac0;margin:0 0 24px;">Comece registrando seu primeiro lançamento. Você pode ver dicas e insights conforme usa o app.</p>
+      <button onclick="finishOnboarding()" style="background:#7fff6e;color:#07080f;border:none;padding:12px 24px;border-radius:8px;font-weight:700;cursor:pointer;width:100%;font-family:Inter,sans-serif;">Começar a usar</button>
     </div>
   </div>
 </div>
-<style>@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}#onboardingModal{display:none !important;}#onboardingModal[style*="flex"]{display:flex !important;}
-/* ===== LANDING PAGE ===== */
-#landingScreen{min-height:100vh;background:var(--bg);color:var(--text);}
-#landingScreen nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:16px 32px;background:rgba(7,8,15,0.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);}
-#landingScreen .landing-nav-logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;letter-spacing:-.5px;}
-#landingScreen .landing-nav-logo span{color:var(--accent);}
-#landingScreen .landing-nav-btns{display:flex;gap:10px;}
-.landing-hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:100px 24px 60px;position:relative;overflow:hidden;}
-.landing-hero-content{max-width:960px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
-.landing-hero h1{font-family:'Syne',sans-serif;font-size:52px;font-weight:800;line-height:1.08;margin-bottom:20px;letter-spacing:-1px;}
-.landing-hero h1 span{color:var(--accent);}
-.landing-hero p{font-size:17px;color:var(--muted);line-height:1.65;margin-bottom:36px;max-width:420px;}
-.landing-ctas{display:flex;gap:12px;flex-wrap:wrap;}
-.btn-landing-primary{background:var(--accent);color:#07080f;border:none;border-radius:12px;padding:16px 32px;font-family:'Syne',sans-serif;font-size:15px;font-weight:800;cursor:pointer;letter-spacing:.3px;transition:opacity .15s,transform .1s;}
-.btn-landing-primary:hover{opacity:.88;}
-.btn-landing-secondary{background:transparent;color:var(--text);border:1px solid var(--border);border-radius:12px;padding:16px 24px;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;}
-.btn-landing-secondary:hover{border-color:var(--accent2);color:var(--accent2);}
-.landing-mockup{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:20px;box-shadow:0 32px 80px rgba(0,0,0,.4);}
-.mock-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
-.mock-logo{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;}
-.mock-logo span{color:var(--accent);}
-.mock-badge{background:#161720;border:1px solid var(--border);border-radius:20px;padding:4px 10px;font-size:10px;color:var(--accent);font-family:'DM Mono',monospace;}
-.mock-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;}
-.mock-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px;}
-.mock-card-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
-.mock-card-value{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;}
-.mock-card-value.green{color:var(--accent);}
-.mock-card-value.red{color:var(--danger);}
-.mock-card-value.blue{color:var(--accent2);}
-.mock-input{background:var(--surface2);border:1px solid var(--accent);border-radius:10px;padding:10px 14px;font-size:11px;color:var(--muted);margin-bottom:10px;font-family:'DM Mono',monospace;}
-.mock-tx{display:flex;align-items:center;gap:8px;padding:8px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;margin-bottom:5px;}
-.mock-tx-icon{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;}
-.mock-tx-info{flex:1;}
-.mock-tx-desc{font-size:11px;color:var(--text);}
-.mock-tx-cat{font-size:9px;color:var(--muted);}
-.mock-tx-val{font-size:12px;font-weight:700;font-family:'Syne',sans-serif;}
-.mock-tx-val.neg{color:var(--danger);}
-.mock-tx-val.pos{color:var(--accent);}
-.landing-features{padding:80px 24px;background:var(--surface);}
-.landing-features-inner{max-width:960px;margin:0 auto;}
-.landing-features h2{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;text-align:center;margin-bottom:12px;}
-.landing-features .feat-sub{text-align:center;color:var(--muted);font-size:16px;margin-bottom:56px;}
-.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-.feat-card{background:var(--surface2);border:1px solid var(--border);border-radius:16px;padding:28px 24px;transition:border-color .2s;}
-.feat-card:hover{border-color:var(--accent);}
-.feat-icon{font-size:32px;margin-bottom:16px;}
-.feat-card h3{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:10px;}
-.feat-card p{font-size:14px;color:var(--muted);line-height:1.6;}
-.landing-cta-section{padding:80px 24px;text-align:center;}
-.landing-cta-section h2{font-family:'Syne',sans-serif;font-size:40px;font-weight:800;margin-bottom:12px;}
-.landing-cta-section p{color:var(--muted);font-size:17px;margin-bottom:36px;}
-.landing-footer{background:var(--surface);border-top:1px solid var(--border);padding:32px;text-align:center;color:var(--muted);font-size:12px;}
-.landing-footer a{color:var(--muted);text-decoration:underline;margin:0 8px;}
-@media(max-width:768px){.landing-hero-content{grid-template-columns:1fr;}.landing-mockup{display:none;}.feat-grid{grid-template-columns:1fr;}.landing-hero h1{font-size:36px;}#landingScreen nav{padding:12px 16px;}}</style>
+<style>@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}#onboardingModal{display:none !important;}#onboardingModal[style*="flex"]{display:flex !important;}</style>
 
-<!-- SPLASH DIGITAÃÃO -->
+<!-- SPLASH DIGITAÇÃO -->
 <div id="splashScreen">
   <canvas id="splashCanvas"></canvas>
   <div class="splash-center">
     <div class="splash-title">
       <span class="sp-financ" id="spFinanc"></span><span class="sp-ia" id="spIA"></span><span class="sp-rs" id="spRS">R$</span><span class="sp-cursor" id="spCursor"></span>
     </div>
-    <div class="splash-tagline" id="spTagline">inteligÃªncia artificial para suas finanÃ§as</div>
+    <div class="splash-tagline" id="spTagline">inteligência artificial para suas finanças</div>
   </div>
   <div class="splash-progress" id="spProgress"></div>
-  <button class="splash-skip" onclick="skipSplash()">pular â</button>
+  <button class="splash-skip" onclick="skipSplash()">pular →</button>
 </div>
 
-<!-- ===== LANDING PAGE ===== -->
 <div id="landingScreen" class="screen active">
-  <nav>
-    <div class="landing-nav-logo">Financ<span>IA</span></div>
-    <div class="landing-nav-btns">
-      <button class="btn-logout" onclick="showAuthFromLanding('login')">Entrar</button>
-      <button class="btn-landing-primary" style="padding:8px 20px;font-size:13px;" onclick="showAuthFromLanding('register')">Criar conta grátis</button>
+  <div class="landing-logo">Financ<span style="color:var(--accent-secondary,#a78bfa)">IA</span></div>
+  <p class="landing-tagline">Controle financeiro inteligente com IA. Simples, bonito e poderoso.</p>
+  <div class="landing-cta-group">
+    <button class="btn-landing-primary" onclick="showAuthFromLanding('signup')">Criar conta gr&#225;tis</button>
+    <button class="btn-landing-secondary" onclick="showAuthFromLanding('login')">Entrar</button>
+  </div>
+  <div class="landing-features">
+    <div class="landing-feat">
+      <div class="landing-feat-icon">&#x1F4CA;</div>
+      <div class="landing-feat-title">Dashboards</div>
+      <div class="landing-feat-desc">Visualize gastos em tempo real</div>
     </div>
-  </nav>
-  <section class="landing-hero">
-    <div class="landing-hero-content">
-      <div>
-        <h1>Seu dinheiro,<br><span>inteligente.</span></h1>
-        <p>Controle suas finanças conversando com IA. Digite em linguagem natural — categorizamos e analisamos tudo automaticamente.</p>
-        <div class="landing-ctas">
-          <button class="btn-landing-primary" onclick="showAuthFromLanding('register')">Criar conta grátis →</button>
-          <button class="btn-landing-secondary" onclick="document.getElementById('landingFeatures').scrollIntoView({behavior:'smooth'})">Ver como funciona ↓</button>
-        </div>
-      </div>
-      <div class="landing-mockup">
-        <div class="mock-header">
-          <div class="mock-logo">Financ<span>IA</span></div>
-          <div class="mock-badge">Nv.3 · 280 XP 🔥</div>
-        </div>
-        <div class="mock-cards">
-          <div class="mock-card"><div class="mock-card-label">Receitas</div><div class="mock-card-value green">R$ 3.200</div></div>
-          <div class="mock-card"><div class="mock-card-label">Gastos</div><div class="mock-card-value red">R$ 1.450</div></div>
-          <div class="mock-card"><div class="mock-card-label">Saldo</div><div class="mock-card-value blue">R$ 1.750</div></div>
-        </div>
-        <div class="mock-input">💬 "gastei 85 reais no ifood hoje"</div>
-        <div class="mock-tx"><div class="mock-tx-icon" style="background:#1a2e1a">🍔</div><div class="mock-tx-info"><div class="mock-tx-desc">iFood</div><div class="mock-tx-cat">ALIMENTAÇÃO</div></div><div class="mock-tx-val neg">-R$ 85,00</div></div>
-        <div class="mock-tx"><div class="mock-tx-icon" style="background:#1a2038">🚀</div><div class="mock-tx-info"><div class="mock-tx-desc">Salário</div><div class="mock-tx-cat">RECEITA</div></div><div class="mock-tx-val pos">+R$ 3.200,00</div></div>
-        <div class="mock-tx"><div class="mock-tx-icon" style="background:#1e1a38">🎮</div><div class="mock-tx-info"><div class="mock-tx-desc">Netflix</div><div class="mock-tx-cat">LAZER</div></div><div class="mock-tx-val neg">-R$ 55,00</div></div>
-      </div>
+    <div class="landing-feat">
+      <div class="landing-feat-icon">&#x1F916;</div>
+      <div class="landing-feat-title">IA Assistente</div>
+      <div class="landing-feat-desc">Lan&#231;e transa&#231;&#245;es por voz ou texto</div>
     </div>
-  </section>
-  <section id="landingFeatures" class="landing-features">
-    <div class="landing-features-inner">
-      <h2>Como o FinancIA funciona</h2>
-      <p class="feat-sub">Três recursos que transformam como você controla seu dinheiro</p>
-      <div class="feat-grid">
-        <div class="feat-card">
-          <div class="feat-icon">🤖</div>
-          <h3>Linguagem Natural</h3>
-          <p>Digite como você fala: "gastei 150 no mercado" ou "recebi 3000 de salário". Nossa IA entende e categoriza automaticamente.</p>
-        </div>
-        <div class="feat-card">
-          <div class="feat-icon">📊</div>
-          <h3>Análise Inteligente</h3>
-          <p>Regra 50/30/20 em tempo real, gráficos de evolução e alertas quando você está gastando demais em alguma categoria.</p>
-        </div>
-        <div class="feat-card">
-          <div class="feat-icon">🏆</div>
-          <h3>Gamificação Financeira</h3>
-          <p>Ganhe XP, suba de nível e desbloqueie conquistas conforme você mantém seus gastos sob controle. Finanças que engajam.</p>
-        </div>
-      </div>
+    <div class="landing-feat">
+      <div class="landing-feat-icon">&#x1F3AF;</div>
+      <div class="landing-feat-title">Metas</div>
+      <div class="landing-feat-desc">Orce com a regra 50/30/20</div>
     </div>
-  </section>
-  <section class="landing-cta-section">
-    <h2>Comece hoje. É grátis.</h2>
-    <p>Crie sua conta em menos de 1 minuto e comece a controlar<br>suas finanças com inteligência artificial.</p>
-    <button class="btn-landing-primary" onclick="showAuthFromLanding('register')">Criar minha conta grátis →</button>
-  </section>
-  <footer class="landing-footer">
-    <div>FinancIA © 2026 &nbsp;|&nbsp; <a href="#">Política de Privacidade</a> &nbsp;|&nbsp; <a href="#">Termos de Uso</a> &nbsp;|&nbsp; <a href="#">LGPD</a></div>
-    <div style="margin-top:8px;color:#555;">Assistente financeiro com IA · Dados salvos localmente no seu dispositivo</div>
-  </footer>
+    <div class="landing-feat">
+      <div class="landing-feat-icon">&#x1F510;</div>
+      <div class="landing-feat-title">Privado</div>
+      <div class="landing-feat-desc">Dados locais, sem servidores</div>
+    </div>
+  </div>
 </div>
 <div id="authScreen" class="screen" style="position: relative; overflow: hidden; background: #030409;">
   <div id="tsparticles" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;"></div>
@@ -520,13 +446,13 @@ body::after {
     <div class="auth-error" id="authError"></div>
     <div id="loginForm">
       <div class="field"><label>E-mail</label><input type="email" id="loginEmail" placeholder="seu@email.com" autocomplete="email"></div>
-      <div class="field"><label>Senha</label><input type="password" id="loginPass" placeholder="â¢â¢â¢â¢â¢â¢â¢â¢" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <div class="field"><label>Senha</label><input type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
       <button class="btn-primary" onclick="doLogin()">Entrar</button>
     </div>
     <div id="registerForm" style="display:none">
       <div class="field"><label>Nome</label><input type="text" id="regName" placeholder="Como quer ser chamado?"></div>
       <div class="field"><label>E-mail</label><input type="email" id="regEmail" placeholder="seu@email.com"></div>
-      <div class="field"><label>Senha</label><input type="password" id="regPass" placeholder="MÃ­n. 6 caracteres"></div>
+      <div class="field"><label>Senha</label><input type="password" id="regPass" placeholder="Mín. 6 caracteres"></div>
       <div class="field"><label>Confirmar senha</label><input type="password" id="regPass2" placeholder="Repita a senha" onkeydown="if(event.key==='Enter')doRegister()"></div>
       <button class="btn-primary" onclick="doRegister()">Criar conta</button>
     </div>
@@ -540,17 +466,18 @@ body::after {
     <div class="header-right">
       <div id="gamification-bar" class="gam-bar"></div>
       <div class="user-pill" id="userPill" onclick="openProfileModal()" title="Editar perfil"></div>
-      <button class="btn-logout" id="themeToggle" onclick="toggleTheme()" title="Alternar tema" style="font-size:16px;padding:5px 10px;">🌙</button><button class="btn-logout" onclick="doLogout()">Sair</button>
+      <button id="themeToggleBtn" class="btn-theme-toggle" onclick="toggleTheme()" title="Alternar tema">🌙</button>
+      <button class="btn-logout" onclick="doLogout()">Sair</button>
     </div>
   </header>
   <div class="summary-grid">
-    <div class="card"><div class="card-label">Receitas</div><div class="card-value green" id="totalIn">R$ 0</div><div class="card-sub" id="countIn">0 lanÃ§amentos</div></div>
-    <div class="card"><div class="card-label">Gastos</div><div class="card-value red" id="totalOut">R$ 0</div><div class="card-sub" id="countOut">0 lanÃ§amentos</div></div>
-    <div class="card"><div class="card-label">Saldo</div><div class="card-value blue" id="balance">R$ 0</div><div class="card-sub" id="balanceSub">â</div></div>
+    <div class="card"><div class="card-label">Receitas</div><div class="card-value green" id="totalIn">R$ 0</div><div class="card-sub" id="countIn">0 lançamentos</div></div>
+    <div class="card"><div class="card-label">Gastos</div><div class="card-value red" id="totalOut">R$ 0</div><div class="card-sub" id="countOut">0 lançamentos</div></div>
+    <div class="card"><div class="card-label">Saldo</div><div class="card-value blue" id="balance">R$ 0</div><div class="card-sub" id="balanceSub">—</div></div>
   </div>
   <div class="input-section">
     <div class="input-header">
-      <span><span class="dot"></span> Novo lanÃ§amento</span>
+      <span><span class="dot"></span> Novo lançamento</span>
       <div class="input-mode-toggle">
         <button class="mode-btn active" id="modeIA" onclick="switchInputMode('ia')">IA</button>
         <button class="mode-btn" id="modeManual" onclick="switchInputMode('manual')">Manual</button>
@@ -558,35 +485,35 @@ body::after {
     </div>
     <div id="aiInputSection">
       <div class="input-row" style="position:relative">
-        <textarea class="input-natural" id="txInput" placeholder="Ex: gastei 150 no mercado  |  200 cartÃ£o gasolina  |  recebi 3000 salÃ¡rio..." rows="1"></textarea>
-        <button class="btn-add" id="btnAdd" onclick="addTransaction()">+ LanÃ§ar</button>
+        <textarea class="input-natural" id="txInput" placeholder="Ex: gastei 150 no mercado  |  200 cartão gasolina  |  recebi 3000 salário..." rows="1"></textarea>
+        <button class="btn-add" id="btnAdd" onclick="addTransaction()">+ Lançar</button>
         <div id="categorySuggestion" style="display:none;margin-top:0;position:absolute;left:0;top:100%;z-index:5;background:rgba(125,255,110,0.08);border:1px solid #7fff6e;border-radius:8px;color:#7fff6e;font-size:13px;font-family:Inter,sans-serif;width:100%;padding:8px 12px;margin-top:4px;pointer-events:none;"><span id="categorySuggestionText"></span></div>
       </div>
       <div class="categories-row">
-        <span class="cat-chip" onclick="quickInput('AlimentaÃ§Ã£o')">ð AlimentaÃ§Ã£o</span>
-        <span class="cat-chip" onclick="quickInput('CartÃ£o')">ð³ CartÃ£o</span>
-        <span class="cat-chip" onclick="quickInput('Casa')">ð  Casa</span>
-        <span class="cat-chip" onclick="quickInput('SaÃºde')">ð SaÃºde</span>
-        <span class="cat-chip" onclick="quickInput('Transporte')">ð Transporte</span>
-        <span class="cat-chip" onclick="quickInput('Lazer')">ð® Lazer</span>
-        <span class="cat-chip" onclick="quickInput('Receita')">ð° Receita</span>
+        <span class="cat-chip" onclick="quickInput('Alimentação')">🍔 Alimentação</span>
+        <span class="cat-chip" onclick="quickInput('Cartão')">💳 Cartão</span>
+        <span class="cat-chip" onclick="quickInput('Casa')">🏠 Casa</span>
+        <span class="cat-chip" onclick="quickInput('Saúde')">💊 Saúde</span>
+        <span class="cat-chip" onclick="quickInput('Transporte')">🚗 Transporte</span>
+        <span class="cat-chip" onclick="quickInput('Lazer')">🎮 Lazer</span>
+        <span class="cat-chip" onclick="quickInput('Receita')">💰 Receita</span>
       </div>
-      <div class="hint">Digite em linguagem natural â a IA categoriza automaticamente. <span>Enter</span> para lanÃ§ar.</div>
-      <label class="recurrent-toggle"><input type="checkbox" id="isRecurringIA"> <span>ð LanÃ§amento fixo (repete todo mÃªs)</span></label>
+      <div class="hint">Digite em linguagem natural — a IA categoriza automaticamente. <span>Enter</span> para lançar.</div>
+      <label class="recurrent-toggle"><input type="checkbox" id="isRecurringIA"> <span>🔄 Lançamento fixo (repete todo mês)</span></label>
     </div>
     <div class="manual-form" id="manualFormSection">
       <div class="manual-row">
-        <div class="manual-field"><label>DescriÃ§Ã£o</label><input type="text" id="manualDesc" placeholder="Gasto/Receita"></div>
+        <div class="manual-field"><label>Descrição</label><input type="text" id="manualDesc" placeholder="Gasto/Receita"></div>
         <div class="manual-field"><label>Valor (R$)</label><input type="number" id="manualAmount" placeholder="0.00" min="0" step="0.01"></div>
         <div class="manual-field"><label>Tipo</label><select id="manualType" onchange="updateManualCategories()"><option value="gasto">Gasto</option><option value="receita">Receita</option></select></div>
-        <div class="manual-field"><label>Categoria</label><select id="manualCategory"><option value="AlimentaÃ§Ã£o">AlimentaÃ§Ã£o</option><option value="CartÃ£o">CartÃ£o</option><option value="Casa">Casa</option><option value="SaÃºde">SaÃºde</option><option value="Transporte">Transporte</option><option value="Lazer">Lazer</option><option value="Outros">Outros</option></select></div>
-        <button class="btn-add" onclick="addManualTransaction()">+ LanÃ§ar</button>
+        <div class="manual-field"><label>Categoria</label><select id="manualCategory"><option value="Alimentação">Alimentação</option><option value="Cartão">Cartão</option><option value="Casa">Casa</option><option value="Saúde">Saúde</option><option value="Transporte">Transporte</option><option value="Lazer">Lazer</option><option value="Outros">Outros</option></select></div>
+        <button class="btn-add" onclick="addManualTransaction()">+ Lançar</button>
       </div>
-      <label class="recurrent-toggle"><input type="checkbox" id="isRecurringManual"> <span>ð LanÃ§amento fixo (repete todo mÃªs)</span></label>
+      <label class="recurrent-toggle"><input type="checkbox" id="isRecurringManual"> <span>🔄 Lançamento fixo (repete todo mês)</span></label>
     </div>
   </div>
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:10px">
-    <div class="section-title" style="margin-bottom:0;flex:1"><span>LanÃ§amentos</span></div>
+    <div class="section-title" style="margin-bottom:0;flex:1"><span>Lançamentos</span></div>
     <button class="tab" onclick="exportCSV()" style="background:var(--accent2);color:#07080f;border:none;font-weight:700;cursor:pointer">Exportar CSV</button>
   </div>
   <div class="filter-tabs" style="margin-bottom:14px">
@@ -594,22 +521,22 @@ body::after {
     <button class="tab" onclick="setFilter('gastos',this)">Gastos</button>
     <button class="tab" onclick="setFilter('receitas',this)">Receitas</button>
     <span style="flex-grow:1"></span>
-    <button class="tab" onclick="setDateFilter('este-mes',this)">Este mÃªs</button>
-    <button class="tab" onclick="setDateFilter('mes-anterior',this)">MÃªs anterior</button>
+    <button class="tab" onclick="setDateFilter('este-mes',this)">Este mês</button>
+    <button class="tab" onclick="setDateFilter('mes-anterior',this)">Mês anterior</button>
     <button class="tab active" onclick="setDateFilter('todos-datas',this)">Tudo</button>
   </div>
-  <div class="tx-list" id="txList"><div class="empty">Nenhum lanÃ§amento ainda.</div></div>
+  <div class="tx-list" id="txList"><div class="empty">Nenhum lançamento ainda.</div></div>
   <div class="chart-section">
     <div class="section-title" style="margin-bottom:0"><span>Por Categoria</span></div>
-    <div class="bars" id="barsChart"><div style="color:var(--muted);font-size:12px;align-self:center;width:100%;text-align:center;">Adicione lanÃ§amentos para ver o grÃ¡fico</div></div>
+    <div class="bars" id="barsChart"><div style="color:var(--muted);font-size:12px;align-self:center;width:100%;text-align:center;">Adicione lançamentos para ver o gráfico</div></div>
   </div>
   <div class="chart-balance-section">
-    <div class="section-title" style="margin-bottom:0"><span>EvoluÃ§Ã£o do Saldo</span></div>
+    <div class="section-title" style="margin-bottom:0"><span>Evolução do Saldo</span></div>
     <canvas class="chart-canvas" id="balanceChart"></canvas>
   </div>
   <div class="budget-section">
     <div class="budget-header">
-      <div class="section-title" style="margin-bottom:0;flex:0"><span>OrÃ§amentos Mensais</span></div>
+      <div class="section-title" style="margin-bottom:0;flex:0"><span>Orçamentos Mensais</span></div>
       <button onclick="openBudgetModal()">+ Adicionar</button>
     </div>
     <div id="budgetList"></div>
@@ -620,7 +547,7 @@ body::after {
       <div class="section-title" style="margin-bottom:0;flex:0"><span>Meta de Economia</span></div>
       <button onclick="openMetaModal()">+ Definir</button>
     </div>
-    <div id="metaContent"><div class="meta-empty">Nenhuma meta definida. Defina quanto quer guardar este mÃªs.</div></div>
+    <div id="metaContent"><div class="meta-empty">Nenhuma meta definida. Defina quanto quer guardar este mês.</div></div>
   </div>
   <div class="rule-section" id="ruleSection">
     <div class="section-title" style="margin-bottom:0">
@@ -630,9 +557,9 @@ body::after {
           <button class="info-icon" id="tooltipBtn" onclick="toggleTooltip(event)" aria-label="Entender a Regra 50/30/20">?</button>
           <div class="tooltip-box" id="ruleTooltip" role="tooltip" aria-hidden="true">
             <div class="tooltip-title">Como funciona a regra?</div>
-            <div class="tooltip-item"><span class="tooltip-dot" style="background:#3de8ff"></span><div><b>50% Necessidades</b><br><span class="dim">Aluguel, contas bÃ¡sicas, mercado.</span></div></div>
-            <div class="tooltip-item"><span class="tooltip-dot" style="background:#a78bfa"></span><div><b>30% Desejos</b><br><span class="dim">Lazer, assinaturas, compras nÃ£o essenciais.</span></div></div>
-            <div class="tooltip-item"><span class="tooltip-dot" style="background:#7fff6e"></span><div><b>20% Futuro</b><br><span class="dim">Investimentos, reserva de emergÃªncia, pagamento de dÃ­vidas.</span></div></div>
+            <div class="tooltip-item"><span class="tooltip-dot" style="background:#3de8ff"></span><div><b>50% Necessidades</b><br><span class="dim">Aluguel, contas básicas, mercado.</span></div></div>
+            <div class="tooltip-item"><span class="tooltip-dot" style="background:#a78bfa"></span><div><b>30% Desejos</b><br><span class="dim">Lazer, assinaturas, compras não essenciais.</span></div></div>
+            <div class="tooltip-item"><span class="tooltip-dot" style="background:#7fff6e"></span><div><b>20% Futuro</b><br><span class="dim">Investimentos, reserva de emergência, pagamento de dívidas.</span></div></div>
           </div>
         </span>
       </span>
@@ -640,9 +567,9 @@ body::after {
     <div class="rule-content">
       <div class="rule-chart-wrap">
         <canvas id="ruleChart" width="160" height="160"></canvas>
-        <div class="rule-chart-center"><div class="rule-score" id="ruleScore">--</div><div class="rule-score-label">SaÃºde</div></div>
+        <div class="rule-chart-center"><div class="rule-score" id="ruleScore">--</div><div class="rule-score-label">Saúde</div></div>
       </div>
-      <div class="rule-details" id="ruleDetails"><div style="color:var(--muted);font-size:12px;text-align:center;padding:20px 0">Adicione lanÃ§amentos para ver a anÃ¡lise</div></div>
+      <div class="rule-details" id="ruleDetails"><div style="color:var(--muted);font-size:12px;text-align:center;padding:20px 0">Adicione lançamentos para ver a análise</div></div>
     </div>
     <div class="rule-legend">
       <div class="rule-legend-item"><div class="rule-legend-dot" style="background:#3de8ff"></div>Necessidades (50%)</div>
@@ -650,17 +577,17 @@ body::after {
       <div class="rule-legend-item"><div class="rule-legend-dot" style="background:#7fff6e"></div>Investimentos (20%)</div>
     </div>
     <div class="rule-feedback" id="ruleFeedback" style="display:none">
-      <div class="rule-feedback-title">DiagnÃ³stico Financeiro</div>
+      <div class="rule-feedback-title">Diagnóstico Financeiro</div>
       <div id="ruleFeedbackContent"></div>
     </div>
   </div>
   <div class="ai-section">
     <div class="ai-header"><span>Assistente Financeiro</span><span class="ai-badge">IA</span></div>
     <div class="ai-messages" id="aiMessages">
-      <div class="ai-bubble ai"><div class="ai-label">ASSISTENTE</div>OlÃ¡! Lance seus gastos acima e me pergunte o que quiser sobre suas finanÃ§as.</div>
+      <div class="ai-bubble ai"><div class="ai-label">ASSISTENTE</div>Olá! Lance seus gastos acima e me pergunte o que quiser sobre suas finanças.</div>
     </div>
     <div class="ai-ask-row">
-      <input class="ai-input" id="aiInput" placeholder="Onde estou gastando mais? Como estÃ¡ meu saldo?..." onkeydown="if(event.key==='Enter')askAI()">
+      <input class="ai-input" id="aiInput" placeholder="Onde estou gastando mais? Como está meu saldo?..." onkeydown="if(event.key==='Enter')askAI()">
       <button class="btn-ai" id="btnAsk" onclick="askAI()">Perguntar</button>
     </div>
   </div>
@@ -670,7 +597,7 @@ body::after {
 <!-- MODAL META -->
 <div class="meta-modal" id="metaModal">
   <div class="meta-modal-content">
-    <div class="meta-modal-title">ð¯ Meta de Economia do MÃªs</div>
+    <div class="meta-modal-title">🎯 Meta de Economia do Mês</div>
     <div class="field"><label>Valor que deseja guardar (R$)</label><input type="number" id="metaValue" placeholder="ex: 500.00" min="0" step="0.01" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;color:var(--text);font-family:'Inter','DM Mono',sans-serif;font-size:14px;outline:none"></div>
     <div class="meta-modal-btns"><button class="meta-save" onclick="saveMeta()">Salvar</button><button class="meta-cancel" onclick="closeMetaModal()">Cancelar</button></div>
   </div>
@@ -679,16 +606,16 @@ body::after {
 <!-- MODAL PERFIL -->
 <div class="profile-modal" id="profileModal">
   <div class="profile-modal-content">
-    <div class="profile-modal-title">âï¸ Editar Perfil</div>
+    <div class="profile-modal-title">✏️ Editar Perfil</div>
     <div class="field"><label>Seu nome</label><input type="text" id="profileName" placeholder="Como quer ser chamado?" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;color:var(--text);font-family:'Inter','DM Mono',sans-serif;font-size:14px;outline:none"></div>
     <div class="profile-modal-btns"><button class="profile-save" onclick="saveProfile()">Salvar</button><button class="profile-cancel" onclick="closeProfileModal()">Cancelar</button></div>
   </div>
 </div>
 
-<!-- MODAL DE CONFIRMAÃÃO (substitui confirm nativo) -->
+<!-- MODAL DE CONFIRMAÇÃO (substitui confirm nativo) -->
 <div class="budget-modal" id="confirmModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;align-items:center;justify-content:center;">
   <div class="budget-modal-content" style="text-align:center;">
-    <h3 id="confirmTitle" style="margin-bottom:8px;font-family:Syne">ConfirmaÃ§Ã£o</h3>
+    <h3 id="confirmTitle" style="margin-bottom:8px;font-family:Syne">Confirmação</h3>
     <p id="confirmMessage" style="color:var(--muted);margin-bottom:18px;"></p>
     <div style="display:flex;gap:8px;justify-content:center">
       <button class="tx-cancel" id="confirmCancel">Cancelar</button>
@@ -701,8 +628,8 @@ body::after {
 <div class="budget-modal" id="budgetModal">
   <div class="budget-modal-content">
     <button class="budget-modal-close" onclick="closeBudgetModal()">X</button>
-    <div class="budget-modal-title">Adicionar/Editar OrÃ§amento</div>
-    <div class="budget-form-item"><label>Categoria</label><select id="budgetCategory"><option value="AlimentaÃ§Ã£o">AlimentaÃ§Ã£o</option><option value="CartÃ£o">CartÃ£o</option><option value="Casa">Casa</option><option value="SaÃºde">SaÃºde</option><option value="Transporte">Transporte</option><option value="Lazer">Lazer</option><option value="Outros">Outros</option></select></div>
+    <div class="budget-modal-title">Adicionar/Editar Orçamento</div>
+    <div class="budget-form-item"><label>Categoria</label><select id="budgetCategory"><option value="Alimentação">Alimentação</option><option value="Cartão">Cartão</option><option value="Casa">Casa</option><option value="Saúde">Saúde</option><option value="Transporte">Transporte</option><option value="Lazer">Lazer</option><option value="Outros">Outros</option></select></div>
     <div class="budget-form-item"><label>Limite Mensal (R$)</label><input type="number" id="budgetLimit" placeholder="0.00" min="0" step="0.01"></div>
     <div class="budget-modal-buttons"><button class="budget-save" onclick="saveBudget()">Salvar</button><button class="budget-cancel" onclick="closeBudgetModal()">Cancelar</button></div>
   </div>
@@ -710,9 +637,9 @@ body::after {
 
 <script>
 
-// ========== FUNÃÃES UTILITÃRIAS ==========
-const CAT_COLORS={'AlimentaÃ§Ã£o':['#ff6e9c','#2a1520'],'CartÃ£o':['#7fff6e','#152a15'],'Casa':['#3de8ff','#0f2028'],'SaÃºde':['#ffb347','#281f0f'],'Transporte':['#a78bfa','#1a1528'],'Lazer':['#fb923c','#281610'],'Receita':['#7fff6e','#152a15'],'Outros':['#6b6b80','#1a1a22']};
-const CAT_ICONS={'AlimentaÃ§Ã£o':'ð','CartÃ£o':'ð³','Casa':'ð ','SaÃºde':'ð','Transporte':'ð','Lazer':'ð®','Receita':'ð°','Outros':'ð'};
+// ========== FUNÇÕES UTILITÁRIAS ==========
+const CAT_COLORS={'Alimentação':['#ff6e9c','#2a1520'],'Cartão':['#7fff6e','#152a15'],'Casa':['#3de8ff','#0f2028'],'Saúde':['#ffb347','#281f0f'],'Transporte':['#a78bfa','#1a1528'],'Lazer':['#fb923c','#281610'],'Receita':['#7fff6e','#152a15'],'Outros':['#6b6b80','#1a1a22']};
+const CAT_ICONS={'Alimentação':'🍔','Cartão':'💳','Casa':'🏠','Saúde':'💊','Transporte':'🚗','Lazer':'🎮','Receita':'💰','Outros':'📌'};
 let currentUser=null,transactions=[],activeFilter='todos',activeDateFilter='todos-datas',inputMode='ia',budgets={},currentMeta=null;
 
 function hashStr(str){let h=0;for(let i=0;i<str.length;i++)h=(Math.imul(31,h)+str.charCodeAt(i))|0;return Math.abs(h).toString(36)}
@@ -730,7 +657,7 @@ function getSession(){return JSON.parse(localStorage.getItem('financia_session')
 
 // ========== TOASTS ==========
 function showToast(msg, type='info', duration=3000) {
-  const icons = {success:'â',error:'â',warning:'â ï¸',info:'â¹ï¸'};
+  const icons = {success:'✅',error:'❌',warning:'⚠️',info:'ℹ️'};
   const colors = {success:'#7fff6e',error:'#ff4d6d',warning:'#ffb347',info:'#3de8ff'};
   let container = document.getElementById('__toast_container');
   if (!container) {
@@ -749,17 +676,17 @@ function showToast(msg, type='info', duration=3000) {
 
 function animateBalanceUpdate(){ const el=document.getElementById('balance'); if(!el)return; el.classList.remove('__pulse'); void el.offsetWidth; el.classList.add('__pulse'); setTimeout(()=>el.classList.remove('__pulse'),600); }
 
-// ========== DETECÃÃO DE CATEGORIA ==========
+// ========== DETECÇÃO DE CATEGORIA ==========
 function detectCategory(text){
   if(!text) return null;
   const t = text.toLowerCase();
   const map = {
-    'AlimentaÃ§Ã£o': ['mercado','restaurante','lanche','comida','almoÃ§o','jantar','cafÃ©','pizza','ifood','rappi','padaria','aÃ§ougue','feira','supermercado'],
-    'Transporte': ['uber','99','tÃ¡xi','taxi','gasolina','combustÃ­vel','Ã´nibus','metrÃ´','metro','estacionamento','pedÃ¡gio','passagem'],
-    'Casa': ['aluguel','condomÃ­nio','luz','Ã¡gua','internet','gÃ¡s','iptu','limpeza','mÃ³vel'],
-    'SaÃºde': ['farmÃ¡cia','remÃ©dio','mÃ©dico','consulta','exame','hospital','plano','dentista'],
+    'Alimentação': ['mercado','restaurante','lanche','comida','almoço','jantar','café','pizza','ifood','rappi','padaria','açougue','feira','supermercado'],
+    'Transporte': ['uber','99','táxi','taxi','gasolina','combustível','ônibus','metrô','metro','estacionamento','pedágio','passagem'],
+    'Casa': ['aluguel','condomínio','luz','água','internet','gás','iptu','limpeza','móvel'],
+    'Saúde': ['farmácia','remédio','médico','consulta','exame','hospital','plano','dentista'],
     'Lazer': ['cinema','show','bar','balada','viagem','hotel','passeio','jogo','netflix','spotify','streaming'],
-    'Receita': ['salÃ¡rio','salario','pix recebido','freelance','rendimento','pagamento recebido','venda','depÃ³sito']
+    'Receita': ['salário','salario','pix recebido','freelance','rendimento','pagamento recebido','venda','depósito']
   };
   for (const [cat, keywords] of Object.entries(map)) {
     if (keywords.some(k => t.includes(k))) return cat;
@@ -767,7 +694,7 @@ function detectCategory(text){
   return null;
 }
 
-// ========== ORÃAMENTO / META / REGRAS ==========
+// ========== ORÇAMENTO / META / REGRAS ==========
 function checkBudgetAlerts(){
   try {
     const budget = JSON.parse(localStorage.getItem('financia_budget')||'{}');
@@ -778,8 +705,8 @@ function checkBudgetAlerts(){
     const txs = JSON.parse(localStorage.getItem(userKey)||'[]');
     const spent = txs.filter(t=>t.type==='gasto').reduce((a,t)=>a+Number(t.amount||0),0);
     const pct = (spent/budget.total)*100;
-    if (pct >= 100 && !sessionStorage.getItem('__alert100')) { showToast('VocÃª ultrapassou o orÃ§amento mensal!','error',5000); sessionStorage.setItem('__alert100','1'); }
-    else if (pct >= 80 && !sessionStorage.getItem('__alert80')) { showToast('AtenÃ§Ã£o: vocÃª jÃ¡ usou '+Math.round(pct)+'% do orÃ§amento.','warning',4500); sessionStorage.setItem('__alert80','1'); }
+    if (pct >= 100 && !sessionStorage.getItem('__alert100')) { showToast('Você ultrapassou o orçamento mensal!','error',5000); sessionStorage.setItem('__alert100','1'); }
+    else if (pct >= 80 && !sessionStorage.getItem('__alert80')) { showToast('Atenção: você já usou '+Math.round(pct)+'% do orçamento.','warning',4500); sessionStorage.setItem('__alert80','1'); }
   } catch(e){}
 }
 
@@ -787,7 +714,7 @@ function metaKey(e){return 'financia_meta_'+hashStr(e)}
 function loadMeta(e){return JSON.parse(localStorage.getItem(metaKey(e))||'null')}
 function saveMeta_(){localStorage.setItem(metaKey(currentUser.email),JSON.stringify(currentMeta))}
 
-// ========== RENDERIZAÃÃES ==========
+// ========== RENDERIZAÇÕES ==========
 function getFilteredTransactions(){
   let f = transactions;
   if(activeFilter==='gastos') f=f.filter(t=>t.type==='gasto');
@@ -820,7 +747,7 @@ function renderSummary(){
   document.getElementById('balance').textContent=fmt(bal);
   document.getElementById('balance').className='card-value '+(bal>=0?'green':'red');
   
-  // VariaÃ§Ã£o percentual em relaÃ§Ã£o ao mÃªs anterior
+  // Variação percentual em relação ao mês anterior
   const now = new Date();
   const cm = now.getMonth(), cy = now.getFullYear();
   const prevMonth = new Date();
@@ -836,24 +763,24 @@ function renderSummary(){
   const fmtPct = (curr, prev) => {
     if (!prev) return '';
     const diff = ((curr - prev)/prev*100).toFixed(1);
-    const arrow = diff > 0 ? 'â' : 'â';
+    const arrow = diff > 0 ? '↑' : '↓';
     return ` (${arrow}${Math.abs(diff)}%)`;
   };
-  document.getElementById('countIn').textContent = `${filtered.filter(t=>t.type==='receita').length} lanÃ§amentos${fmtPct(tI, prevIn)}`;
-  document.getElementById('countOut').textContent = `${filtered.filter(t=>t.type==='gasto').length} lanÃ§amentos${fmtPct(tO, prevOut)}`;
-  document.getElementById('balanceSub').textContent = bal>=0?'Positivo ð¢':'Negativo ð´';
+  document.getElementById('countIn').textContent = `${filtered.filter(t=>t.type==='receita').length} lançamentos${fmtPct(tI, prevIn)}`;
+  document.getElementById('countOut').textContent = `${filtered.filter(t=>t.type==='gasto').length} lançamentos${fmtPct(tO, prevOut)}`;
+  document.getElementById('balanceSub').textContent = bal>=0?'Positivo 🟢':'Negativo 🔴';
   animateBalanceUpdate();
 }
 
 function renderList(){
   const list=document.getElementById('txList');
   let filtered=getFilteredTransactions();
-  if(!filtered.length){ list.innerHTML='<div class="empty">Nenhum lanÃ§amento encontrado.</div>'; return; }
+  if(!filtered.length){ list.innerHTML='<div class="empty">Nenhum lançamento encontrado.</div>'; return; }
   list.innerHTML = filtered.map(t=>{
     const[color,bg]=CAT_COLORS[t.category]||CAT_COLORS['Outros'];
-    const icon=CAT_ICONS[t.category]||'ð';
-    const recBadge=t.isRecurring?'<span class="recurring-badge">ð fixo</span>':'';
-    return '<div class="tx-item" id="tx-'+t.id+'"><div class="tx-icon" style="background:'+bg+'">'+icon+'</div><div class="tx-info"><div class="tx-desc">'+t.desc+recBadge+'</div><div class="tx-meta">'+humanizeDate(t.date)+' Â· <span class="cat-badge" style="background:'+bg+';color:'+color+'">'+t.category+'</span></div></div><div class="tx-amount '+(t.type==='receita'?'pos':'neg')+'">'+(t.type==='receita'?'+':'-')+' R$ '+t.amount.toLocaleString('pt-BR',{minimumFractionDigits:2})+'</div><div class="tx-actions"><button class="tx-btn" onclick="editTx(\'+t.id+\')">âï¸</button><button class="tx-btn danger" onclick="delTx(\'+t.id+\')">â</button></div></div>';
+    const icon=CAT_ICONS[t.category]||'📌';
+    const recBadge=t.isRecurring?'<span class="recurring-badge">🔄 fixo</span>':'';
+    return '<div class="tx-item" id="tx-'+t.id+'"><div class="tx-icon" style="background:'+bg+'">'+icon+'</div><div class="tx-info"><div class="tx-desc">'+t.desc+recBadge+'</div><div class="tx-meta">'+humanizeDate(t.date)+' · <span class="cat-badge" style="background:'+bg+';color:'+color+'">'+t.category+'</span></div></div><div class="tx-amount '+(t.type==='receita'?'pos':'neg')+'">'+(t.type==='receita'?'+':'-')+' R$ '+t.amount.toLocaleString('pt-BR',{minimumFractionDigits:2})+'</div><div class="tx-actions"><button class="tx-btn" onclick="editTx(\'+t.id+\')">✏️</button><button class="tx-btn danger" onclick="delTx(\'+t.id+\')">✕</button></div></div>';
   }).join('');
   applyDateHumanization();
 }
@@ -874,8 +801,8 @@ function humanizeDate(input) {
   const meses = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
   if (diffDays === 0) return 'hoje';
   if (diffDays === 1) return 'ontem';
-  if (diffDays === -1) return 'amanhÃ£';
-  if (diffDays > 1 && diffDays <= 6) return 'hÃ¡ ' + diffDays + ' dias';
+  if (diffDays === -1) return 'amanhã';
+  if (diffDays > 1 && diffDays <= 6) return 'há ' + diffDays + ' dias';
   if (diffDays < -1 && diffDays >= -6) return 'em ' + (-diffDays) + ' dias';
   return d.getDate() + ' ' + meses[d.getMonth()] + (d.getFullYear() !== today.getFullYear() ? ' ' + d.getFullYear() : '');
 }
@@ -904,7 +831,7 @@ function applyDateHumanization(){
 function renderChart(){
   const chart=document.getElementById('barsChart');
   const gastos=getFilteredTransactions().filter(t=>t.type==='gasto');
-  if(!gastos.length){ chart.innerHTML='<div style="color:var(--muted);font-size:12px;align-self:center;width:100%;text-align:center;">Adicione gastos para ver o grÃ¡fico</div>'; return; }
+  if(!gastos.length){ chart.innerHTML='<div style="color:var(--muted);font-size:12px;align-self:center;width:100%;text-align:center;">Adicione gastos para ver o gráfico</div>'; return; }
   const bycat={};
   gastos.forEach(t=>{ bycat[t.category]=(bycat[t.category]||0)+t.amount });
   const entries=Object.entries(bycat).sort((a,b)=>b[1]-a[1]).slice(0,7);
@@ -912,7 +839,7 @@ function renderChart(){
   chart.innerHTML=entries.map(([cat,val])=>{
     const[color]=CAT_COLORS[cat]||CAT_COLORS['Outros'];
     const pct=Math.round((val/max)*100);
-    return `<div class="bar-wrap"><div style="font-size:9px;color:var(--muted)">${val>=1000?(val/1000).toFixed(1)+'k':Math.round(val)}</div><div class="bar-fill" style="height:${pct}%;background:${color};opacity:.8"></div><div class="bar-label">${CAT_ICONS[cat]||'ð'}</div></div>`;
+    return `<div class="bar-wrap"><div style="font-size:9px;color:var(--muted)">${val>=1000?(val/1000).toFixed(1)+'k':Math.round(val)}</div><div class="bar-fill" style="height:${pct}%;background:${color};opacity:.8"></div><div class="bar-label">${CAT_ICONS[cat]||'📌'}</div></div>`;
   }).join('');
 }
 
@@ -928,7 +855,7 @@ function renderBalanceChart(){
     ctx.fillStyle='rgba(90,90,122,.5)';
     ctx.font='12px Inter,sans-serif';
     ctx.textAlign='center';
-    ctx.fillText('Adicione lanÃ§amentos para ver a evoluÃ§Ã£o',canvas.width/2,canvas.height/2);
+    ctx.fillText('Adicione lançamentos para ver a evolução',canvas.width/2,canvas.height/2);
     return;
   }
   const sorted = [...filtered].sort((a,b)=>{
@@ -985,20 +912,20 @@ function renderBalanceChart(){
 
 function renderBudgets(){
   const list=document.getElementById('budgetList');
-  if(!Object.keys(budgets).length){ list.innerHTML='<div class="empty">Nenhum orÃ§amento definido.</div>'; return; }
+  if(!Object.keys(budgets).length){ list.innerHTML='<div class="empty">Nenhum orçamento definido.</div>'; return; }
   list.innerHTML=Object.entries(budgets).map(([category,limit])=>{
     const spent=transactions.filter(t=>t.type==='gasto'&&t.category===category).reduce((s,t)=>s+t.amount,0);
     const pct=Math.round((spent/limit)*100);
     let barColor='var(--accent)';
     if(pct>=100)barColor='var(--danger)';
     else if(pct>=80)barColor='#ffb347';
-    return `<div class="budget-item"><div style="display:flex;justify-content:space-between;align-items:center"><div class="budget-name">${CAT_ICONS[category]||'ð'} ${category}</div><button style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:12px" onclick="deleteBudget('${category}')">X</button></div><div class="budget-bar-wrap"><div class="budget-bar-fill" style="width:${Math.min(pct,100)}%;background:${barColor}"></div></div><div class="budget-info"><span>R$ ${spent.toFixed(2)} / R$ ${limit.toFixed(2)}</span><span>${pct}%</span></div></div>`;
+    return `<div class="budget-item"><div style="display:flex;justify-content:space-between;align-items:center"><div class="budget-name">${CAT_ICONS[category]||'📌'} ${category}</div><button style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:12px" onclick="deleteBudget('${category}')">X</button></div><div class="budget-bar-wrap"><div class="budget-bar-fill" style="width:${Math.min(pct,100)}%;background:${barColor}"></div></div><div class="budget-info"><span>R$ ${spent.toFixed(2)} / R$ ${limit.toFixed(2)}</span><span>${pct}%</span></div></div>`;
   }).join('');
 }
 
 function renderMeta(){
   const el = document.getElementById('metaContent');
-  if(!currentMeta){el.innerHTML='<div class="meta-empty">Nenhuma meta definida. Defina quanto quer guardar este mÃªs.</div>';return;}
+  if(!currentMeta){el.innerHTML='<div class="meta-empty">Nenhuma meta definida. Defina quanto quer guardar este mês.</div>';return;}
   const now = new Date();
   const cm = now.getMonth(), cy = now.getFullYear();
   const monthTx = transactions.filter(t=>{
@@ -1011,7 +938,7 @@ function renderMeta(){
   const pct = Math.min(100, Math.round((guardado/currentMeta)*100));
   const fmt = v => `R$ ${v.toLocaleString('pt-BR',{minimumFractionDigits:2})}`;
   const cor = pct>=100?'#7fff6e':pct>=60?'#ffb347':'#3de8ff';
-  const emoji = pct>=100?'ð':pct>=60?'ð':'ðª';
+  const emoji = pct>=100?'🏆':pct>=60?'📈':'💪';
   el.innerHTML = `
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
       <span style="font-size:12px;color:var(--text)">${emoji} Meta: <b style="color:${cor}">${fmt(currentMeta)}</b></span>
@@ -1022,7 +949,7 @@ function renderMeta(){
       <span>Guardado: <span class="meta-val" style="color:${cor}">${fmt(guardado)}</span></span>
       <span><span class="meta-val">${pct}%</span> da meta</span>
     </div>
-    ${pct>=100?`<div style="margin-top:8px;font-size:11px;color:#7fff6e;text-align:center">ð Meta atingida! ParabÃ©ns!</div>`:''}
+    ${pct>=100?`<div style="margin-top:8px;font-size:11px;color:#7fff6e;text-align:center">🏆 Meta atingida! Parabéns!</div>`:''}
   `;
 }
 
@@ -1038,7 +965,7 @@ function renderAll(){
 }
 
 // ========== REGRA 50/30/20 ==========
-const RULE_MAP={necessidades:['Casa','AlimentaÃ§Ã£o','SaÃºde','Transporte'],desejos:['Lazer','CartÃ£o']};
+const RULE_MAP={necessidades:['Casa','Alimentação','Saúde','Transporte'],desejos:['Lazer','Cartão']};
 const RULE_COLORS={necessidades:'#3de8ff',desejos:'#a78bfa',investimentos:'#7fff6e'};
 const RULE_IDEAL={necessidades:50,desejos:30,investimentos:20};
 const RULE_LABELS={necessidades:'Necessidades',desejos:'Desejos',investimentos:'Investimentos'};
@@ -1059,7 +986,7 @@ function renderRuleChart(){
     ctx.clearRect(0,0,160,160);
     ctx.beginPath(); ctx.arc(80,80,60,0,Math.PI*2); ctx.strokeStyle='rgba(255,255,255,.08)'; ctx.lineWidth=16; ctx.stroke();
     scoreEl.textContent='--';
-    detailsEl.innerHTML='<div style="color:var(--muted);font-size:12px;text-align:center;padding:20px 0">Adicione receitas e gastos para ver a anÃ¡lise</div>';
+    detailsEl.innerHTML='<div style="color:var(--muted);font-size:12px;text-align:center;padding:20px 0">Adicione receitas e gastos para ver a análise</div>';
     feedbackEl.style.display='none';
     return;
   }
@@ -1107,7 +1034,7 @@ function renderRuleChart(){
     const pct=actual[seg];
     const ideal=RULE_IDEAL[seg];
     const val=seg==='necessidades'?necessidades:seg==='desejos'?desejos:investimentos;
-    barsHTML+=`<div class="rule-bar-item"><div class="rule-bar-label"><span class="rule-cat-name">${RULE_LABELS[seg]}</span><span class="rule-cat-pct">${pct.toFixed(1)}% (ideal: ${ideal}%) Â· ${fmt(val)}</span></div><div class="rule-bar-track"><div class="rule-bar-actual" style="width:${Math.min(pct,100)}%;background:${RULE_COLORS[seg]}"></div><div class="rule-bar-ideal" style="left:${ideal}%"></div></div></div>`;
+    barsHTML+=`<div class="rule-bar-item"><div class="rule-bar-label"><span class="rule-cat-name">${RULE_LABELS[seg]}</span><span class="rule-cat-pct">${pct.toFixed(1)}% (ideal: ${ideal}%) · ${fmt(val)}</span></div><div class="rule-bar-track"><div class="rule-bar-actual" style="width:${Math.min(pct,100)}%;background:${RULE_COLORS[seg]}"></div><div class="rule-bar-ideal" style="left:${ideal}%"></div></div></div>`;
   });
   detailsEl.innerHTML=barsHTML;
   feedbackEl.style.display='block';
@@ -1118,18 +1045,18 @@ function renderRuleChart(){
     const diff=pct-ideal;
     const name=RULE_LABELS[seg];
     if(seg==='investimentos'){
-      if(Math.abs(diff)<3)feedbackHTML+=`<div class="rule-feedback-item"><span class="emoji">â</span><b>${name}</b>: ${pct.toFixed(1)}% â Dentro do ideal!</div>`;
-      else if(diff>0)feedbackHTML+=`<div class="rule-feedback-item"><span class="emoji">ð</span><b>${name}</b>: ${pct.toFixed(1)}% â ${diff.toFixed(1)}pp acima. Excelente!</div>`;
-      else feedbackHTML+=`<div class="rule-feedback-item"><span class="emoji">â ï¸</span><b>${name}</b>: ${pct.toFixed(1)}% â ${Math.abs(diff).toFixed(1)}pp abaixo do ideal. Tente investir mais.</div>`;
+      if(Math.abs(diff)<3)feedbackHTML+=`<div class="rule-feedback-item"><span class="emoji">✅</span><b>${name}</b>: ${pct.toFixed(1)}% — Dentro do ideal!</div>`;
+      else if(diff>0)feedbackHTML+=`<div class="rule-feedback-item"><span class="emoji">🚀</span><b>${name}</b>: ${pct.toFixed(1)}% — ${diff.toFixed(1)}pp acima. Excelente!</div>`;
+      else feedbackHTML+=`<div class="rule-feedback-item"><span class="emoji">⚠️</span><b>${name}</b>: ${pct.toFixed(1)}% — ${Math.abs(diff).toFixed(1)}pp abaixo do ideal. Tente investir mais.</div>`;
     } else {
-      if(Math.abs(diff)<3)feedbackHTML+=`<div class="rule-feedback-item"><span class="emoji">â</span><b>${name}</b>: ${pct.toFixed(1)}% â Dentro do ideal!</div>`;
-      else if(diff>0)feedbackHTML+=`<div class="rule-feedback-item"><span class="emoji">â ï¸</span><b>${name}</b>: ${pct.toFixed(1)}% â ${diff.toFixed(1)}pp acima do ideal. Tente reduzir.</div>`;
-      else feedbackHTML+=`<div class="rule-feedback-item"><span class="emoji">ð¡</span><b>${name}</b>: ${pct.toFixed(1)}% â ${Math.abs(diff).toFixed(1)}pp abaixo. Boa margem!</div>`;
+      if(Math.abs(diff)<3)feedbackHTML+=`<div class="rule-feedback-item"><span class="emoji">✅</span><b>${name}</b>: ${pct.toFixed(1)}% — Dentro do ideal!</div>`;
+      else if(diff>0)feedbackHTML+=`<div class="rule-feedback-item"><span class="emoji">⚠️</span><b>${name}</b>: ${pct.toFixed(1)}% — ${diff.toFixed(1)}pp acima do ideal. Tente reduzir.</div>`;
+      else feedbackHTML+=`<div class="rule-feedback-item"><span class="emoji">💡</span><b>${name}</b>: ${pct.toFixed(1)}% — ${Math.abs(diff).toFixed(1)}pp abaixo. Boa margem!</div>`;
     }
   });
-  if(score>=80)feedbackHTML+=`<div class="rule-feedback-item" style="margin-top:8px"><span class="emoji">ð</span><b>ParabÃ©ns!</b> DistribuiÃ§Ã£o muito prÃ³xima do ideal.</div>`;
-  else if(score>=50)feedbackHTML+=`<div class="rule-feedback-item" style="margin-top:8px"><span class="emoji">ð</span><b>AtenÃ§Ã£o:</b> Alguns ajustes necessÃ¡rios.</div>`;
-  else feedbackHTML+=`<div class="rule-feedback-item" style="margin-top:8px"><span class="emoji">ð¨</span><b>Alerta:</b> DistribuiÃ§Ã£o distante do ideal. Reorganize seu orÃ§amento.</div>`;
+  if(score>=80)feedbackHTML+=`<div class="rule-feedback-item" style="margin-top:8px"><span class="emoji">🏆</span><b>Parabéns!</b> Distribuição muito próxima do ideal.</div>`;
+  else if(score>=50)feedbackHTML+=`<div class="rule-feedback-item" style="margin-top:8px"><span class="emoji">📊</span><b>Atenção:</b> Alguns ajustes necessários.</div>`;
+  else feedbackHTML+=`<div class="rule-feedback-item" style="margin-top:8px"><span class="emoji">🚨</span><b>Alerta:</b> Distribuição distante do ideal. Reorganize seu orçamento.</div>`;
   feedbackContent.innerHTML=feedbackHTML;
 }
 
@@ -1159,7 +1086,7 @@ async function addTransaction(){
   btn.disabled=true;
   btn.innerHTML='<span class="loading"></span>';
   try{
-    const system=`VocÃª Ã© um parser financeiro. Responda SOMENTE com JSON vÃ¡lido: {"desc":"descriÃ§Ã£o curta","amount":0.00,"type":"gasto ou receita","category":"uma de: AlimentaÃ§Ã£o, CartÃ£o, Casa, SaÃºde, Transporte, Lazer, Receita, Outros"} â amount sempre positivo. type="receita" para salÃ¡rio/entrada; "gasto" para tudo mais. Exemplos: "paguei condomÃ­nio" â Casa; "comprei remÃ©dio" â SaÃºde; "uber para o trabalho" â Transporte; "salÃ¡rio caiu" â Receita. Use o bom senso.`;
+    const system=`Você é um parser financeiro. Responda SOMENTE com JSON válido: {"desc":"descrição curta","amount":0.00,"type":"gasto ou receita","category":"uma de: Alimentação, Cartão, Casa, Saúde, Transporte, Lazer, Receita, Outros"} — amount sempre positivo. type="receita" para salário/entrada; "gasto" para tudo mais. Exemplos: "paguei condomínio" → Casa; "comprei remédio" → Saúde; "uber para o trabalho" → Transporte; "salário caiu" → Receita. Use o bom senso.`;
     const raw=await gemini(text,system);
     const parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());
     if(parsed&&parsed.amount>0){
@@ -1178,16 +1105,16 @@ async function addTransaction(){
       addXP(10);
       checkTxAchievement(transactions.length);
       renderAll();
-      showToast(isRec?'LanÃ§amento fixo adicionado! ð':'LanÃ§amento adicionado!','success');
+      showToast(isRec?'Lançamento fixo adicionado! 🔄':'Lançamento adicionado!','success');
     }
   }catch(e){
     if(!e.message.includes('API Error')){
-      showToast('NÃ£o consegui interpretar. Alternando para modo manual.','error',3000);
+      showToast('Não consegui interpretar. Alternando para modo manual.','error',3000);
       switchInputMode('manual');
     }
   }
   btn.disabled=false;
-  btn.textContent='+ LanÃ§ar';
+  btn.textContent='+ Lançar';
 }
 
 async function askAI(){
@@ -1203,26 +1130,26 @@ async function askAI(){
   msgs.innerHTML+=`<div class="ai-bubble ai" id="${loadId}"><div class="ai-label">ASSISTENTE</div><span class="loading"></span></div>`;
   msgs.scrollTop=msgs.scrollHeight;
   const summary=buildSummary();
-  const system=`VocÃª Ã© um assistente financeiro pessoal brasileiro, direto e Ãºtil. Responda em portuguÃªs de forma concisa. LanÃ§amentos do usuÃ¡rio ${currentUser.name}:\n\n${summary}`;
+  const system=`Você é um assistente financeiro pessoal brasileiro, direto e útil. Responda em português de forma concisa. Lançamentos do usuário ${currentUser.name}:\n\n${summary}`;
   try{
     const answer=await gemini(q,system);
-    document.getElementById(loadId).innerHTML=`<div class="ai-label">ASSISTENTE</div>${answer||'NÃ£o consegui processar.'}`;
+    document.getElementById(loadId).innerHTML=`<div class="ai-label">ASSISTENTE</div>${answer||'Não consegui processar.'}`;
   }catch(e){
-    document.getElementById(loadId).innerHTML=`<div class="ai-label">ASSISTENTE</div>Desculpe, nÃ£o consegui processar no momento.`;
+    document.getElementById(loadId).innerHTML=`<div class="ai-label">ASSISTENTE</div>Desculpe, não consegui processar no momento.`;
   }
   msgs.scrollTop=msgs.scrollHeight;
   btn.disabled=false;
 }
 
 function buildSummary(){
-  if(!transactions.length) return 'Nenhum lanÃ§amento ainda.';
+  if(!transactions.length) return 'Nenhum lançamento ainda.';
   const tI=transactions.filter(t=>t.type==='receita').reduce((s,t)=>s+t.amount,0);
   const tO=transactions.filter(t=>t.type==='gasto').reduce((s,t)=>s+t.amount,0);
   const lines=transactions.map(t=>`[${t.date}] ${t.type==='receita'?'+':'-'}R$${t.amount.toFixed(2)} | ${t.desc} | ${t.category}`);
   return `Receitas: R$${tI.toFixed(2)} | Gastos: R$${tO.toFixed(2)} | Saldo: R$${(tI-tO).toFixed(2)}\n\n${lines.join('\n')}`;
 }
 
-// ========== MODAIS E AÃÃES ==========
+// ========== MODAIS E AÇÕES ==========
 function confirmDelete(title, message, onConfirm){
   const modal = document.getElementById('confirmModal');
   document.getElementById('confirmTitle').textContent = title;
@@ -1236,13 +1163,13 @@ function confirmDelete(title, message, onConfirm){
 }
 
 function delTx(id){
-  confirmDelete('Remover lanÃ§amento', 'Tem certeza que deseja excluir este lanÃ§amento?', ()=>{
+  confirmDelete('Remover lançamento', 'Tem certeza que deseja excluir este lançamento?', ()=>{
     transactions=transactions.filter(t=>t.id!==id);
     saveTx(currentUser.email,transactions);
     addXP(10);
     checkTxAchievement(transactions.length);
     renderAll();
-    showToast('LanÃ§amento removido.','success');
+    showToast('Lançamento removido.','success');
   });
 }
 
@@ -1254,8 +1181,8 @@ function editTx(id){
   if(existing)existing.remove();
   const editForm=document.createElement('div');
   editForm.className='tx-edit-form active';
-  const g=['AlimentaÃ§Ã£o','CartÃ£o','Casa','SaÃºde','Transporte','Lazer','Outros'];
-  const r=['SalÃ¡rio','Freelance','Adiantamento','Investimento','Presente','Outros'];
+  const g=['Alimentação','Cartão','Casa','Saúde','Transporte','Lazer','Outros'];
+  const r=['Salário','Freelance','Adiantamento','Investimento','Presente','Outros'];
   const cats=tx.type==='receita'?r:g;
   const catOptions=cats.map(c=>`<option value="${c}" ${tx.category===c?'selected':''}>${c}</option>`).join('');
   editForm.innerHTML=`
@@ -1274,13 +1201,13 @@ function saveTxEdit(id){
   const amount=parseFloat(document.getElementById(`edit-amount-${id}`).value);
   const type=document.getElementById(`edit-type-${id}`).value;
   const category=document.getElementById(`edit-cat-${id}`).value;
-  if(!desc||!amount||amount<=0) return showToast('Dados invÃ¡lidos.','error');
+  if(!desc||!amount||amount<=0) return showToast('Dados inválidos.','error');
   tx.desc=desc; tx.amount=amount; tx.type=type; tx.category=category;
   saveTx(currentUser.email,transactions);
   addXP(10);
   checkTxAchievement(transactions.length);
   renderAll();
-  showToast('LanÃ§amento atualizado!','success');
+  showToast('Lançamento atualizado!','success');
 }
 
 function cancelEdit(id){ const form=document.querySelector(`#tx-${id} .tx-edit-form`); if(form)form.remove(); }
@@ -1296,10 +1223,10 @@ function saveBudget(){
   saveBudgets(currentUser.email,budgets);
   closeBudgetModal();
   renderBudgets();
-  showToast('OrÃ§amento salvo!','success');
+  showToast('Orçamento salvo!','success');
 }
 
-function deleteBudget(category){ delete budgets[category]; saveBudgets(currentUser.email,budgets); renderBudgets(); showToast('OrÃ§amento removido.','success'); }
+function deleteBudget(category){ delete budgets[category]; saveBudgets(currentUser.email,budgets); renderBudgets(); showToast('Orçamento removido.','success'); }
 
 function openMetaModal(){
   document.getElementById('metaModal').classList.add('active');
@@ -1310,7 +1237,7 @@ function closeMetaModal(){ document.getElementById('metaModal').classList.remove
 
 function saveMeta(){
   const val = parseFloat(document.getElementById('metaValue').value);
-  if(!val||val<=0) return showToast('Digite um valor vÃ¡lido.','error');
+  if(!val||val<=0) return showToast('Digite um valor válido.','error');
   currentMeta = val;
   saveMeta_();
   closeMetaModal();
@@ -1338,7 +1265,7 @@ function saveProfile(){
   showToast('Perfil atualizado!','success');
 }
 
-// ========== GAMIFICAÃÃO ==========
+// ========== GAMIFICAÇÃO ==========
 function xpKey(e){return 'financia_xp_'+hashStr(e)}
 function streakKey(e){return 'financia_uxstreak_'+hashStr(e)}
 function loadXP(e){return JSON.parse(localStorage.getItem(xpKey(e))||'{"xp":0,"level":1,"totalTx":0}')}
@@ -1361,7 +1288,7 @@ function addXP(amount){
 function showXPToast(amount){
   const t=document.createElement('div');
   t.className='xp-toast';
-  t.innerHTML='+'+amount+' XP <span class="xp-star">â­</span>';
+  t.innerHTML='+'+amount+' XP <span class="xp-star">⭐</span>';
   document.body.appendChild(t);
   setTimeout(()=>{t.classList.add('show')},10);
   setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),400)},2000);
@@ -1380,21 +1307,21 @@ function updateStreakOnAction(){
 function checkStreakAchievement(streak){
   const milestones=[3,7,14,30];
   if(milestones.includes(streak)){
-    const icons={3:'ð¥',7:'ð¥',14:'â¡',30:'ð'};
-    showAchievementPopup(icons[streak]+' '+streak+' dias seguidos!','SequÃªncia IncrÃ­vel');
+    const icons={3:'🔥',7:'💥',14:'⚡',30:'🏆'};
+    showAchievementPopup(icons[streak]+' '+streak+' dias seguidos!','Sequência Incrível');
   }
 }
 function checkTxAchievement(total){
   const milestones=[1,5,10,25,50];
   if(milestones.includes(total)){
-    const labels={1:'Primeiro LanÃ§amento! ð',5:'5 LanÃ§amentos! ðª',10:'10 LanÃ§amentos! ð',25:'25 LanÃ§amentos! ð',50:'50 LanÃ§amentos! ð'};
+    const labels={1:'Primeiro Lançamento! 🎉',5:'5 Lançamentos! 💪',10:'10 Lançamentos! 🚀',25:'25 Lançamentos! 🌟',50:'50 Lançamentos! 🏆'};
     showAchievementPopup(labels[total],'Conquista Desbloqueada');
   }
 }
 function showAchievementPopup(title,sub){
   const pop=document.createElement('div');
   pop.className='achievement-pop';
-  pop.innerHTML='<div class="achiev-icon">ð</div><div class="achiev-title">'+sub+'</div><div class="achiev-desc">'+title+'</div>';
+  pop.innerHTML='<div class="achiev-icon">🏅</div><div class="achiev-title">'+sub+'</div><div class="achiev-desc">'+title+'</div>';
   document.body.appendChild(pop);
   setTimeout(()=>{pop.classList.add('show')},10);
   setTimeout(()=>{pop.classList.remove('show');setTimeout(()=>pop.remove(),500)},3500);
@@ -1420,7 +1347,7 @@ function renderGamification(){
   const pct=Math.round((prog/100)*100);
   const el=document.getElementById('gamification-bar');
   if(!el)return;
-  el.innerHTML='<div class="gam-level-badge">Nv.'+lvl+'</div><div class="gam-xp-wrap"><div class="gam-xp-bar" style="width:'+pct+'%"></div></div><div class="gam-xp-label">'+prog+'/100 XP</div>'+(streakData.streak>0?'<div class="gam-streak">ð¥'+streakData.streak+'</div>':'');
+  el.innerHTML='<div class="gam-level-badge">Nv.'+lvl+'</div><div class="gam-xp-wrap"><div class="gam-xp-bar" style="width:'+pct+'%"></div></div><div class="gam-xp-label">'+prog+'/100 XP</div>'+(streakData.streak>0?'<div class="gam-streak">🔥'+streakData.streak+'</div>':'');
 }
 
 // ========== RECORRENTES ==========
@@ -1446,25 +1373,40 @@ function checkAndApplyRecurring(){
   localStorage.setItem(appliedKey,'1');
 }
 
-// ========== AUTENTICAÃÃO ==========
+// ========== AUTENTICAÇÃO ==========
 function switchTab(tab){document.getElementById('loginForm').style.display=tab==='login'?'block':'none';document.getElementById('registerForm').style.display=tab==='register'?'block':'none';document.querySelectorAll('.auth-tab').forEach((el,i)=>el.classList.toggle('active',(tab==='login')===(i===0)));showError('')}
 function showError(msg){const el=document.getElementById('authError');el.textContent=msg;el.classList.toggle('show',!!msg)}
-function doRegister(){const name=document.getElementById('regName').value.trim();const email=document.getElementById('regEmail').value.trim().toLowerCase();const pass=document.getElementById('regPass').value;const pass2=document.getElementById('regPass2').value;if(!name)return showError('Digite seu nome.');if(!email||!email.includes('@'))return showError('E-mail invÃ¡lido.');if(pass.length<6)return showError('Senha deve ter no mÃ­nimo 6 caracteres.');if(pass!==pass2)return showError('As senhas nÃ£o coincidem.');const users=getUsers();if(users[email])return showError('E-mail jÃ¡ cadastrado. FaÃ§a login.');users[email]={name,passHash:hashStr(pass+email)};saveUsers(users);const user={email,name};saveSession(user);startApp(user)}
-function showAuthFromLanding(tab){const ls=document.getElementById('landingScreen');const as=document.getElementById('authScreen');if(ls)ls.classList.remove('active');if(as)as.classList.add('active');if(tab==='register'){const regBtn=document.querySelector('[onclick*="register"]');if(regBtn)regBtn.click();}else{const loginBtn=document.querySelector('[onclick*="login"]');if(loginBtn)loginBtn.click();}}
-function doLogin(){const email=document.getElementById('loginEmail').value.trim().toLowerCase();const pass=document.getElementById('loginPass').value;if(!email||!pass)return showError('Preencha todos os campos.');const users=getUsers();const u=users[email];if(!u)return showError('E-mail nÃ£o encontrado.');if(u.passHash!==hashStr(pass+email))return showError('Senha incorreta.');const user={email,name:u.name};saveSession(user);startApp(user)}
-function doLogout(){clearSession();currentUser=null;transactions=[];budgets={};document.getElementById('landingScreen').classList.add('active');document.getElementById('appScreen').classList.remove('active');document.getElementById('loginEmail').value='';document.getElementById('loginPass').value='';showError('');document.body.classList.remove('light-mode');}
-function initTheme(){const t=localStorage.getItem('financia_theme');if(t==='light')document.body.classList.add('light-mode');else document.body.classList.remove('light-mode');}
-function toggleTheme(){const isLight=document.body.classList.toggle('light-mode');localStorage.setItem('financia_theme',isLight?'light':'dark');const btn=document.getElementById('themeToggle');if(btn)btn.textContent=isLight?'☀️':'🌙';try{renderBalanceChart();}catch(e){}}
-function startApp(user){document.getElementById('landingScreen')?.classList.remove('active');document.getElementById('authScreen')?.classList.remove('active');currentUser=user;transactions=loadTx(user.email);budgets=loadBudgets(user.email);currentMeta=loadMeta(user.email);checkAndApplyRecurring();renderGamification();document.getElementById('userPill').textContent=user.name||user.email;document.getElementById('authScreen').classList.remove('active');document.getElementById('appScreen').classList.add('active');const _savedTheme=localStorage.getItem('financia_theme');if(_savedTheme==='light')document.body.classList.add('light-mode');else document.body.classList.remove('light-mode');document.getElementById('aiMessages').innerHTML=`<div class="ai-bubble ai"><div class="ai-label">ASSISTENTE</div>OlÃ¡, ${user.name}! Lance seus gastos acima e me pergunte o que quiser sobre suas finanÃ§as.</div>`;renderAll()}
-function switchInputMode(mode){inputMode=mode;document.getElementById('modeIA').classList.toggle('active',mode==='ia');document.getElementById('modeManual').classList.toggle('active',mode==='manual');const mf=document.querySelector('.manual-form');const ir=document.querySelector('.input-row');const cr=document.querySelector('.categories-row');if(mode==='ia'){if(ir)ir.style.display='flex';if(mf)mf.classList.remove('active');if(cr)cr.style.display='flex';}else{if(ir)ir.style.display='none';if(mf)mf.classList.add('active');}const inp=document.querySelector('.input-natural');if(inp)inp.value='';document.querySelectorAll('.cat-chip').forEach(c=>{c.style.borderColor='';c.style.color='';c.classList.remove('active');});const hint=document.querySelector('.hint span');if(hint)hint.style.color='';}
-function addManualTransaction(){const desc=document.getElementById('manualDesc').value.trim();const amount=parseFloat(document.getElementById('manualAmount').value);const type=document.getElementById('manualType').value;const category=document.getElementById('manualCategory').value;if(!desc||!amount||amount<=0||!currentUser)return showToast('Preencha todos os campos corretamente.','error');const isRec=document.getElementById('isRecurringManual').checked;const tx={id:Date.now(),desc,amount,type,category,date:new Date().toLocaleDateString('pt-BR'),original:desc,isRecurring:isRec};if(isRec){const rec=loadRecurring(currentUser.email);rec.push({id:tx.id,desc,amount,type,category});saveRecurring(currentUser.email,rec);}transactions.unshift(tx);saveTx(currentUser.email,transactions);document.getElementById('manualDesc').value='';document.getElementById('manualAmount').value='';document.getElementById('manualType').value='gasto';document.getElementById('isRecurringManual').checked=false;updateManualCategories();addXP(10);checkTxAchievement(transactions.length);renderAll();showToast(isRec?'LanÃ§amento fixo adicionado! ð':'LanÃ§amento adicionado!','success')}
+function doRegister(){const name=document.getElementById('regName').value.trim();const email=document.getElementById('regEmail').value.trim().toLowerCase();const pass=document.getElementById('regPass').value;const pass2=document.getElementById('regPass2').value;if(!name)return showError('Digite seu nome.');if(!email||!email.includes('@'))return showError('E-mail inválido.');if(pass.length<6)return showError('Senha deve ter no mínimo 6 caracteres.');if(pass!==pass2)return showError('As senhas não coincidem.');const users=getUsers();if(users[email])return showError('E-mail já cadastrado. Faça login.');users[email]={name,passHash:hashStr(pass+email)};saveUsers(users);const user={email,name};saveSession(user);startApp(user)}
+function showAuthFromLanding(tab){
+  document.getElementById('landingScreen').classList.remove('active');
+  document.getElementById('authScreen').classList.add('active');
+  if(tab==='signup'){
+    var st=document.getElementById('signupTab');
+    var lt=document.getElementById('loginTab');
+    var sf=document.getElementById('signupForm');
+    var lf=document.getElementById('loginForm');
+    if(st)st.classList.add('active');
+    if(lt)lt.classList.remove('active');
+    if(sf)sf.classList.add('active');
+    if(lf)lf.classList.remove('active');
+  }
+}
+function doLogin(){const email=document.getElementById('loginEmail').value.trim().toLowerCase();const pass=document.getElementById('loginPass').value;if(!email||!pass)return showError('Preencha todos os campos.');const users=getUsers();const u=users[email];if(!u)return showError('E-mail não encontrado.');if(u.passHash!==hashStr(pass+email))return showError('Senha incorreta.');const user={email,name:u.name};saveSession(user);startApp(user)}
+function doLogout(){clearSession();currentUser=null;transactions=[];budgets={};document.getElementById('landingScreen').classList.add('active');document.getElementById('authScreen').classList.remove('active');document.getElementById('appScreen').classList.remove('active');document.getElementById('loginEmail').value='';document.getElementById('loginPass').value='';showError('');document.body.classList.remove('light-mode');}
+function initTheme(){var t=localStorage.getItem('financia_theme');if(t==='light'){document.body.classList.add('light-mode');}else{document.body.classList.remove('light-mode');}}
+function toggleTheme(){var isLight=document.body.classList.toggle('light-mode');localStorage.setItem('financia_theme',isLight?'light':'dark');var btn=document.getElementById('themeToggleBtn');if(btn)btn.textContent=isLight?'☀️':'🌙';}
+function startApp(user){currentUser=user;transactions=loadTx(user.email);budgets=loadBudgets(user.email);currentMeta=loadMeta(user.email);checkAndApplyRecurring();renderGamification();document.getElementById('userPill').textContent=user.name||user.email;document.getElementById('landingScreen').classList.remove('active');document.getElementById('authScreen').classList.remove('active');document.getElementById('appScreen').classList.add('active');// Theme: restore saved preference (default = dark)
+  const _savedTheme = localStorage.getItem('financia_theme');
+  if (_savedTheme === 'light') { document.body.classList.add('light-mode'); }document.getElementById('aiMessages').innerHTML=`<div class="ai-bubble ai"><div class="ai-label">ASSISTENTE</div>Olá, ${user.name}! Lance seus gastos acima e me pergunte o que quiser sobre suas finanças.</div>`;renderAll()}
+function switchInputMode(mode){inputMode=mode;document.getElementById('modeIA').classList.toggle('active',mode==='ia');document.getElementById('modeManual').classList.toggle('active',mode==='manual');document.getElementById('aiInputSection').style.display=mode==='ia'?'block':'none';document.getElementById('manualFormSection').classList.toggle('active',mode==='manual');var iaF=document.getElementById('txInput');if(iaF)iaF.value='';document.querySelectorAll('.cat-chip').forEach(function(c){c.classList.remove('selected')});}
+function addManualTransaction(){const desc=document.getElementById('manualDesc').value.trim();const amount=parseFloat(document.getElementById('manualAmount').value);const type=document.getElementById('manualType').value;const category=document.getElementById('manualCategory').value;if(!desc||!amount||amount<=0||!currentUser)return showToast('Preencha todos os campos corretamente.','error');const isRec=document.getElementById('isRecurringManual').checked;const tx={id:Date.now(),desc,amount,type,category,date:new Date().toLocaleDateString('pt-BR'),original:desc,isRecurring:isRec};if(isRec){const rec=loadRecurring(currentUser.email);rec.push({id:tx.id,desc,amount,type,category});saveRecurring(currentUser.email,rec);}transactions.unshift(tx);saveTx(currentUser.email,transactions);document.getElementById('manualDesc').value='';document.getElementById('manualAmount').value='';document.getElementById('manualType').value='gasto';document.getElementById('isRecurringManual').checked=false;updateManualCategories();addXP(10);checkTxAchievement(transactions.length);renderAll();showToast(isRec?'Lançamento fixo adicionado! 🔄':'Lançamento adicionado!','success')}
 function quickInput(cat){const el=document.getElementById('txInput');el.value=cat+' ';el.focus()}
-function updateManualCategories(){const type=document.getElementById('manualType').value;const sel=document.getElementById('manualCategory');const g=['AlimentaÃ§Ã£o','CartÃ£o','Casa','SaÃºde','Transporte','Lazer','Outros'];const r=['SalÃ¡rio','Freelance','Adiantamento','Investimento','Presente','Outros'];sel.innerHTML=(type==='receita'?r:g).map(c=>`<option value="${c}">${c}</option>`).join('')}
-function exportCSV(){if(!transactions.length)return showToast('Nenhum lanÃ§amento para exportar.','error');let csv='Data,Descricao,Tipo,Categoria,Valor\n';transactions.forEach(t=>{const amount=(t.type==='receita'?'+':'-')+t.amount.toFixed(2);csv+=`"${t.date}","${t.desc}","${t.type}","${t.category}","${amount}"\n`});const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});const link=document.createElement('a');link.setAttribute('href',URL.createObjectURL(blob));link.setAttribute('download',`financia_${new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')}.csv`);link.style.visibility='hidden';document.body.appendChild(link);link.click();document.body.removeChild(link);showToast('CSV exportado!','success')}
+function updateManualCategories(){const type=document.getElementById('manualType').value;const sel=document.getElementById('manualCategory');const g=['Alimentação','Cartão','Casa','Saúde','Transporte','Lazer','Outros'];const r=['Salário','Freelance','Adiantamento','Investimento','Presente','Outros'];sel.innerHTML=(type==='receita'?r:g).map(c=>`<option value="${c}">${c}</option>`).join('')}
+function exportCSV(){if(!transactions.length)return showToast('Nenhum lançamento para exportar.','error');let csv='Data,Descricao,Tipo,Categoria,Valor\n';transactions.forEach(t=>{const amount=(t.type==='receita'?'+':'-')+t.amount.toFixed(2);csv+=`"${t.date}","${t.desc}","${t.type}","${t.category}","${amount}"\n`});const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});const link=document.createElement('a');link.setAttribute('href',URL.createObjectURL(blob));link.setAttribute('download',`financia_${new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')}.csv`);link.style.visibility='hidden';document.body.appendChild(link);link.click();document.body.removeChild(link);showToast('CSV exportado!','success')}
 
 // ========== FILTROS ==========
 function setFilter(f,el){activeFilter=f;document.querySelectorAll('.filter-tabs .tab').forEach(t=>{t.classList.toggle('active',t.textContent.trim()===f.charAt(0).toUpperCase()+f.slice(1))});renderAll()}
-function setDateFilter(f,el){activeDateFilter=f;document.querySelectorAll('.filter-tabs .tab').forEach(t=>{if(t.textContent==='Este mÃªs'||t.textContent==='MÃªs anterior'||t.textContent==='Tudo')t.classList.toggle('active',t===el)});renderAll()}
+function setDateFilter(f,el){activeDateFilter=f;document.querySelectorAll('.filter-tabs .tab').forEach(t=>{if(t.textContent==='Este mês'||t.textContent==='Mês anterior'||t.textContent==='Tudo')t.classList.toggle('active',t===el)});renderAll()}
 
 // ========== TOOLTIP ==========
 function toggleTooltip(e){e.stopPropagation();const tt=document.getElementById('ruleTooltip');const v=tt.classList.contains('visible');tt.classList.toggle('visible',!v);tt.setAttribute('aria-hidden',v?'true':'false')}
@@ -1493,7 +1435,7 @@ function finishOnboarding(){
     const session = JSON.parse(localStorage.getItem('financia_session')||'{}');
     if (session && session.email) localStorage.setItem('first_login_'+session.email, '1');
     const m = document.getElementById('onboardingModal'); if (m) m.style.display='none';
-    showToast('Bem-vindo ao FinancIA! Vamos comeÃ§ar.','success');
+    showToast('Bem-vindo ao FinancIA! Vamos começar.','success');
   } catch(e){}
 }
 function skipOnboarding(){
@@ -1504,7 +1446,7 @@ function skipOnboarding(){
       localStorage.setItem('onboarding_skipped_'+session.email, '1');
     }
     const m = document.getElementById('onboardingModal'); if (m) m.style.display='none';
-    showToast('Tutorial pulado. VocÃª pode revÃª-lo em ConfiguraÃ§Ãµes.','info',3500);
+    showToast('Tutorial pulado. Você pode revê-lo em Configurações.','info',3500);
   } catch(e){}
 }
 
@@ -1512,7 +1454,7 @@ function skipOnboarding(){
 (function(){
   const canvas=document.getElementById('splashCanvas');
   const ctx=canvas.getContext('2d');
-  const symbols=['R$','%','0','1','2','3','4','5','6','7','8','9','$','â¬','â','â','â','â²'];
+  const symbols=['R$','%','0','1','2','3','4','5','6','7','8','9','$','€','↑','↓','◈','▲'];
   let particles=[];
   let raf;
   let done=false;
@@ -1581,8 +1523,9 @@ function skipOnboarding(){
   setTimeout(type,500);
 })();
 
-// ========== SUGESTÃO DE CATEGORIA ==========
+// ========== SUGESTÃO DE CATEGORIA ==========
 document.addEventListener('DOMContentLoaded', ()=>{
+  initTheme();
   const inp = document.getElementById('txInput');
   const sug = document.getElementById('categorySuggestion');
   const txt = document.getElementById('categorySuggestionText');
@@ -1593,7 +1536,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
       else { sug.style.display='none'; }
     });
   }
-  // Inicializa sessÃ£o
+  // Inicializa sessão
   const session=getSession();
   if(session) startApp(session);
   checkFirstLogin();
@@ -1610,7 +1553,7 @@ function setupAssistantFAB() {
   if (document.getElementById('assistantFAB')) return;
   const fab = document.createElement('button');
   fab.id = 'assistantFAB';
-  fab.innerHTML = '<span style="font-size:24px">ð¤</span><span id="fabBadge" style="display:none;position:absolute;top:-4px;right:-4px;background:#ff4d6d;color:#fff;font-size:10px;font-weight:700;border-radius:10px;padding:2px 6px;font-family:Inter,sans-serif;">0</span>';
+  fab.innerHTML = '<span style="font-size:24px">🤖</span><span id="fabBadge" style="display:none;position:absolute;top:-4px;right:-4px;background:#ff4d6d;color:#fff;font-size:10px;font-weight:700;border-radius:10px;padding:2px 6px;font-family:Inter,sans-serif;">0</span>';
   fab.style.cssText = 'position:fixed;bottom:24px;right:24px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#7fff6e,#3de8ff);border:none;cursor:pointer;box-shadow:0 6px 20px rgba(125,255,110,0.4);display:flex;align-items:center;justify-content:center;z-index:9000;transition:transform 0.2s, box-shadow 0.2s;';
   fab.onmouseenter = ()=>{ fab.style.transform='scale(1.08)'; fab.style.boxShadow='0 8px 28px rgba(125,255,110,0.55)'; };
   fab.onmouseleave = ()=>{ fab.style.transform='scale(1)'; fab.style.boxShadow='0 6px 20px rgba(125,255,110,0.4)'; };
@@ -1621,7 +1564,7 @@ function setupAssistantFAB() {
       setTimeout(()=>{ const inp = document.getElementById('aiInput'); if (inp) inp.focus(); }, 600);
       const b = document.getElementById('fabBadge'); if (b) b.style.display='none';
       sessionStorage.setItem('__fabSeen','1');
-    } else { showToast('Assistente indisponÃ­vel no momento.','warning'); }
+    } else { showToast('Assistente indisponível no momento.','warning'); }
   };
   document.body.appendChild(fab);
   setTimeout(()=>{
@@ -1643,7 +1586,7 @@ function showAutoInsight(){
     const byCat = {};
     txs.filter(t=>t.type==='gasto').forEach(t=>{ byCat[t.category]=(byCat[t.category]||0)+Number(t.amount||0); });
     const top = Object.entries(byCat).sort((a,b)=>b[1]-a[1])[0];
-    if (top) { showToast('ð¡ Sua maior categoria de gasto Ã© '+top[0]+' (R$ '+top[1].toLocaleString('pt-BR',{minimumFractionDigits:2})+')','info',6000); sessionStorage.setItem('__insightShown','1'); }
+    if (top) { showToast('💡 Sua maior categoria de gasto é '+top[0]+' (R$ '+top[1].toLocaleString('pt-BR',{minimumFractionDigits:2})+')','info',6000); sessionStorage.setItem('__insightShown','1'); }
   } catch(e){}
 }
 
@@ -1660,7 +1603,7 @@ function renderStreak() {
       if (target && target.parentElement) target.parentElement.insertBefore(badge, target);
       else document.body.appendChild(badge);
     }
-    badge.innerHTML = 'ð¥ ' + count + (count === 1 ? ' dia' : ' dias');
+    badge.innerHTML = '🔥 ' + count + (count === 1 ? ' dia' : ' dias');
   } catch(e){}
 }
 
@@ -1686,11 +1629,11 @@ function updateStreak(){
   } catch(e){ return 0; }
 }
 
-document.addEventListener('DOMContentLoaded', () => {initTheme();
+document.addEventListener('DOMContentLoaded', () => {
   if(document.getElementById('typed-tagline')){
     new Typed('#typed-tagline', {
       strings: [
-        'Sua vida financeira com inteligÃªncia artificial.',
+        'Sua vida financeira com inteligência artificial.',
         'Fale com seu dinheiro. Literalmente.',
         'Economize e atinja suas metas com facilidade.'
       ],
@@ -1698,7 +1641,7 @@ document.addEventListener('DOMContentLoaded', () => {initTheme();
       backSpeed: 25,
       backDelay: 2000,
       loop: true,
-      cursorChar: 'â'
+      cursorChar: '█'
     });
   }
   if(document.getElementById('tsparticles')){
