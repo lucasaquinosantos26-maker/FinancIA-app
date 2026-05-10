@@ -347,6 +347,30 @@ body::after {
 .landing-feat-desc { font-size:0.78rem; color:var(--text-secondary); margin-top:0.25rem; }
 .btn-theme-toggle { background:transparent; border:1px solid var(--border); border-radius:8px; padding:0.4rem 0.75rem; cursor:pointer; font-size:1.1rem; color:var(--text); margin-right:0.5rem; transition:background 0.2s; }
 .btn-theme-toggle:hover { background:var(--hover); }
+
+/* ===== LIGHT MODE CARD OVERRIDES ===== */
+body.light-mode .auth-card,
+body.light-mode .card,
+body.light-mode .input-section,
+body.light-mode .chart-section,
+body.light-mode .budget-section,
+body.light-mode .meta-section,
+body.light-mode .rule-section,
+body.light-mode .ai-section {
+  background: rgba(255,255,255,0.9) !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+  box-shadow: 0 4px 16px 0 rgba(0,0,0,0.08) !important;
+}
+body.light-mode {
+  background: var(--bg);
+}
+body.light-mode::before {
+  opacity: 0.05;
+}
+body.light-mode .summary-grid .card {
+  background: rgba(255,255,255,0.95) !important;
+}
+
 </style>
 </head>
 <body>
