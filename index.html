@@ -7,7 +7,9 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600;700&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#07080f;--surface:#0f1018;--surface2:#161720;--border:#22233a;--accent:#7fff6e;--accent2:#3de8ff;--text:#e8e8f2;--muted:#9a9ac0;--danger:#ff4d6d}
+:root{--bg:#07080f;--surface:#0f1018;--surface2:#161720;--border:#22233a;--accent:#7fff6e;--accent2:#3de8ff;--text:#e8e8f2;--muted:#9a9ac0;--danger:#ff4d6d;
+/* Fix #5a: variáveis faltantes */
+--bg-rgb:7,8,15;--text-secondary:#9a9ac0;--card-bg:#0f1018;--hover:rgba(255,255,255,0.06)}
 body.light-mode{--bg:#f8fafc;--surface:#ffffff;--surface2:#f1f5f9;--border:#e2e8f0;--text:#0f172a;--muted:#64748b}
 body{font-family:'Inter','DM Mono',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
@@ -348,6 +350,23 @@ body::after {
 .btn-theme-toggle { background:transparent; border:1px solid var(--border); border-radius:8px; padding:0.4rem 0.75rem; cursor:pointer; font-size:1.1rem; color:var(--text); margin-right:0.5rem; transition:background 0.2s; }
 .btn-theme-toggle:hover { background:var(--hover); }
 
+/* ===== Fix #5b: PROFILE MODAL ===== */
+.profile-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;align-items:center;justify-content:center}
+.profile-modal.active{display:flex}
+.profile-modal-content{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;width:90%;max-width:360px;position:relative}
+.profile-modal-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:16px;color:var(--text)}
+.profile-modal-btns{display:flex;gap:8px;margin-top:16px}
+.profile-modal-btns button{flex:1;padding:10px;border-radius:8px;border:none;font-weight:600;cursor:pointer;font-size:11px;font-family:'Inter','DM Mono',sans-serif}
+.profile-save{background:var(--accent);color:#07080f}
+.profile-cancel{background:var(--surface2);border:1px solid var(--border)!important;color:var(--muted)}
+
+/* ===== Fix #5c: RECURRENT TOGGLE & RECURRING BADGE ===== */
+.recurrent-toggle{display:inline-flex;align-items:center;gap:8px;margin-top:10px;font-size:12px;color:var(--muted);cursor:pointer;user-select:none}
+.recurrent-toggle input[type="checkbox"]{accent-color:var(--accent);width:14px;height:14px;cursor:pointer}
+.recurrent-toggle span{transition:color .15s}
+.recurrent-toggle:hover span{color:var(--text)}
+.recurring-badge{display:inline-flex;align-items:center;gap:3px;background:rgba(61,232,255,.1);border:1px solid rgba(61,232,255,.3);color:var(--accent2);font-size:9px;padding:2px 7px;border-radius:10px;margin-left:6px;letter-spacing:.5px;font-weight:600;vertical-align:middle}
+
 /* ===== LIGHT MODE CARD OVERRIDES ===== */
 body.light-mode .auth-card,
 body.light-mode .card,
@@ -372,6 +391,9 @@ body.light-mode .summary-grid .card {
 }
 
 </style>
+<!-- Fix #1: Bibliotecas externas (Typed.js e tsParticles) -->
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
 </head>
 <body>
 <!-- ONBOARDING MODAL -->
@@ -721,11 +743,14 @@ function detectCategory(text){
 // ========== ORÇAMENTO / META / REGRAS ==========
 function checkBudgetAlerts(){
   try {
-    const budget = JSON.parse(localStorage.getItem('financia_budget')||'{}');
-    if (!budget || !budget.total) return;
+    // Fix #4a: session usa 'email', não 'id'. Fix #4b: usar loadBudgets() em vez de chave errada
     const session = JSON.parse(localStorage.getItem('financia_session')||'{}');
-    const userKey = session.id ? 'financia_tx_'+session.id : null;
-    if (!userKey) return;
+    if (!session || !session.email) return;
+    const budgetData = loadBudgets(session.email);
+    const totalLimit = Object.values(budgetData).reduce((s,v)=>s+v, 0);
+    if (!totalLimit) return;
+    const budget = { total: totalLimit };
+    const userKey = txKey(session.email);
     const txs = JSON.parse(localStorage.getItem(userKey)||'[]');
     const spent = txs.filter(t=>t.type==='gasto').reduce((a,t)=>a+Number(t.amount||0),0);
     const pct = (spent/budget.total)*100;
@@ -909,12 +934,14 @@ function renderBalanceChart(){
   ctx.lineTo(canvas.width-pad, canvas.height-pad);
   ctx.stroke();
   const step = Math.max(1, Math.floor(dailyBalance.length/6));
+  // Fix #6b: evitar divisão por zero quando há apenas 1 transação
+  const denom = Math.max(1, dailyBalance.length - 1);
   ctx.fillStyle='rgba(90,90,122,0.8)';
   ctx.font='9px Inter,sans-serif';
   ctx.textAlign='center';
   dailyBalance.forEach((d,i)=>{
     if(i%step===0 || i===dailyBalance.length-1){
-      const x = pad + (i/(dailyBalance.length-1))*w;
+      const x = pad + (i/denom)*w;
       ctx.fillText(d.date.slice(0,5), x, canvas.height-pad+12);
     }
   });
@@ -922,7 +949,7 @@ function renderBalanceChart(){
   ctx.lineWidth=2.5;
   ctx.beginPath();
   dailyBalance.forEach((d,i)=>{
-    const x = pad + (i/(dailyBalance.length-1))*w;
+    const x = pad + (i/denom)*w;
     const y = canvas.height-pad - ((d.balance-min)/range)*h;
     if(i===0)ctx.moveTo(x,y); else ctx.lineTo(x,y);
   });
@@ -1190,8 +1217,7 @@ function delTx(id){
   confirmDelete('Remover lançamento', 'Tem certeza que deseja excluir este lançamento?', ()=>{
     transactions=transactions.filter(t=>t.id!==id);
     saveTx(currentUser.email,transactions);
-    addXP(10);
-    checkTxAchievement(transactions.length);
+    // Fix #6a: removido addXP e checkTxAchievement — não se ganha XP por deletar
     renderAll();
     showToast('Lançamento removido.','success');
   });
@@ -1219,7 +1245,9 @@ function editTx(id){
 }
 
 function saveTxEdit(id){
-  const tx=transactions.find(t=>t.id===id);
+  // Fix #3: converter para Number pois IDs são números e o onclick passa string
+  const numId = Number(id);
+  const tx=transactions.find(t=>t.id===numId);
   if(!tx)return;
   const desc=document.getElementById(`edit-desc-${id}`).value.trim();
   const amount=parseFloat(document.getElementById(`edit-amount-${id}`).value);
@@ -1228,8 +1256,8 @@ function saveTxEdit(id){
   if(!desc||!amount||amount<=0) return showToast('Dados inválidos.','error');
   tx.desc=desc; tx.amount=amount; tx.type=type; tx.category=category;
   saveTx(currentUser.email,transactions);
+  cancelEdit(id); // Fix #3b: remover formulário após salvar
   addXP(10);
-  checkTxAchievement(transactions.length);
   renderAll();
   showToast('Lançamento atualizado!','success');
 }
@@ -1402,17 +1430,13 @@ function switchTab(tab){document.getElementById('loginForm').style.display=tab==
 function showError(msg){const el=document.getElementById('authError');el.textContent=msg;el.classList.toggle('show',!!msg)}
 function doRegister(){const name=document.getElementById('regName').value.trim();const email=document.getElementById('regEmail').value.trim().toLowerCase();const pass=document.getElementById('regPass').value;const pass2=document.getElementById('regPass2').value;if(!name)return showError('Digite seu nome.');if(!email||!email.includes('@'))return showError('E-mail inválido.');if(pass.length<6)return showError('Senha deve ter no mínimo 6 caracteres.');if(pass!==pass2)return showError('As senhas não coincidem.');const users=getUsers();if(users[email])return showError('E-mail já cadastrado. Faça login.');users[email]={name,passHash:hashStr(pass+email)};saveUsers(users);const user={email,name};saveSession(user);startApp(user)}
 function showAuthFromLanding(tab){
+  // Fix #2: usar switchTab() que já conhece os IDs corretos
   document.getElementById('landingScreen').classList.remove('active');
   document.getElementById('authScreen').classList.add('active');
   if(tab==='signup'){
-    var st=document.getElementById('signupTab');
-    var lt=document.getElementById('loginTab');
-    var sf=document.getElementById('signupForm');
-    var lf=document.getElementById('loginForm');
-    if(st)st.classList.add('active');
-    if(lt)lt.classList.remove('active');
-    if(sf)sf.classList.add('active');
-    if(lf)lf.classList.remove('active');
+    switchTab('register');
+  } else {
+    switchTab('login');
   }
 }
 function doLogin(){const email=document.getElementById('loginEmail').value.trim().toLowerCase();const pass=document.getElementById('loginPass').value;if(!email||!pass)return showError('Preencha todos os campos.');const users=getUsers();const u=users[email];if(!u)return showError('E-mail não encontrado.');if(u.passHash!==hashStr(pass+email))return showError('Senha incorreta.');const user={email,name:u.name};saveSession(user);startApp(user)}
@@ -1548,25 +1572,59 @@ function skipOnboarding(){
 })();
 
 // ========== SUGESTÃO DE CATEGORIA ==========
-document.addEventListener('DOMContentLoaded', ()=>{
+// ========== Fix #8: DOMContentLoaded unificado ==========
+document.addEventListener('DOMContentLoaded', () => {
   initTheme();
+
+  // Sugestao de categoria em tempo real
   const inp = document.getElementById('txInput');
   const sug = document.getElementById('categorySuggestion');
   const txt = document.getElementById('categorySuggestionText');
   if (inp && sug && txt) {
-    inp.addEventListener('input', ()=>{
+    inp.addEventListener('input', () => {
       const cat = detectCategory(inp.value);
-      if (cat) { txt.textContent = 'Categoria detectada: '+cat; sug.style.display='block'; }
-      else { sug.style.display='none'; }
+      if (cat) { txt.textContent = 'Categoria detectada: ' + cat; sug.style.display = 'block'; }
+      else { sug.style.display = 'none'; }
     });
   }
-  // Inicializa sessão
-  const session=getSession();
-  if(session) startApp(session);
+
+  // Inicializa sessao e UI
+  const session = getSession();
+  if (session) startApp(session);
   checkFirstLogin();
   setTimeout(showAutoInsight, 2500);
   setupAssistantFAB();
   renderStreak();
+
+  // Typed.js
+  if (document.getElementById('typed-tagline')) {
+    new Typed('#typed-tagline', {
+      strings: [
+        'Sua vida financeira com inteligencia artificial.',
+        'Fale com seu dinheiro. Literalmente.',
+        'Economize e atinja suas metas com facilidade.'
+      ],
+      typeSpeed: 45, backSpeed: 25, backDelay: 2000, loop: true, cursorChar: 'I'
+    });
+  }
+
+  // tsParticles
+  if (document.getElementById('tsparticles')) {
+    tsParticles.load('tsparticles', {
+      background: { color: { value: 'transparent' } },
+      fpsLimit: 60,
+      particles: {
+        color: { value: ['#7fff6e', '#3de8ff'] },
+        links: { enable: true, color: '#22233a', distance: 150, opacity: 0.4, width: 1 },
+        move: { enable: true, speed: 0.8, direction: 'none', random: true, straight: false, outModes: 'out' },
+        number: { density: { enable: true, area: 800 }, value: 40 },
+        opacity: { value: 0.5 },
+        shape: { type: 'circle' },
+        size: { value: { min: 1, max: 3 } }
+      },
+      detectRetina: true
+    });
+  }
 });
 
 // ========== SKIP INIT ==========
@@ -1602,9 +1660,10 @@ function setupAssistantFAB() {
 function showAutoInsight(){
   try {
     if (sessionStorage.getItem('__insightShown')) return;
+    // Fix #4c: session usa 'email', não 'id'
     const session = JSON.parse(localStorage.getItem('financia_session')||'{}');
-    const userKey = session.id ? 'financia_tx_'+session.id : null;
-    if (!userKey) return;
+    if (!session || !session.email) return;
+    const userKey = txKey(session.email);
     const txs = JSON.parse(localStorage.getItem(userKey)||'[]');
     if (txs.length < 3) return;
     const byCat = {};
@@ -1633,9 +1692,10 @@ function renderStreak() {
 
 function updateStreak(){
   try {
+    // Fix #4d: session usa 'email', não 'id'
     const session = JSON.parse(localStorage.getItem('financia_session')||'{}');
-    if (!session || !session.id) return 0;
-    const key = 'financia_uxstreak_'+session.id;
+    if (!session || !session.email) return 0;
+    const key = streakKey(session.email);
     const today = new Date(); today.setHours(0,0,0,0);
     const todayISO = today.toISOString().slice(0,10);
     let data = {};
@@ -1653,39 +1713,7 @@ function updateStreak(){
   } catch(e){ return 0; }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  if(document.getElementById('typed-tagline')){
-    new Typed('#typed-tagline', {
-      strings: [
-        'Sua vida financeira com inteligência artificial.',
-        'Fale com seu dinheiro. Literalmente.',
-        'Economize e atinja suas metas com facilidade.'
-      ],
-      typeSpeed: 45,
-      backSpeed: 25,
-      backDelay: 2000,
-      loop: true,
-      cursorChar: '█'
-    });
-  }
-  if(document.getElementById('tsparticles')){
-    tsParticles.load("tsparticles", {
-      background: { color: { value: "transparent" } },
-      fpsLimit: 60,
-      particles: {
-        color: { value: ["#7fff6e", "#3de8ff"] },
-        links: { enable: true, color: "#22233a", distance: 150, opacity: 0.4, width: 1 },
-        move: { enable: true, speed: 0.8, direction: "none", random: true, straight: false, outModes: "out" },
-        number: { density: { enable: true, area: 800 }, value: 40 },
-        opacity: { value: 0.5 },
-        shape: { type: "circle" },
-        size: { value: { min: 1, max: 3 } }
-      },
-      detectRetina: true
-    });
-  }
-});
+
 </script>
 </body>
 </html>
-
